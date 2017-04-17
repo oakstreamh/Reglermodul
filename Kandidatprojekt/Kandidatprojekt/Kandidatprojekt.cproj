@@ -190,6 +190,66 @@
     <Folder Include="src\config\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\fuzzy_speed_controller.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\fuzzy_speed_controller.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\general_FIS.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\general_FIS.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\main.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\manualMode.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\manualMode.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\pid.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\pid.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\PID_TEST.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\servo.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\servo.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\setServo.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\signals.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\testmanual.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\testmanual.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\test_FLC_speed.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\test_FLC_speed.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\uart_buffer.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\uart_buffer.h">
+      <SubType>compile</SubType>
+    </Compile>
     <None Include="src\asf.h">
       <SubType>compile</SubType>
     </None>
@@ -244,9 +304,9 @@
     <None Include="src\ASF\mega\utils\preprocessor\tpaste.h">
       <SubType>compile</SubType>
     </None>
-    <Compile Include="src\main.c">
+    <None Include="src\main.txt">
       <SubType>compile</SubType>
-    </Compile>
+    </None>
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
 </Project>
