@@ -1,0 +1,630 @@
+
+Kandidatprojekt.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000003b2  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .bss          000000bf  00800100  00800100  00000426  2**0
+                  ALLOC
+  2 .comment      00000030  00000000  00000000  00000426  2**0
+                  CONTENTS, READONLY
+  3 .debug_aranges 00000100  00000000  00000000  00000456  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  4 .debug_info   00000ae6  00000000  00000000  00000556  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_abbrev 00000513  00000000  00000000  0000103c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_line   0000101e  00000000  00000000  0000154f  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_frame  00000224  00000000  00000000  00002570  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_str    0001074a  00000000  00000000  00002794  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_loc    00000399  00000000  00000000  00012ede  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_ranges 000000c0  00000000  00000000  00013277  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_macro  00003217  00000000  00000000  00013337  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	45 c0       	rjmp	.+138    	; 0x8c <__ctors_end>
+   2:	00 00       	nop
+   4:	60 c0       	rjmp	.+192    	; 0xc6 <__bad_interrupt>
+   6:	00 00       	nop
+   8:	5e c0       	rjmp	.+188    	; 0xc6 <__bad_interrupt>
+   a:	00 00       	nop
+   c:	5c c0       	rjmp	.+184    	; 0xc6 <__bad_interrupt>
+   e:	00 00       	nop
+  10:	5a c0       	rjmp	.+180    	; 0xc6 <__bad_interrupt>
+  12:	00 00       	nop
+  14:	58 c0       	rjmp	.+176    	; 0xc6 <__bad_interrupt>
+  16:	00 00       	nop
+  18:	56 c0       	rjmp	.+172    	; 0xc6 <__bad_interrupt>
+  1a:	00 00       	nop
+  1c:	54 c0       	rjmp	.+168    	; 0xc6 <__bad_interrupt>
+  1e:	00 00       	nop
+  20:	52 c0       	rjmp	.+164    	; 0xc6 <__bad_interrupt>
+  22:	00 00       	nop
+  24:	50 c0       	rjmp	.+160    	; 0xc6 <__bad_interrupt>
+  26:	00 00       	nop
+  28:	4e c0       	rjmp	.+156    	; 0xc6 <__bad_interrupt>
+  2a:	00 00       	nop
+  2c:	4c c0       	rjmp	.+152    	; 0xc6 <__bad_interrupt>
+  2e:	00 00       	nop
+  30:	4a c0       	rjmp	.+148    	; 0xc6 <__bad_interrupt>
+  32:	00 00       	nop
+  34:	48 c0       	rjmp	.+144    	; 0xc6 <__bad_interrupt>
+  36:	00 00       	nop
+  38:	46 c0       	rjmp	.+140    	; 0xc6 <__bad_interrupt>
+  3a:	00 00       	nop
+  3c:	44 c0       	rjmp	.+136    	; 0xc6 <__bad_interrupt>
+  3e:	00 00       	nop
+  40:	42 c0       	rjmp	.+132    	; 0xc6 <__bad_interrupt>
+  42:	00 00       	nop
+  44:	40 c0       	rjmp	.+128    	; 0xc6 <__bad_interrupt>
+  46:	00 00       	nop
+  48:	85 c0       	rjmp	.+266    	; 0x154 <__vector_18>
+  4a:	00 00       	nop
+  4c:	3c c0       	rjmp	.+120    	; 0xc6 <__bad_interrupt>
+  4e:	00 00       	nop
+  50:	02 c1       	rjmp	.+516    	; 0x256 <__vector_20>
+  52:	00 00       	nop
+  54:	38 c0       	rjmp	.+112    	; 0xc6 <__bad_interrupt>
+  56:	00 00       	nop
+  58:	59 c1       	rjmp	.+690    	; 0x30c <__vector_22>
+  5a:	00 00       	nop
+  5c:	34 c0       	rjmp	.+104    	; 0xc6 <__bad_interrupt>
+  5e:	00 00       	nop
+  60:	32 c0       	rjmp	.+100    	; 0xc6 <__bad_interrupt>
+  62:	00 00       	nop
+  64:	30 c0       	rjmp	.+96     	; 0xc6 <__bad_interrupt>
+  66:	00 00       	nop
+  68:	2e c0       	rjmp	.+92     	; 0xc6 <__bad_interrupt>
+  6a:	00 00       	nop
+  6c:	2c c0       	rjmp	.+88     	; 0xc6 <__bad_interrupt>
+  6e:	00 00       	nop
+  70:	2b c0       	rjmp	.+86     	; 0xc8 <__vector_28>
+  72:	00 00       	nop
+  74:	28 c0       	rjmp	.+80     	; 0xc6 <__bad_interrupt>
+  76:	00 00       	nop
+  78:	26 c0       	rjmp	.+76     	; 0xc6 <__bad_interrupt>
+  7a:	00 00       	nop
+  7c:	24 c0       	rjmp	.+72     	; 0xc6 <__bad_interrupt>
+  7e:	00 00       	nop
+  80:	22 c0       	rjmp	.+68     	; 0xc6 <__bad_interrupt>
+  82:	00 00       	nop
+  84:	20 c0       	rjmp	.+64     	; 0xc6 <__bad_interrupt>
+  86:	00 00       	nop
+  88:	1e c0       	rjmp	.+60     	; 0xc6 <__bad_interrupt>
+	...
+
+0000008c <__ctors_end>:
+  8c:	11 24       	eor	r1, r1
+  8e:	1f be       	out	0x3f, r1	; 63
+  90:	cf ef       	ldi	r28, 0xFF	; 255
+  92:	d0 e4       	ldi	r29, 0x40	; 64
+  94:	de bf       	out	0x3e, r29	; 62
+  96:	cd bf       	out	0x3d, r28	; 61
+
+00000098 <__do_copy_data>:
+  98:	11 e0       	ldi	r17, 0x01	; 1
+  9a:	a0 e0       	ldi	r26, 0x00	; 0
+  9c:	b1 e0       	ldi	r27, 0x01	; 1
+  9e:	e2 eb       	ldi	r30, 0xB2	; 178
+  a0:	f3 e0       	ldi	r31, 0x03	; 3
+  a2:	00 e0       	ldi	r16, 0x00	; 0
+  a4:	0b bf       	out	0x3b, r16	; 59
+  a6:	02 c0       	rjmp	.+4      	; 0xac <__do_copy_data+0x14>
+  a8:	07 90       	elpm	r0, Z+
+  aa:	0d 92       	st	X+, r0
+  ac:	a0 30       	cpi	r26, 0x00	; 0
+  ae:	b1 07       	cpc	r27, r17
+  b0:	d9 f7       	brne	.-10     	; 0xa8 <__do_copy_data+0x10>
+
+000000b2 <__do_clear_bss>:
+  b2:	21 e0       	ldi	r18, 0x01	; 1
+  b4:	a0 e0       	ldi	r26, 0x00	; 0
+  b6:	b1 e0       	ldi	r27, 0x01	; 1
+  b8:	01 c0       	rjmp	.+2      	; 0xbc <.do_clear_bss_start>
+
+000000ba <.do_clear_bss_loop>:
+  ba:	1d 92       	st	X+, r1
+
+000000bc <.do_clear_bss_start>:
+  bc:	af 3b       	cpi	r26, 0xBF	; 191
+  be:	b2 07       	cpc	r27, r18
+  c0:	e1 f7       	brne	.-8      	; 0xba <.do_clear_bss_loop>
+  c2:	6f d0       	rcall	.+222    	; 0x1a2 <main>
+  c4:	74 c1       	rjmp	.+744    	; 0x3ae <_exit>
+
+000000c6 <__bad_interrupt>:
+  c6:	9c cf       	rjmp	.-200    	; 0x0 <__vectors>
+
+000000c8 <__vector_28>:
+}
+
+int16_t Get_Measurement(void) //TODO
+{
+	return 140;
+}
+  c8:	1f 92       	push	r1
+  ca:	0f 92       	push	r0
+  cc:	0f b6       	in	r0, 0x3f	; 63
+  ce:	0f 92       	push	r0
+  d0:	11 24       	eor	r1, r1
+  d2:	0b b6       	in	r0, 0x3b	; 59
+  d4:	0f 92       	push	r0
+  d6:	8f 93       	push	r24
+  d8:	9f 93       	push	r25
+  da:	ef 93       	push	r30
+  dc:	ff 93       	push	r31
+  de:	80 91 ce 00 	lds	r24, 0x00CE
+  e2:	8f 3f       	cpi	r24, 0xFF	; 255
+  e4:	29 f4       	brne	.+10     	; 0xf0 <__vector_28+0x28>
+  e6:	10 92 b0 01 	sts	0x01B0, r1
+  ea:	10 92 af 01 	sts	0x01AF, r1
+  ee:	10 c0       	rjmp	.+32     	; 0x110 <__vector_28+0x48>
+  f0:	e0 91 af 01 	lds	r30, 0x01AF
+  f4:	f0 91 b0 01 	lds	r31, 0x01B0
+  f8:	e1 57       	subi	r30, 0x71	; 113
+  fa:	fe 4f       	sbci	r31, 0xFE	; 254
+  fc:	80 83       	st	Z, r24
+  fe:	80 91 af 01 	lds	r24, 0x01AF
+ 102:	90 91 b0 01 	lds	r25, 0x01B0
+ 106:	01 96       	adiw	r24, 0x01	; 1
+ 108:	90 93 b0 01 	sts	0x01B0, r25
+ 10c:	80 93 af 01 	sts	0x01AF, r24
+ 110:	ff 91       	pop	r31
+ 112:	ef 91       	pop	r30
+ 114:	9f 91       	pop	r25
+ 116:	8f 91       	pop	r24
+ 118:	0f 90       	pop	r0
+ 11a:	0b be       	out	0x3b, r0	; 59
+ 11c:	0f 90       	pop	r0
+ 11e:	0f be       	out	0x3f, r0	; 63
+ 120:	0f 90       	pop	r0
+ 122:	1f 90       	pop	r1
+ 124:	18 95       	reti
+
+00000126 <SPI_slaveInit>:
+ 126:	80 e4       	ldi	r24, 0x40	; 64
+ 128:	84 b9       	out	0x04, r24	; 4
+ 12a:	80 ec       	ldi	r24, 0xC0	; 192
+ 12c:	8c bd       	out	0x2c, r24	; 44
+ 12e:	08 95       	ret
+
+00000130 <carInit>:
+ 130:	3d d0       	rcall	.+122    	; 0x1ac <pwmInit>
+ 132:	f9 df       	rcall	.-14     	; 0x126 <SPI_slaveInit>
+ 134:	8d ec       	ldi	r24, 0xCD	; 205
+ 136:	9a e0       	ldi	r25, 0x0A	; 10
+ 138:	48 d0       	rcall	.+144    	; 0x1ca <setESC>
+ 13a:	84 e6       	ldi	r24, 0x64	; 100
+ 13c:	9a e0       	ldi	r25, 0x0A	; 10
+ 13e:	60 d0       	rcall	.+192    	; 0x200 <setServo>
+ 140:	2f ef       	ldi	r18, 0xFF	; 255
+ 142:	8f ef       	ldi	r24, 0xFF	; 255
+ 144:	90 ee       	ldi	r25, 0xE0	; 224
+ 146:	21 50       	subi	r18, 0x01	; 1
+ 148:	80 40       	sbci	r24, 0x00	; 0
+ 14a:	90 40       	sbci	r25, 0x00	; 0
+ 14c:	e1 f7       	brne	.-8      	; 0x146 <carInit+0x16>
+ 14e:	00 c0       	rjmp	.+0      	; 0x150 <carInit+0x20>
+ 150:	00 00       	nop
+ 152:	08 95       	ret
+
+00000154 <__vector_18>:
+ 154:	1f 92       	push	r1
+ 156:	0f 92       	push	r0
+ 158:	0f b6       	in	r0, 0x3f	; 63
+ 15a:	0f 92       	push	r0
+ 15c:	11 24       	eor	r1, r1
+ 15e:	2f 93       	push	r18
+ 160:	8f 93       	push	r24
+ 162:	9f 93       	push	r25
+ 164:	80 91 00 01 	lds	r24, 0x0100
+ 168:	90 91 01 01 	lds	r25, 0x0101
+ 16c:	8b 39       	cpi	r24, 0x9B	; 155
+ 16e:	26 e9       	ldi	r18, 0x96	; 150
+ 170:	92 07       	cpc	r25, r18
+ 172:	30 f4       	brcc	.+12     	; 0x180 <__vector_18+0x2c>
+ 174:	01 96       	adiw	r24, 0x01	; 1
+ 176:	90 93 01 01 	sts	0x0101, r25
+ 17a:	80 93 00 01 	sts	0x0100, r24
+ 17e:	09 c0       	rjmp	.+18     	; 0x192 <__vector_18+0x3e>
+ 180:	80 91 02 01 	lds	r24, 0x0102
+ 184:	81 60       	ori	r24, 0x01	; 1
+ 186:	80 93 02 01 	sts	0x0102, r24
+ 18a:	10 92 01 01 	sts	0x0101, r1
+ 18e:	10 92 00 01 	sts	0x0100, r1
+ 192:	9f 91       	pop	r25
+ 194:	8f 91       	pop	r24
+ 196:	2f 91       	pop	r18
+ 198:	0f 90       	pop	r0
+ 19a:	0f be       	out	0x3f, r0	; 63
+ 19c:	0f 90       	pop	r0
+ 19e:	1f 90       	pop	r1
+ 1a0:	18 95       	reti
+
+000001a2 <main>:
+	
+	*/
+	
+	
+	
+		carInit();
+ 1a2:	c6 df       	rcall	.-116    	; 0x130 <carInit>
+		testSpeed();
+ 1a4:	48 d0       	rcall	.+144    	; 0x236 <testSpeed>
+				
+				
+			}
+		}
+		*/
+}
+ 1a6:	80 e0       	ldi	r24, 0x00	; 0
+ 1a8:	90 e0       	ldi	r25, 0x00	; 0
+ 1aa:	08 95       	ret
+
+000001ac <pwmInit>:
+ * The formula of pwm length with current counter register settings:
+ * pwm_length = counterValue/1843
+*/
+void pwmInit(void)
+{
+	DDRD = (1<<DDD5)|(1<<DDD4);
+ 1ac:	80 e3       	ldi	r24, 0x30	; 48
+ 1ae:	8a b9       	out	0x0a, r24	; 10
+	TCCR1A = (1<<WGM11)|(1<<COM1A1)|(1<<COM1B1);
+ 1b0:	82 ea       	ldi	r24, 0xA2	; 162
+ 1b2:	80 93 80 00 	sts	0x0080, r24
+	ICR1 = 36863;
+ 1b6:	8f ef       	ldi	r24, 0xFF	; 255
+ 1b8:	9f e8       	ldi	r25, 0x8F	; 143
+ 1ba:	90 93 87 00 	sts	0x0087, r25
+ 1be:	80 93 86 00 	sts	0x0086, r24
+	TCCR1B = (1<<CS11)|(1<<WGM12)|(1<<WGM13);
+ 1c2:	8a e1       	ldi	r24, 0x1A	; 26
+ 1c4:	80 93 81 00 	sts	0x0081, r24
+ 1c8:	08 95       	ret
+
+000001ca <setESC>:
+ * Input values outside of the valid interval are forced to the lower/upper limit
+ * @param int counterEsc sets the upper limit to the 16-bit counter1 in the processor
+*/
+void setESC(int counterEsc){
+	
+	if(counterEsc <= MINESC)
+ 1ca:	80 36       	cpi	r24, 0x60	; 96
+ 1cc:	2a e0       	ldi	r18, 0x0A	; 10
+ 1ce:	92 07       	cpc	r25, r18
+ 1d0:	3c f4       	brge	.+14     	; 0x1e0 <setESC+0x16>
+	{
+		OCR1A = MINESC;
+ 1d2:	8f e5       	ldi	r24, 0x5F	; 95
+ 1d4:	9a e0       	ldi	r25, 0x0A	; 10
+ 1d6:	90 93 89 00 	sts	0x0089, r25
+ 1da:	80 93 88 00 	sts	0x0088, r24
+ 1de:	08 95       	ret
+	}
+	else if  (counterEsc >= MAXESC)
+ 1e0:	8b 33       	cpi	r24, 0x3B	; 59
+ 1e2:	2b e0       	ldi	r18, 0x0B	; 11
+ 1e4:	92 07       	cpc	r25, r18
+ 1e6:	3c f0       	brlt	.+14     	; 0x1f6 <setESC+0x2c>
+	{
+		OCR1A = MAXESC;
+ 1e8:	8b e3       	ldi	r24, 0x3B	; 59
+ 1ea:	9b e0       	ldi	r25, 0x0B	; 11
+ 1ec:	90 93 89 00 	sts	0x0089, r25
+ 1f0:	80 93 88 00 	sts	0x0088, r24
+ 1f4:	08 95       	ret
+	} else {
+		OCR1A = counterEsc;
+ 1f6:	90 93 89 00 	sts	0x0089, r25
+ 1fa:	80 93 88 00 	sts	0x0088, r24
+ 1fe:	08 95       	ret
+
+00000200 <setServo>:
+ * Input values outside of the valid interval are forced to the lower/upper limit
+ * @parameter int counterServo sets the upper limit to the 16-bit counter1 in the processor
+*/
+void setServo (int counterServo)
+{
+	if (counterServo <= MAXRIGHT){
+ 200:	87 3e       	cpi	r24, 0xE7	; 231
+ 202:	27 e0       	ldi	r18, 0x07	; 7
+ 204:	92 07       	cpc	r25, r18
+ 206:	3c f4       	brge	.+14     	; 0x216 <setServo+0x16>
+		
+		OCR1B = MAXRIGHT;
+ 208:	86 ee       	ldi	r24, 0xE6	; 230
+ 20a:	97 e0       	ldi	r25, 0x07	; 7
+ 20c:	90 93 8b 00 	sts	0x008B, r25
+ 210:	80 93 8a 00 	sts	0x008A, r24
+ 214:	08 95       	ret
+		
+	}	else if (counterServo >= MAXLEFT){
+ 216:	8f 33       	cpi	r24, 0x3F	; 63
+ 218:	2c e0       	ldi	r18, 0x0C	; 12
+ 21a:	92 07       	cpc	r25, r18
+ 21c:	3c f0       	brlt	.+14     	; 0x22c <setServo+0x2c>
+
+		OCR1B = MAXLEFT;
+ 21e:	8f e3       	ldi	r24, 0x3F	; 63
+ 220:	9c e0       	ldi	r25, 0x0C	; 12
+ 222:	90 93 8b 00 	sts	0x008B, r25
+ 226:	80 93 8a 00 	sts	0x008A, r24
+ 22a:	08 95       	ret
+		
+	} else {
+		
+		OCR1B = counterServo;	
+ 22c:	90 93 8b 00 	sts	0x008B, r25
+ 230:	80 93 8a 00 	sts	0x008A, r24
+ 234:	08 95       	ret
+
+00000236 <testSpeed>:
+void testSpeed(void)
+{
+	
+	// It was found that 2764 + 110 is a good MAXLIMIT for driving on the floor
+	// and 2765 - 110 is a good MINLIMIT for driving on the floor
+	setESC(NEUTRAL-110);
+ 236:	8f e5       	ldi	r24, 0x5F	; 95
+ 238:	9a e0       	ldi	r25, 0x0A	; 10
+ 23a:	c7 df       	rcall	.-114    	; 0x1ca <setESC>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 23c:	2f ef       	ldi	r18, 0xFF	; 255
+ 23e:	8f ef       	ldi	r24, 0xFF	; 255
+ 240:	99 e5       	ldi	r25, 0x59	; 89
+ 242:	21 50       	subi	r18, 0x01	; 1
+ 244:	80 40       	sbci	r24, 0x00	; 0
+ 246:	90 40       	sbci	r25, 0x00	; 0
+ 248:	e1 f7       	brne	.-8      	; 0x242 <testSpeed+0xc>
+ 24a:	00 c0       	rjmp	.+0      	; 0x24c <testSpeed+0x16>
+ 24c:	00 00       	nop
+	
+	
+	// 
+	_delay_ms(2000);
+	
+	setESC(NEUTRAL);
+ 24e:	8d ec       	ldi	r24, 0xCD	; 205
+ 250:	9a e0       	ldi	r25, 0x0A	; 10
+ 252:	bb cf       	rjmp	.-138    	; 0x1ca <setESC>
+ 254:	08 95       	ret
+
+00000256 <__vector_20>:
+
+buffer_typedef rx_uart0 = {{0}, 0 , 0 ,0}; //declaring a receive buffer
+buffer_typedef tx_uart0 = {{0}, 0 , 0 ,0}; //declaring a transmit buffer
+
+ISR(USART0_RX_vect)
+{
+ 256:	1f 92       	push	r1
+ 258:	0f 92       	push	r0
+ 25a:	0f b6       	in	r0, 0x3f	; 63
+ 25c:	0f 92       	push	r0
+ 25e:	11 24       	eor	r1, r1
+ 260:	0b b6       	in	r0, 0x3b	; 59
+ 262:	0f 92       	push	r0
+ 264:	2f 93       	push	r18
+ 266:	3f 93       	push	r19
+ 268:	4f 93       	push	r20
+ 26a:	8f 93       	push	r24
+ 26c:	9f 93       	push	r25
+ 26e:	af 93       	push	r26
+ 270:	bf 93       	push	r27
+ 272:	ef 93       	push	r30
+ 274:	ff 93       	push	r31
+	if(rx_uart0.num_bytes == BUFFER_SIZE) { // if buffer full, set flag
+ 276:	80 91 8d 01 	lds	r24, 0x018D
+ 27a:	90 91 8e 01 	lds	r25, 0x018E
+ 27e:	80 34       	cpi	r24, 0x40	; 64
+ 280:	91 05       	cpc	r25, r1
+ 282:	31 f4       	brne	.+12     	; 0x290 <__vector_20+0x3a>
+		uart0_rx_overf_flag = 1;
+ 284:	81 e0       	ldi	r24, 0x01	; 1
+ 286:	80 93 bd 01 	sts	0x01BD, r24
+		unsigned char scrap_var;
+		scrap_var = UDR0; //UDR0 has to be read, therefore the scrap variable
+ 28a:	80 91 c6 00 	lds	r24, 0x00C6
+ 28e:	16 c0       	rjmp	.+44     	; 0x2bc <__vector_20+0x66>
+		} else if(rx_uart0.num_bytes < BUFFER_SIZE) { //if there is space in buffer     //CHECK IF THIS IS RIGHT LATER
+ 290:	80 34       	cpi	r24, 0x40	; 64
+ 292:	91 05       	cpc	r25, r1
+ 294:	e8 f4       	brcc	.+58     	; 0x2d0 <__vector_20+0x7a>
+		
+		rx_uart0.buffer[rx_uart0.i_last] = UDR0;
+ 296:	eb e8       	ldi	r30, 0x8B	; 139
+ 298:	f1 e0       	ldi	r31, 0x01	; 1
+ 29a:	20 81       	ld	r18, Z
+ 29c:	31 81       	ldd	r19, Z+1	; 0x01
+ 29e:	40 91 c6 00 	lds	r20, 0x00C6
+ 2a2:	d9 01       	movw	r26, r18
+ 2a4:	a7 5b       	subi	r26, 0xB7	; 183
+ 2a6:	be 4f       	sbci	r27, 0xFE	; 254
+ 2a8:	4c 93       	st	X, r20
+		
+		rx_uart0.i_last++;
+ 2aa:	2f 5f       	subi	r18, 0xFF	; 255
+ 2ac:	3f 4f       	sbci	r19, 0xFF	; 255
+ 2ae:	31 83       	std	Z+1, r19	; 0x01
+ 2b0:	20 83       	st	Z, r18
+		rx_uart0.num_bytes++;
+ 2b2:	01 96       	adiw	r24, 0x01	; 1
+ 2b4:	90 93 8e 01 	sts	0x018E, r25
+ 2b8:	80 93 8d 01 	sts	0x018D, r24
+		
+	}
+	
+	//Check if buffer is full now. If yes, set full_flag
+	if(rx_uart0.num_bytes == BUFFER_SIZE){
+ 2bc:	80 91 8d 01 	lds	r24, 0x018D
+ 2c0:	90 91 8e 01 	lds	r25, 0x018E
+ 2c4:	80 34       	cpi	r24, 0x40	; 64
+ 2c6:	91 05       	cpc	r25, r1
+ 2c8:	19 f4       	brne	.+6      	; 0x2d0 <__vector_20+0x7a>
+		uart0_rx_full_flag = 1;
+ 2ca:	81 e0       	ldi	r24, 0x01	; 1
+ 2cc:	80 93 bb 01 	sts	0x01BB, r24
+	}
+
+
+	//If index has reached the end of buffer, set the i_last to 0 to go around
+	if(rx_uart0.i_last == BUFFER_SIZE){
+ 2d0:	80 91 8b 01 	lds	r24, 0x018B
+ 2d4:	90 91 8c 01 	lds	r25, 0x018C
+ 2d8:	80 34       	cpi	r24, 0x40	; 64
+ 2da:	91 05       	cpc	r25, r1
+ 2dc:	21 f4       	brne	.+8      	; 0x2e6 <__vector_20+0x90>
+		rx_uart0.i_last = 0;
+ 2de:	10 92 8c 01 	sts	0x018C, r1
+ 2e2:	10 92 8b 01 	sts	0x018B, r1
+	}
+
+	uart0_rx_not_empty_flag = 1; //Not empty is something has been placed in buffer
+ 2e6:	81 e0       	ldi	r24, 0x01	; 1
+ 2e8:	80 93 ba 01 	sts	0x01BA, r24
+}
+ 2ec:	ff 91       	pop	r31
+ 2ee:	ef 91       	pop	r30
+ 2f0:	bf 91       	pop	r27
+ 2f2:	af 91       	pop	r26
+ 2f4:	9f 91       	pop	r25
+ 2f6:	8f 91       	pop	r24
+ 2f8:	4f 91       	pop	r20
+ 2fa:	3f 91       	pop	r19
+ 2fc:	2f 91       	pop	r18
+ 2fe:	0f 90       	pop	r0
+ 300:	0b be       	out	0x3b, r0	; 59
+ 302:	0f 90       	pop	r0
+ 304:	0f be       	out	0x3f, r0	; 63
+ 306:	0f 90       	pop	r0
+ 308:	1f 90       	pop	r1
+ 30a:	18 95       	reti
+
+0000030c <__vector_22>:
+
+
+
+
+ISR(USART0_TX_vect)
+{
+ 30c:	1f 92       	push	r1
+ 30e:	0f 92       	push	r0
+ 310:	0f b6       	in	r0, 0x3f	; 63
+ 312:	0f 92       	push	r0
+ 314:	11 24       	eor	r1, r1
+ 316:	0b b6       	in	r0, 0x3b	; 59
+ 318:	0f 92       	push	r0
+ 31a:	8f 93       	push	r24
+ 31c:	9f 93       	push	r25
+ 31e:	ef 93       	push	r30
+ 320:	ff 93       	push	r31
+	
+	//check if buffer is full. If yes, clear flag because we gonna make room for
+	if(tx_uart0.num_bytes == BUFFER_SIZE){
+ 322:	80 91 47 01 	lds	r24, 0x0147
+ 326:	90 91 48 01 	lds	r25, 0x0148
+ 32a:	80 34       	cpi	r24, 0x40	; 64
+ 32c:	91 05       	cpc	r25, r1
+ 32e:	19 f4       	brne	.+6      	; 0x336 <__vector_22+0x2a>
+		uart0_tx_full_flag = 0;
+ 330:	10 92 b9 01 	sts	0x01B9, r1
+ 334:	02 c0       	rjmp	.+4      	; 0x33a <__vector_22+0x2e>
+	}
+	
+	//if data exist, put the sending_byte in the buffer
+	if(tx_uart0.num_bytes > 0){
+ 336:	89 2b       	or	r24, r25
+ 338:	b9 f0       	breq	.+46     	; 0x368 <__vector_22+0x5c>
+		
+		UDR0 = tx_uart0.buffer[tx_uart0.i_first];
+ 33a:	e0 91 43 01 	lds	r30, 0x0143
+ 33e:	f0 91 44 01 	lds	r31, 0x0144
+ 342:	ed 5f       	subi	r30, 0xFD	; 253
+ 344:	fe 4f       	sbci	r31, 0xFE	; 254
+ 346:	80 81       	ld	r24, Z
+ 348:	80 93 c6 00 	sts	0x00C6, r24
+		
+		tx_uart0.i_first++;
+ 34c:	e3 e4       	ldi	r30, 0x43	; 67
+ 34e:	f1 e0       	ldi	r31, 0x01	; 1
+ 350:	80 81       	ld	r24, Z
+ 352:	91 81       	ldd	r25, Z+1	; 0x01
+ 354:	01 96       	adiw	r24, 0x01	; 1
+ 356:	91 83       	std	Z+1, r25	; 0x01
+ 358:	80 83       	st	Z, r24
+		tx_uart0.num_bytes--;
+ 35a:	e7 e4       	ldi	r30, 0x47	; 71
+ 35c:	f1 e0       	ldi	r31, 0x01	; 1
+ 35e:	80 81       	ld	r24, Z
+ 360:	91 81       	ldd	r25, Z+1	; 0x01
+ 362:	01 97       	sbiw	r24, 0x01	; 1
+ 364:	91 83       	std	Z+1, r25	; 0x01
+ 366:	80 83       	st	Z, r24
+	}
+	
+	//if reaches the end of buffer, set it to 0 to go around
+	if(tx_uart0.i_first == BUFFER_SIZE){
+ 368:	80 91 43 01 	lds	r24, 0x0143
+ 36c:	90 91 44 01 	lds	r25, 0x0144
+ 370:	80 34       	cpi	r24, 0x40	; 64
+ 372:	91 05       	cpc	r25, r1
+ 374:	21 f4       	brne	.+8      	; 0x37e <__vector_22+0x72>
+		tx_uart0.i_first = 0;
+ 376:	10 92 44 01 	sts	0x0144, r1
+ 37a:	10 92 43 01 	sts	0x0143, r1
+	}
+	
+	//if no more data in buffer, set not_empty_flag to 0
+	if(tx_uart0.num_bytes == 0){
+ 37e:	80 91 47 01 	lds	r24, 0x0147
+ 382:	90 91 48 01 	lds	r25, 0x0148
+ 386:	89 2b       	or	r24, r25
+ 388:	39 f4       	brne	.+14     	; 0x398 <__vector_22+0x8c>
+		uart0_tx_not_empty_flag = 0;
+ 38a:	10 92 bc 01 	sts	0x01BC, r1
+		
+		//Disable UART "TX hw buffer empty" interrupt here
+		//I do this by setting UDRIE0 in UCSR0B to 0
+		UCSR0B &= ~(1<<TXCIE0);
+ 38e:	e1 ec       	ldi	r30, 0xC1	; 193
+ 390:	f0 e0       	ldi	r31, 0x00	; 0
+ 392:	80 81       	ld	r24, Z
+ 394:	8f 7b       	andi	r24, 0xBF	; 191
+ 396:	80 83       	st	Z, r24
+		//if using shared RX/TX hardware buffer (WHICH I DO, OR DO WE?) enable RX data interrupt here
+		//UCSR0B |= (1<<RXEN0);
+		
+	}
+	
+}
+ 398:	ff 91       	pop	r31
+ 39a:	ef 91       	pop	r30
+ 39c:	9f 91       	pop	r25
+ 39e:	8f 91       	pop	r24
+ 3a0:	0f 90       	pop	r0
+ 3a2:	0b be       	out	0x3b, r0	; 59
+ 3a4:	0f 90       	pop	r0
+ 3a6:	0f be       	out	0x3f, r0	; 63
+ 3a8:	0f 90       	pop	r0
+ 3aa:	1f 90       	pop	r1
+ 3ac:	18 95       	reti
+
+000003ae <_exit>:
+ 3ae:	f8 94       	cli
+
+000003b0 <__stop_program>:
+ 3b0:	ff cf       	rjmp	.-2      	; 0x3b0 <__stop_program>

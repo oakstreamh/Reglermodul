@@ -5,8 +5,9 @@
  *  Author: hjaek237
  */ 
 
-#include <servo.h>
+#include "servo.h"
 #include <avr/interrupt.h>
+#include "manualMode.h"
 
 
 int manualInstruction[4] = {0,0,0,0}; // right,forward,left,reverse

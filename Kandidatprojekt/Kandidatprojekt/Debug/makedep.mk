@@ -2,6 +2,8 @@
 # Automatically-generated file. Do not edit or delete the file
 ################################################################################
 
+src\fuzzyParkingRoutine.c
+
 src\fuzzy_speed_controller.c
 
 src\general_FIS.c

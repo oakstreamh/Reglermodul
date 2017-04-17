@@ -11,6 +11,7 @@
 
 void testSteering(void);
 void testmanual(unsigned char);
+void testSpeed(void);
 
 
 

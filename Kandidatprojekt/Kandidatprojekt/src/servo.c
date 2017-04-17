@@ -1,36 +1,43 @@
-﻿/*
- * servo.c
- *
- * Created: 4/7/2017 11:27:27 AM
- *  Author: hjaek237
- */ 
+﻿
+//////////////////////////////////////////////////////////////////////////////////
+// servo.c contains methods, variables and constants for the speed and          //
+// steering servo signals                                                       //
+// AUTHORS: MATHIAS DALSHAGEN & HJALMAR EKSTRÖM                                 //
+//                                                                              //
+//////////////////////////////////////////////////////////////////////////////////
+
+//////////////// DEFINITIONS /////////////////////////////////////////////////////
+
+#define MAXESC 2875		// MAX/MIN limit for driving on the floor
+#define MINESC 2655
+
+#define MAXLEFT 3135	// Limits before servo is exhausted
+#define MAXRIGHT 2022
+
+#define NEUTRAL 2765
+#define STRAIGHT 2660
 
 
+//////////////// INCLUSIONS //////////////////////////////////////////////////////
 
 #include <asf.h>
 #include <avr/interrupt.h>
 #include <avr/io.h>
+#include "servo.h"
 
-// This file includes methods for controlling the servo
-void setServo(int counterServo);
-void setESC(int counterESC);
-void pwmInit(void);
+//////////////// CONSTANTS ///////////////////////////////////////////////////////
 
-
-
-// Declaration of variables and constants for PWM
-int MAXLEFT = 3060;
-int MAXRIGHT = 2200;
-int STRAIGHT = 2870;
-int NEUTRAL = 2764;			// 1.5 ms
 int MANUAL_FORWARD = 2840;
-int MANUAL_REVERSE = 2664;
-volatile int lastESC;
+int MANUAL_REVERSE = 2665;
+
+
+//////////////// METHODS /////////////////////////////////////////////////////////
 
 /*
-Configuration setup for PWM signals in Timer/Counter 1
-Pins 19(OC1A) and 18(OC1B) setup for output for ESC and steering servo respectively
-TCCR1A,
+ * Configuration setup for PWM signals in Timer/Counter 1:
+ * Pins 19(OC1A) and 18(OC1B) setup for output for ESC and steering servo respectively.
+ * The formula of pwm length with current counter register settings:
+ * pwm_length = counterValue/1843
 */
 void pwmInit(void)
 {
@@ -40,49 +47,36 @@ void pwmInit(void)
 	TCCR1B = (1<<CS11)|(1<<WGM12)|(1<<WGM13);
 }
 
-/*
-1843 => 1ms very high reverse
-2690 => 1.46 ms high reverse
-2765 => 1.5 ms
+/* This method sets the ESC pwm length. The extreme values are MINESC and MAXESC.
+ * Input values outside of the valid interval are forced to the lower/upper limit
+ * @param int counterEsc sets the upper limit to the 16-bit counter1 in the processor
 */
 void setESC(int counterEsc){
 	
-	if(counterEsc >= 2664 || counterEsc <= 2845)
+	if(counterEsc <= MINESC)
 	{
-		OCR1A = counterEsc;
-		lastESC = counterEsc;
-		} else {
-		OCR1A = NEUTRAL;
+		OCR1A = MINESC;
 	}
+	else if  (counterEsc >= MAXESC)
+	{
+		OCR1A = MAXESC;
+	} else {
+		OCR1A = counterEsc;
+	}
+	
 }
 
-/* This method takes a counter value and sets the servo pulse width if valid value.
- * @parameter int counterServo is a value between [2200,3060]
- *
- * During testing the following was found:
- *
- * 1843 => 1 ms too much right
- * 2000 => 1.08 ms too much right
- * 2100 => 1.14 ms too much right
- *
- * APPROX MAX RIGHT: 2200 => 1.196 ms
- *
- *
- * 2690 => 1.459 ms STRAIGHT
- * 2764 => 1.5 ms slight left/center
- *
- * APPROX MAX LEFT: 3060 => 1.66 ms
- *
- * 3086 => 1.68 ms too much left
- * 3386 => 1.86 ms too much left
- * 3586 => 1.96 ms too much left
- * 3686 => 2.0 ms too much left
+
+/* This method sets the PWM length for the servo signal that controls
+ * the steering angle. The extreme values are defined as MAXRIGHT and MAXLEFT
+ * Input values outside of the valid interval are forced to the lower/upper limit
+ * @parameter int counterServo sets the upper limit to the 16-bit counter1 in the processor
 */
 void setServo (int counterServo)
 {
-	if (counterServo <= MAXRIGHT ){
+	if (counterServo <= MAXRIGHT){
 		
-		OCR1B =MAXRIGHT;
+		OCR1B = MAXRIGHT;
 		
 	}	else if (counterServo >= MAXLEFT){
 

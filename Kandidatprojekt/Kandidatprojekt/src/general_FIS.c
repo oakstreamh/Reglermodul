@@ -28,17 +28,29 @@
 #include "general_FIS.h"
 #include <string.h>
 
+//////////////////////////////////////////////////////////////////////////////////
+// VARIABLES & HEADERS                                                          //
+//////////////////////////////////////////////////////////////////////////////////
+
 struct io_type *System_Outputs;
 struct io_type *System_Inputs;
 struct rule_type *Rule_Base;
-
+int max(int arg1, int arg2);
+int min(int arg1, int arg2);
+void compute_degree_of_membership(mf,input);
+int compute_area_of_trapezoid(mf);
 
 
 //////////////////////////////////////////////////////////////////////////////////
 // METHODS TO SET POINTERS                                                      //
 //////////////////////////////////////////////////////////////////////////////////
 
-
+void setPointers(struct io_type *inPoint, struct io_type *outPoint, struct rule_type *rulePoint)
+{
+	System_Inputs = inPoint;
+	System_Outputs = outPoint;
+	Rule_Base = rulePoint;
+}
 
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -73,13 +85,6 @@ int arg2;
     {
         return(arg2);
     }
-}
-
-void setPointers(struct io_type *inPoint, struct io_type *outPoint, struct rule_type *rulePoint)
-{
-    System_Inputs = inPoint;
-    System_Outputs = outPoint;
-    Rule_Base = rulePoint;
 }
 
 

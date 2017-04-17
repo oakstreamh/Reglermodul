@@ -50,6 +50,9 @@ void USART1_init(unsigned int baud_setting);
 void SPI_slaveInit(void);
 void carInit(void);
 void Sens_info_read(struct Sensor_information*);
+void Init(void);
+int16_t Get_Measurement(void);
+int16_t Get_Reference(void);
 
 
 //////////////// VARIABLES ///////////////////////////////////////////////////////
@@ -241,7 +244,9 @@ int main (void)
 	
 	
 		carInit();
+		testSpeed();
 
+		/*
 		
 		uint16_t referenceValue, measurementValue, inputValue = 0;
 		//TCNT0 =255;
@@ -262,9 +267,9 @@ int main (void)
 		USART1_init(baud_setting);
 		//End of init for UART
 		
+		*/
 		
-		
-		
+		/*
 		int distance;
 		
 		while (1) {
@@ -282,7 +287,7 @@ int main (void)
 		
 				referenceValue   = 125;
 				distance = (int) sensor_info.dist_right_line;
-				set_fuzzySpeedInputs(lastESC, distance);
+				set_fuzzySpeedInputs(OCR1A, distance);
 				FLC_road();
 				// inputValue = pid_Controller(referenceValue, measurementValue, &pidData);
 
@@ -291,6 +296,7 @@ int main (void)
 				
 			}
 		}
+		*/
 }
 
 

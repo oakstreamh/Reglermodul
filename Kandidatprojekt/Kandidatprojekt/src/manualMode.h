@@ -9,7 +9,7 @@
 #ifndef MANUALMODE_H_
 #define MANUALMODE_H_
 
-void manualmode(void);
+void manualMode(void);
 int manualInstruction[4];
 
 

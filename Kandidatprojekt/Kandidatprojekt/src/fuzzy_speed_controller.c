@@ -371,6 +371,7 @@ void FLC_road(void)
     then5.next = NULL;
     
     struct rule_element_type if52;
+	if52.value = &oneM.value;
 	if52.next = NULL;
 	
     struct rule_element_type if51;
