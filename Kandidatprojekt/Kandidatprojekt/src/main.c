@@ -18,7 +18,7 @@
 #include <avr/interrupt.h>
 #include <avr/io.h>
 #include <util/delay.h>
-#include <testmanual.h>
+#include "test_methods.h"
 #include "servo.h"
 #include "manualMode.h"
 //#include <uart_buffer.h>

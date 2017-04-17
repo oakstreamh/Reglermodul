@@ -125,39 +125,60 @@ void FLC_road(void)
      * From MATLAB-file
      * speed variable interval: [2750 2930]
      *
-     * MF low:		[2749 2750 2810 2836]
-     * MF medium:	[2780 2830 2850 2900]
-     * MF high:		[2850 2900 2930 2931]
+	 * MF still:	[2749 2750 2765 2970]
+     * MF low:		[2765 2790 2810 2835]
+	 * MF cruising:	[2800 2825 2855 2880]
+     * MF medium:	[2845 2878 2892 2925]
+     * MF high:		[2890 2900 2930 2931]
      *
      */
     struct mf_type high;
     strcpy(high.name, "high");
     high.value = 0;
-    high.point1 = 2850;
+    high.point1 = 2890;
     high.point2 = 2931;
-    high.slope1 = 2;
+    high.slope1 = 10;
     high.slope2 = 100;
     high.next = NULL;
     
     struct mf_type medium;
     strcpy(medium.name, "medium");
     medium.value = 0;
-    medium.point1 = 2780;
-    medium.point2 = 2900;
-    medium.slope1 = 2;
-    medium.slope2 = 2;
+    medium.point1 = 2845;
+    medium.point2 = 2926;
+    medium.slope1 = 3;
+    medium.slope2 = 3;
     medium.next = &high;
     
-    struct mf_type low;
-    strcpy(low.name, "low");
-    low.value = 0;
-    low.point1 = 2749;
-    low.point2= 2830;
-    low.slope1 = 100;
-    low.slope2 = 2;
-    low.next = &medium;
+	struct mf_type cruising;
+	strcpy(cruising.name, "cruising");
+	cruising.value = 0;
+	cruising.point1 = 2800;
+	cruising.point2= 2880;
+	cruising.slope1 = 4;
+	cruising.slope2 = 4;
+	cruising.next = &medium;
+	
+	struct mf_type low;
+	strcpy(low.name, "low");
+	low.value = 0;
+	low.point1 = 2765;
+	low.point2= 2835;
+	low.slope1 = 4;
+	low.slope2 = 4;
+	low.next = &cruising;
+	
+	
+    struct mf_type still;
+    strcpy(still.name, "still");
+    still.value = 0;
+    still.point1 = 2749;
+    still.point2= 2790;
+    still.slope1 = 100;
+    still.slope2 = 4;
+    still.next = &low;
     
-    speed.membership_functions = &low;
+    speed.membership_functions = &still;
     speed.next = &distance;
     
     
@@ -227,43 +248,141 @@ void FLC_road(void)
      *
      * #1 IF distance is "stopDist" THEN speed is "noSpeed"
      * #2 IF speed is "low" AND distance is "oneM" THEN speed is "slow"
-     * #3 IF speed is "medium" AND distance is "oneM" THEN speed is "cruise"
-     * #4 IF speed is "high" AND distance is "oneM" THEN speed is "cruise"
-     * #5 IF distance is "threeM" THEN speed is "max"
-     * #6 IF distance is "twoM" THEN speed is "medHigh"
-     *
+     * #3 IF speed is "cruising" AND distance is "oneM" THEN speed is "slow"
+     * #4 IF speed is "medium" AND distance is "oneM" THEN speed is "cruise"
+     * #5 IF speed is "high" AND distance is "oneM" THEN speed is "medHigh"
+     * #6 IF speed is "low" AND distance is "twoM" THEN speed is "cruise"
+     * #7 IF speed is "cruising" AND distance is "twoM" THEN speed is "medHigh"
+	 * #8 IF speed is "high" AND distance is "twoM" THEN speed is "medHigh"
+	 * #9 IF distance is "threeM" THEN speed is "max"
+	 * #10 IF speed is "low" AND distance is "twoM" THEN speed is "cruise"
+	 * #11 IF speed is "still" AND distance is "oneM" THEN speed is "slow"
      *
      */
+	
+	/* rule # 11: if still and oneMeter then slow */
+	struct rule_element_type then11;
+	then11.value = &slow.value;
+	then11.next = NULL;
+	
+	struct rule_element_type if112;
+	if112.value = &oneM.value;
+	if112.next = NULL;
+	
+	struct rule_element_type if111;
+	if111.value = &still.value;
+	if111.next = &if112;
+	
+	struct rule_type rule11;
+	rule11.if_side = &if111;
+	rule11.then_side = &then11;
+	rule11.next = NULL;
+	
+	/* rule # 10: if low and twoM then cruise */
+	struct rule_element_type then10;
+	then10.value = &cruise.value;
+	then10.next = NULL;
+	
+	struct rule_element_type if102;
+	if102.value = &twoM.value;
+	if102.next = NULL;
+	
+	struct rule_element_type if101;
+	if101.value = &low.value;
+	if101.next = &if102;
+	
+	struct rule_type rule10;
+	rule10.if_side = &if101;
+	rule10.then_side = &then10;
+	rule10.next = &rule11;
+	
+	/* rule # 9: if threeM then max */
+	struct rule_element_type then9;
+	then9.value = &max.value;
+	then9.next = NULL;
+	
+	struct rule_element_type if91;
+	if91.value = &threeM.value;
+	if91.next = NULL;
+	
+	struct rule_type rule9;
+	rule9.if_side = &if91;
+	rule9.then_side = &then9;
+	rule9.next = &rule10;
  
-     /* rule # 6: if twoM then medHigh */
+	/* rule # 8: if high and twoM then medHigh */
+	struct rule_element_type then8;
+	then8.value = &medHigh.value;
+	then8.next = NULL;
+	
+	struct rule_element_type if82;
+	if82.value = &twoM.value;
+	if82.next = NULL;
+	
+	struct rule_element_type if81;
+	if81.value = &high.value;
+	if81.next = &if82;
+	
+	struct rule_type rule8;
+	rule8.if_side = &if81;
+	rule8.then_side = &then8;
+	rule8.next = &rule9;
+ 
+	/* rule # 7: if cruising and twoM then medHigh */
+	struct rule_element_type then7;
+	then7.value = &medHigh.value;
+	then7.next = NULL;
+ 
+	struct rule_element_type if72;
+	if72.value = &twoM.value;
+	if72.next = NULL;
+ 
+	struct rule_element_type if71;
+	if71.value = &cruising.value;
+	if71.next = &if72;
+ 
+	struct rule_type rule7;
+	rule7.if_side = &if71;
+	rule7.then_side = &then7;
+	rule7.next = &rule8;
+ 
+ 
+     /* rule # 6: if low and twoM then cruise */
     struct rule_element_type then6;
-    then6.value = &medHigh.value;
+    then6.value = &cruise.value;
     then6.next = NULL;
     
+	struct rule_element_type if62;
+	if62.value = &twoM.value;
+	if62.next = NULL;
+	
     struct rule_element_type if61;
-    if61.value = &twoM.value;
+    if61.value = &low.value;
+	if61.next = &if62;
     
     struct rule_type rule6;
     rule6.if_side = &if61;
     rule6.then_side = &then6;
-    rule6.next = NULL;
+    rule6.next = &rule7;
     
-    /* rule # 5: if threeM then max */
+    /* rule # 5: if high and oneM then medHigh */
     struct rule_element_type then5;
-    then5.value = &max.value;
+    then5.value = &medHigh.value;
     then5.next = NULL;
     
-    
+    struct rule_element_type if52;
+	if52.next = NULL;
+	
     struct rule_element_type if51;
-    if51.value = &threeM.value;
-    if51.next = NULL;
+    if51.value = &high.value;
+    if51.next = &if52;
     
     struct rule_type rule5;
     rule5.if_side = &if51;
     rule5.then_side = &then5;
     rule5.next = &rule6;
     
-    /* rule # 4: if high and oneM then cruise */  
+    /* rule # 4: if medium and oneM then cruise */  
     struct rule_element_type then4;
     then4.value = &cruise.value;
     then4.next = NULL;
@@ -281,9 +400,9 @@ void FLC_road(void)
     rule4.then_side = &then4;
     rule4.next = &rule5;
 	  
-    /* rule # 3: if medium and oneM then cruise */
+    /* rule # 3: if cruising and oneM then slow */
     struct rule_element_type then3;
-    then3.value = &cruise.value;
+    then3.value = &slow.value;
     then3.next = NULL;
     
     struct rule_element_type if32;
@@ -291,7 +410,7 @@ void FLC_road(void)
     if32.next = NULL;
     
     struct rule_element_type if31;
-    if31.value = &medium.value;
+    if31.value = &cruising.value;
     if31.next = &if32;
     
     struct rule_type rule3;

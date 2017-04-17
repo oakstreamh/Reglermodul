@@ -69,9 +69,9 @@ struct rule_type{
 // DECLARATION METHODS THAT PERFORM FUZZY LOGIC CONTROL                         //
 //////////////////////////////////////////////////////////////////////////////////
 
-void fuzzification();
-void rule_evaluation();
-void defuzzification();
+void fuzzification(void);
+void rule_evaluation(void);
+void defuzzification(void);
 
 
 //////////////////////////////////////////////////////////////////////////////////

@@ -19,6 +19,6 @@ extern struct rule_type rule1;
 
 void FLC_road(void);
 void set_fuzzySpeedInputs(int v, int d);
-void doFuzzySpeed();
+void doFuzzySpeed(void);
 
 #endif /* fuzzy_speed_controller_h */
