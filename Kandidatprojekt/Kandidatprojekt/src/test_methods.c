@@ -81,11 +81,15 @@ void testSpeed(void)
 	
 	// It was found that 2764 + 110 is a good MAXLIMIT for driving on the floor
 	// and 2765 - 110 is a good MINLIMIT for driving on the floor
-	setESC(NEUTRAL-110);
+	
+	setServo(STRAIGHT-300);
+	_delay_ms(2000);
+	
+	setESC(NEUTRAL+90);
 	
 	
 	// 
-	_delay_ms(2000);
+	_delay_ms(3000);
 	
 	setESC(NEUTRAL);
 }

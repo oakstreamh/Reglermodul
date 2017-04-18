@@ -3,29 +3,29 @@ Kandidatprojekt.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         000003b2  00000000  00000000  00000074  2**1
+  0 .text         000003ca  00000000  00000000  00000074  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .bss          000000bf  00800100  00800100  00000426  2**0
+  1 .bss          000000bf  00800100  00800100  0000043e  2**0
                   ALLOC
-  2 .comment      00000030  00000000  00000000  00000426  2**0
+  2 .comment      00000030  00000000  00000000  0000043e  2**0
                   CONTENTS, READONLY
-  3 .debug_aranges 00000100  00000000  00000000  00000456  2**0
+  3 .debug_aranges 00000100  00000000  00000000  0000046e  2**0
                   CONTENTS, READONLY, DEBUGGING
-  4 .debug_info   00000ae6  00000000  00000000  00000556  2**0
+  4 .debug_info   00000b3b  00000000  00000000  0000056e  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_abbrev 00000513  00000000  00000000  0000103c  2**0
+  5 .debug_abbrev 00000513  00000000  00000000  000010a9  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_line   0000101e  00000000  00000000  0000154f  2**0
+  6 .debug_line   00001030  00000000  00000000  000015bc  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_frame  00000224  00000000  00000000  00002570  2**2
+  7 .debug_frame  00000224  00000000  00000000  000025ec  2**2
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_str    0001074a  00000000  00000000  00002794  2**0
+  8 .debug_str    0001074a  00000000  00000000  00002810  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_loc    00000399  00000000  00000000  00012ede  2**0
+  9 .debug_loc    00000399  00000000  00000000  00012f5a  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_ranges 000000c0  00000000  00000000  00013277  2**0
+ 10 .debug_ranges 000000c0  00000000  00000000  000132f3  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_macro  00003217  00000000  00000000  00013337  2**0
+ 11 .debug_macro  00003217  00000000  00000000  000133b3  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -71,11 +71,11 @@ Disassembly of section .text:
   4a:	00 00       	nop
   4c:	3c c0       	rjmp	.+120    	; 0xc6 <__bad_interrupt>
   4e:	00 00       	nop
-  50:	02 c1       	rjmp	.+516    	; 0x256 <__vector_20>
+  50:	0e c1       	rjmp	.+540    	; 0x26e <__vector_20>
   52:	00 00       	nop
   54:	38 c0       	rjmp	.+112    	; 0xc6 <__bad_interrupt>
   56:	00 00       	nop
-  58:	59 c1       	rjmp	.+690    	; 0x30c <__vector_22>
+  58:	65 c1       	rjmp	.+714    	; 0x324 <__vector_22>
   5a:	00 00       	nop
   5c:	34 c0       	rjmp	.+104    	; 0xc6 <__bad_interrupt>
   5e:	00 00       	nop
@@ -114,7 +114,7 @@ Disassembly of section .text:
   98:	11 e0       	ldi	r17, 0x01	; 1
   9a:	a0 e0       	ldi	r26, 0x00	; 0
   9c:	b1 e0       	ldi	r27, 0x01	; 1
-  9e:	e2 eb       	ldi	r30, 0xB2	; 178
+  9e:	ea ec       	ldi	r30, 0xCA	; 202
   a0:	f3 e0       	ldi	r31, 0x03	; 3
   a2:	00 e0       	ldi	r16, 0x00	; 0
   a4:	0b bf       	out	0x3b, r16	; 59
@@ -139,7 +139,7 @@ Disassembly of section .text:
   be:	b2 07       	cpc	r27, r18
   c0:	e1 f7       	brne	.-8      	; 0xba <.do_clear_bss_loop>
   c2:	6f d0       	rcall	.+222    	; 0x1a2 <main>
-  c4:	74 c1       	rjmp	.+744    	; 0x3ae <_exit>
+  c4:	80 c1       	rjmp	.+768    	; 0x3c6 <_exit>
 
 000000c6 <__bad_interrupt>:
   c6:	9c cf       	rjmp	.-200    	; 0x0 <__vectors>
@@ -369,15 +369,15 @@ void setServo (int counterServo)
  234:	08 95       	ret
 
 00000236 <testSpeed>:
-void testSpeed(void)
 {
 	
 	// It was found that 2764 + 110 is a good MAXLIMIT for driving on the floor
 	// and 2765 - 110 is a good MINLIMIT for driving on the floor
-	setESC(NEUTRAL-110);
- 236:	8f e5       	ldi	r24, 0x5F	; 95
+	
+	setServo(STRAIGHT);
+ 236:	84 e6       	ldi	r24, 0x64	; 100
  238:	9a e0       	ldi	r25, 0x0A	; 10
- 23a:	c7 df       	rcall	.-114    	; 0x1ca <setESC>
+ 23a:	e2 df       	rcall	.-60     	; 0x200 <setServo>
 	#else
 		//round up by default
 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
@@ -393,238 +393,253 @@ void testSpeed(void)
  248:	e1 f7       	brne	.-8      	; 0x242 <testSpeed+0xc>
  24a:	00 c0       	rjmp	.+0      	; 0x24c <testSpeed+0x16>
  24c:	00 00       	nop
+	_delay_ms(2000);
+	
+	setESC(NEUTRAL+90);
+ 24e:	87 e2       	ldi	r24, 0x27	; 39
+ 250:	9b e0       	ldi	r25, 0x0B	; 11
+ 252:	bb df       	rcall	.-138    	; 0x1ca <setESC>
+ 254:	2f ef       	ldi	r18, 0xFF	; 255
+ 256:	8f ef       	ldi	r24, 0xFF	; 255
+ 258:	96 e8       	ldi	r25, 0x86	; 134
+ 25a:	21 50       	subi	r18, 0x01	; 1
+ 25c:	80 40       	sbci	r24, 0x00	; 0
+ 25e:	90 40       	sbci	r25, 0x00	; 0
+ 260:	e1 f7       	brne	.-8      	; 0x25a <testSpeed+0x24>
+ 262:	00 c0       	rjmp	.+0      	; 0x264 <testSpeed+0x2e>
+ 264:	00 00       	nop
 	
 	
 	// 
-	_delay_ms(2000);
+	_delay_ms(3000);
 	
 	setESC(NEUTRAL);
- 24e:	8d ec       	ldi	r24, 0xCD	; 205
- 250:	9a e0       	ldi	r25, 0x0A	; 10
- 252:	bb cf       	rjmp	.-138    	; 0x1ca <setESC>
- 254:	08 95       	ret
+ 266:	8d ec       	ldi	r24, 0xCD	; 205
+ 268:	9a e0       	ldi	r25, 0x0A	; 10
+ 26a:	af cf       	rjmp	.-162    	; 0x1ca <setESC>
+ 26c:	08 95       	ret
 
-00000256 <__vector_20>:
+0000026e <__vector_20>:
 
 buffer_typedef rx_uart0 = {{0}, 0 , 0 ,0}; //declaring a receive buffer
 buffer_typedef tx_uart0 = {{0}, 0 , 0 ,0}; //declaring a transmit buffer
 
 ISR(USART0_RX_vect)
 {
- 256:	1f 92       	push	r1
- 258:	0f 92       	push	r0
- 25a:	0f b6       	in	r0, 0x3f	; 63
- 25c:	0f 92       	push	r0
- 25e:	11 24       	eor	r1, r1
- 260:	0b b6       	in	r0, 0x3b	; 59
- 262:	0f 92       	push	r0
- 264:	2f 93       	push	r18
- 266:	3f 93       	push	r19
- 268:	4f 93       	push	r20
- 26a:	8f 93       	push	r24
- 26c:	9f 93       	push	r25
- 26e:	af 93       	push	r26
- 270:	bf 93       	push	r27
- 272:	ef 93       	push	r30
- 274:	ff 93       	push	r31
+ 26e:	1f 92       	push	r1
+ 270:	0f 92       	push	r0
+ 272:	0f b6       	in	r0, 0x3f	; 63
+ 274:	0f 92       	push	r0
+ 276:	11 24       	eor	r1, r1
+ 278:	0b b6       	in	r0, 0x3b	; 59
+ 27a:	0f 92       	push	r0
+ 27c:	2f 93       	push	r18
+ 27e:	3f 93       	push	r19
+ 280:	4f 93       	push	r20
+ 282:	8f 93       	push	r24
+ 284:	9f 93       	push	r25
+ 286:	af 93       	push	r26
+ 288:	bf 93       	push	r27
+ 28a:	ef 93       	push	r30
+ 28c:	ff 93       	push	r31
 	if(rx_uart0.num_bytes == BUFFER_SIZE) { // if buffer full, set flag
- 276:	80 91 8d 01 	lds	r24, 0x018D
- 27a:	90 91 8e 01 	lds	r25, 0x018E
- 27e:	80 34       	cpi	r24, 0x40	; 64
- 280:	91 05       	cpc	r25, r1
- 282:	31 f4       	brne	.+12     	; 0x290 <__vector_20+0x3a>
+ 28e:	80 91 8d 01 	lds	r24, 0x018D
+ 292:	90 91 8e 01 	lds	r25, 0x018E
+ 296:	80 34       	cpi	r24, 0x40	; 64
+ 298:	91 05       	cpc	r25, r1
+ 29a:	31 f4       	brne	.+12     	; 0x2a8 <__vector_20+0x3a>
 		uart0_rx_overf_flag = 1;
- 284:	81 e0       	ldi	r24, 0x01	; 1
- 286:	80 93 bd 01 	sts	0x01BD, r24
+ 29c:	81 e0       	ldi	r24, 0x01	; 1
+ 29e:	80 93 bd 01 	sts	0x01BD, r24
 		unsigned char scrap_var;
 		scrap_var = UDR0; //UDR0 has to be read, therefore the scrap variable
- 28a:	80 91 c6 00 	lds	r24, 0x00C6
- 28e:	16 c0       	rjmp	.+44     	; 0x2bc <__vector_20+0x66>
+ 2a2:	80 91 c6 00 	lds	r24, 0x00C6
+ 2a6:	16 c0       	rjmp	.+44     	; 0x2d4 <__vector_20+0x66>
 		} else if(rx_uart0.num_bytes < BUFFER_SIZE) { //if there is space in buffer     //CHECK IF THIS IS RIGHT LATER
- 290:	80 34       	cpi	r24, 0x40	; 64
- 292:	91 05       	cpc	r25, r1
- 294:	e8 f4       	brcc	.+58     	; 0x2d0 <__vector_20+0x7a>
+ 2a8:	80 34       	cpi	r24, 0x40	; 64
+ 2aa:	91 05       	cpc	r25, r1
+ 2ac:	e8 f4       	brcc	.+58     	; 0x2e8 <__vector_20+0x7a>
 		
 		rx_uart0.buffer[rx_uart0.i_last] = UDR0;
- 296:	eb e8       	ldi	r30, 0x8B	; 139
- 298:	f1 e0       	ldi	r31, 0x01	; 1
- 29a:	20 81       	ld	r18, Z
- 29c:	31 81       	ldd	r19, Z+1	; 0x01
- 29e:	40 91 c6 00 	lds	r20, 0x00C6
- 2a2:	d9 01       	movw	r26, r18
- 2a4:	a7 5b       	subi	r26, 0xB7	; 183
- 2a6:	be 4f       	sbci	r27, 0xFE	; 254
- 2a8:	4c 93       	st	X, r20
+ 2ae:	eb e8       	ldi	r30, 0x8B	; 139
+ 2b0:	f1 e0       	ldi	r31, 0x01	; 1
+ 2b2:	20 81       	ld	r18, Z
+ 2b4:	31 81       	ldd	r19, Z+1	; 0x01
+ 2b6:	40 91 c6 00 	lds	r20, 0x00C6
+ 2ba:	d9 01       	movw	r26, r18
+ 2bc:	a7 5b       	subi	r26, 0xB7	; 183
+ 2be:	be 4f       	sbci	r27, 0xFE	; 254
+ 2c0:	4c 93       	st	X, r20
 		
 		rx_uart0.i_last++;
- 2aa:	2f 5f       	subi	r18, 0xFF	; 255
- 2ac:	3f 4f       	sbci	r19, 0xFF	; 255
- 2ae:	31 83       	std	Z+1, r19	; 0x01
- 2b0:	20 83       	st	Z, r18
+ 2c2:	2f 5f       	subi	r18, 0xFF	; 255
+ 2c4:	3f 4f       	sbci	r19, 0xFF	; 255
+ 2c6:	31 83       	std	Z+1, r19	; 0x01
+ 2c8:	20 83       	st	Z, r18
 		rx_uart0.num_bytes++;
- 2b2:	01 96       	adiw	r24, 0x01	; 1
- 2b4:	90 93 8e 01 	sts	0x018E, r25
- 2b8:	80 93 8d 01 	sts	0x018D, r24
+ 2ca:	01 96       	adiw	r24, 0x01	; 1
+ 2cc:	90 93 8e 01 	sts	0x018E, r25
+ 2d0:	80 93 8d 01 	sts	0x018D, r24
 		
 	}
 	
 	//Check if buffer is full now. If yes, set full_flag
 	if(rx_uart0.num_bytes == BUFFER_SIZE){
- 2bc:	80 91 8d 01 	lds	r24, 0x018D
- 2c0:	90 91 8e 01 	lds	r25, 0x018E
- 2c4:	80 34       	cpi	r24, 0x40	; 64
- 2c6:	91 05       	cpc	r25, r1
- 2c8:	19 f4       	brne	.+6      	; 0x2d0 <__vector_20+0x7a>
+ 2d4:	80 91 8d 01 	lds	r24, 0x018D
+ 2d8:	90 91 8e 01 	lds	r25, 0x018E
+ 2dc:	80 34       	cpi	r24, 0x40	; 64
+ 2de:	91 05       	cpc	r25, r1
+ 2e0:	19 f4       	brne	.+6      	; 0x2e8 <__vector_20+0x7a>
 		uart0_rx_full_flag = 1;
- 2ca:	81 e0       	ldi	r24, 0x01	; 1
- 2cc:	80 93 bb 01 	sts	0x01BB, r24
+ 2e2:	81 e0       	ldi	r24, 0x01	; 1
+ 2e4:	80 93 bb 01 	sts	0x01BB, r24
 	}
 
 
 	//If index has reached the end of buffer, set the i_last to 0 to go around
 	if(rx_uart0.i_last == BUFFER_SIZE){
- 2d0:	80 91 8b 01 	lds	r24, 0x018B
- 2d4:	90 91 8c 01 	lds	r25, 0x018C
- 2d8:	80 34       	cpi	r24, 0x40	; 64
- 2da:	91 05       	cpc	r25, r1
- 2dc:	21 f4       	brne	.+8      	; 0x2e6 <__vector_20+0x90>
+ 2e8:	80 91 8b 01 	lds	r24, 0x018B
+ 2ec:	90 91 8c 01 	lds	r25, 0x018C
+ 2f0:	80 34       	cpi	r24, 0x40	; 64
+ 2f2:	91 05       	cpc	r25, r1
+ 2f4:	21 f4       	brne	.+8      	; 0x2fe <__vector_20+0x90>
 		rx_uart0.i_last = 0;
- 2de:	10 92 8c 01 	sts	0x018C, r1
- 2e2:	10 92 8b 01 	sts	0x018B, r1
+ 2f6:	10 92 8c 01 	sts	0x018C, r1
+ 2fa:	10 92 8b 01 	sts	0x018B, r1
 	}
 
 	uart0_rx_not_empty_flag = 1; //Not empty is something has been placed in buffer
- 2e6:	81 e0       	ldi	r24, 0x01	; 1
- 2e8:	80 93 ba 01 	sts	0x01BA, r24
+ 2fe:	81 e0       	ldi	r24, 0x01	; 1
+ 300:	80 93 ba 01 	sts	0x01BA, r24
 }
- 2ec:	ff 91       	pop	r31
- 2ee:	ef 91       	pop	r30
- 2f0:	bf 91       	pop	r27
- 2f2:	af 91       	pop	r26
- 2f4:	9f 91       	pop	r25
- 2f6:	8f 91       	pop	r24
- 2f8:	4f 91       	pop	r20
- 2fa:	3f 91       	pop	r19
- 2fc:	2f 91       	pop	r18
- 2fe:	0f 90       	pop	r0
- 300:	0b be       	out	0x3b, r0	; 59
- 302:	0f 90       	pop	r0
- 304:	0f be       	out	0x3f, r0	; 63
- 306:	0f 90       	pop	r0
- 308:	1f 90       	pop	r1
- 30a:	18 95       	reti
+ 304:	ff 91       	pop	r31
+ 306:	ef 91       	pop	r30
+ 308:	bf 91       	pop	r27
+ 30a:	af 91       	pop	r26
+ 30c:	9f 91       	pop	r25
+ 30e:	8f 91       	pop	r24
+ 310:	4f 91       	pop	r20
+ 312:	3f 91       	pop	r19
+ 314:	2f 91       	pop	r18
+ 316:	0f 90       	pop	r0
+ 318:	0b be       	out	0x3b, r0	; 59
+ 31a:	0f 90       	pop	r0
+ 31c:	0f be       	out	0x3f, r0	; 63
+ 31e:	0f 90       	pop	r0
+ 320:	1f 90       	pop	r1
+ 322:	18 95       	reti
 
-0000030c <__vector_22>:
+00000324 <__vector_22>:
 
 
 
 
 ISR(USART0_TX_vect)
 {
- 30c:	1f 92       	push	r1
- 30e:	0f 92       	push	r0
- 310:	0f b6       	in	r0, 0x3f	; 63
- 312:	0f 92       	push	r0
- 314:	11 24       	eor	r1, r1
- 316:	0b b6       	in	r0, 0x3b	; 59
- 318:	0f 92       	push	r0
- 31a:	8f 93       	push	r24
- 31c:	9f 93       	push	r25
- 31e:	ef 93       	push	r30
- 320:	ff 93       	push	r31
+ 324:	1f 92       	push	r1
+ 326:	0f 92       	push	r0
+ 328:	0f b6       	in	r0, 0x3f	; 63
+ 32a:	0f 92       	push	r0
+ 32c:	11 24       	eor	r1, r1
+ 32e:	0b b6       	in	r0, 0x3b	; 59
+ 330:	0f 92       	push	r0
+ 332:	8f 93       	push	r24
+ 334:	9f 93       	push	r25
+ 336:	ef 93       	push	r30
+ 338:	ff 93       	push	r31
 	
 	//check if buffer is full. If yes, clear flag because we gonna make room for
 	if(tx_uart0.num_bytes == BUFFER_SIZE){
- 322:	80 91 47 01 	lds	r24, 0x0147
- 326:	90 91 48 01 	lds	r25, 0x0148
- 32a:	80 34       	cpi	r24, 0x40	; 64
- 32c:	91 05       	cpc	r25, r1
- 32e:	19 f4       	brne	.+6      	; 0x336 <__vector_22+0x2a>
+ 33a:	80 91 47 01 	lds	r24, 0x0147
+ 33e:	90 91 48 01 	lds	r25, 0x0148
+ 342:	80 34       	cpi	r24, 0x40	; 64
+ 344:	91 05       	cpc	r25, r1
+ 346:	19 f4       	brne	.+6      	; 0x34e <__vector_22+0x2a>
 		uart0_tx_full_flag = 0;
- 330:	10 92 b9 01 	sts	0x01B9, r1
- 334:	02 c0       	rjmp	.+4      	; 0x33a <__vector_22+0x2e>
+ 348:	10 92 b9 01 	sts	0x01B9, r1
+ 34c:	02 c0       	rjmp	.+4      	; 0x352 <__vector_22+0x2e>
 	}
 	
 	//if data exist, put the sending_byte in the buffer
 	if(tx_uart0.num_bytes > 0){
- 336:	89 2b       	or	r24, r25
- 338:	b9 f0       	breq	.+46     	; 0x368 <__vector_22+0x5c>
+ 34e:	89 2b       	or	r24, r25
+ 350:	b9 f0       	breq	.+46     	; 0x380 <__vector_22+0x5c>
 		
 		UDR0 = tx_uart0.buffer[tx_uart0.i_first];
- 33a:	e0 91 43 01 	lds	r30, 0x0143
- 33e:	f0 91 44 01 	lds	r31, 0x0144
- 342:	ed 5f       	subi	r30, 0xFD	; 253
- 344:	fe 4f       	sbci	r31, 0xFE	; 254
- 346:	80 81       	ld	r24, Z
- 348:	80 93 c6 00 	sts	0x00C6, r24
+ 352:	e0 91 43 01 	lds	r30, 0x0143
+ 356:	f0 91 44 01 	lds	r31, 0x0144
+ 35a:	ed 5f       	subi	r30, 0xFD	; 253
+ 35c:	fe 4f       	sbci	r31, 0xFE	; 254
+ 35e:	80 81       	ld	r24, Z
+ 360:	80 93 c6 00 	sts	0x00C6, r24
 		
 		tx_uart0.i_first++;
- 34c:	e3 e4       	ldi	r30, 0x43	; 67
- 34e:	f1 e0       	ldi	r31, 0x01	; 1
- 350:	80 81       	ld	r24, Z
- 352:	91 81       	ldd	r25, Z+1	; 0x01
- 354:	01 96       	adiw	r24, 0x01	; 1
- 356:	91 83       	std	Z+1, r25	; 0x01
- 358:	80 83       	st	Z, r24
+ 364:	e3 e4       	ldi	r30, 0x43	; 67
+ 366:	f1 e0       	ldi	r31, 0x01	; 1
+ 368:	80 81       	ld	r24, Z
+ 36a:	91 81       	ldd	r25, Z+1	; 0x01
+ 36c:	01 96       	adiw	r24, 0x01	; 1
+ 36e:	91 83       	std	Z+1, r25	; 0x01
+ 370:	80 83       	st	Z, r24
 		tx_uart0.num_bytes--;
- 35a:	e7 e4       	ldi	r30, 0x47	; 71
- 35c:	f1 e0       	ldi	r31, 0x01	; 1
- 35e:	80 81       	ld	r24, Z
- 360:	91 81       	ldd	r25, Z+1	; 0x01
- 362:	01 97       	sbiw	r24, 0x01	; 1
- 364:	91 83       	std	Z+1, r25	; 0x01
- 366:	80 83       	st	Z, r24
+ 372:	e7 e4       	ldi	r30, 0x47	; 71
+ 374:	f1 e0       	ldi	r31, 0x01	; 1
+ 376:	80 81       	ld	r24, Z
+ 378:	91 81       	ldd	r25, Z+1	; 0x01
+ 37a:	01 97       	sbiw	r24, 0x01	; 1
+ 37c:	91 83       	std	Z+1, r25	; 0x01
+ 37e:	80 83       	st	Z, r24
 	}
 	
 	//if reaches the end of buffer, set it to 0 to go around
 	if(tx_uart0.i_first == BUFFER_SIZE){
- 368:	80 91 43 01 	lds	r24, 0x0143
- 36c:	90 91 44 01 	lds	r25, 0x0144
- 370:	80 34       	cpi	r24, 0x40	; 64
- 372:	91 05       	cpc	r25, r1
- 374:	21 f4       	brne	.+8      	; 0x37e <__vector_22+0x72>
+ 380:	80 91 43 01 	lds	r24, 0x0143
+ 384:	90 91 44 01 	lds	r25, 0x0144
+ 388:	80 34       	cpi	r24, 0x40	; 64
+ 38a:	91 05       	cpc	r25, r1
+ 38c:	21 f4       	brne	.+8      	; 0x396 <__vector_22+0x72>
 		tx_uart0.i_first = 0;
- 376:	10 92 44 01 	sts	0x0144, r1
- 37a:	10 92 43 01 	sts	0x0143, r1
+ 38e:	10 92 44 01 	sts	0x0144, r1
+ 392:	10 92 43 01 	sts	0x0143, r1
 	}
 	
 	//if no more data in buffer, set not_empty_flag to 0
 	if(tx_uart0.num_bytes == 0){
- 37e:	80 91 47 01 	lds	r24, 0x0147
- 382:	90 91 48 01 	lds	r25, 0x0148
- 386:	89 2b       	or	r24, r25
- 388:	39 f4       	brne	.+14     	; 0x398 <__vector_22+0x8c>
+ 396:	80 91 47 01 	lds	r24, 0x0147
+ 39a:	90 91 48 01 	lds	r25, 0x0148
+ 39e:	89 2b       	or	r24, r25
+ 3a0:	39 f4       	brne	.+14     	; 0x3b0 <__vector_22+0x8c>
 		uart0_tx_not_empty_flag = 0;
- 38a:	10 92 bc 01 	sts	0x01BC, r1
+ 3a2:	10 92 bc 01 	sts	0x01BC, r1
 		
 		//Disable UART "TX hw buffer empty" interrupt here
 		//I do this by setting UDRIE0 in UCSR0B to 0
 		UCSR0B &= ~(1<<TXCIE0);
- 38e:	e1 ec       	ldi	r30, 0xC1	; 193
- 390:	f0 e0       	ldi	r31, 0x00	; 0
- 392:	80 81       	ld	r24, Z
- 394:	8f 7b       	andi	r24, 0xBF	; 191
- 396:	80 83       	st	Z, r24
+ 3a6:	e1 ec       	ldi	r30, 0xC1	; 193
+ 3a8:	f0 e0       	ldi	r31, 0x00	; 0
+ 3aa:	80 81       	ld	r24, Z
+ 3ac:	8f 7b       	andi	r24, 0xBF	; 191
+ 3ae:	80 83       	st	Z, r24
 		//if using shared RX/TX hardware buffer (WHICH I DO, OR DO WE?) enable RX data interrupt here
 		//UCSR0B |= (1<<RXEN0);
 		
 	}
 	
 }
- 398:	ff 91       	pop	r31
- 39a:	ef 91       	pop	r30
- 39c:	9f 91       	pop	r25
- 39e:	8f 91       	pop	r24
- 3a0:	0f 90       	pop	r0
- 3a2:	0b be       	out	0x3b, r0	; 59
- 3a4:	0f 90       	pop	r0
- 3a6:	0f be       	out	0x3f, r0	; 63
- 3a8:	0f 90       	pop	r0
- 3aa:	1f 90       	pop	r1
- 3ac:	18 95       	reti
+ 3b0:	ff 91       	pop	r31
+ 3b2:	ef 91       	pop	r30
+ 3b4:	9f 91       	pop	r25
+ 3b6:	8f 91       	pop	r24
+ 3b8:	0f 90       	pop	r0
+ 3ba:	0b be       	out	0x3b, r0	; 59
+ 3bc:	0f 90       	pop	r0
+ 3be:	0f be       	out	0x3f, r0	; 63
+ 3c0:	0f 90       	pop	r0
+ 3c2:	1f 90       	pop	r1
+ 3c4:	18 95       	reti
 
-000003ae <_exit>:
- 3ae:	f8 94       	cli
+000003c6 <_exit>:
+ 3c6:	f8 94       	cli
 
-000003b0 <__stop_program>:
- 3b0:	ff cf       	rjmp	.-2      	; 0x3b0 <__stop_program>
+000003c8 <__stop_program>:
+ 3c8:	ff cf       	rjmp	.-2      	; 0x3c8 <__stop_program>
