@@ -1,12 +1,18 @@
 
-/**
- * \file
- *
- * \Styrmodulen
- *
- */
+//////////////////////////////////////////////////////////////////////////////////
+// main.c contains the ISR, important signals and the control loop.             //
+// AUTHORS: MATHIAS DALSHAGEN & HJALMAR EKSTRÖM                                 //
+//                                                                              //
+//                                                                              //
+//////////////////////////////////////////////////////////////////////////////////
+
+
+//////////////// DEFINITIONS /////////////////////////////////////////////////////
 
 #define F_CPU 14745600
+
+
+//////////////// INCLUDING PROGRAMS //////////////////////////////////////////////
 
 #include <asf.h>
 #include <avr/interrupt.h>
@@ -22,6 +28,9 @@
 #include "fuzzy_speed_controller.h"
 #include "general_FIS.h"
 
+
+//////////////// STRUCTS /////////////////////////////////////////////////////////
+
 struct Sensor_information{
 	unsigned char dist_right_line;
 	unsigned short dist_sonic_middle;
@@ -35,17 +44,15 @@ struct Sensor_information{
 };
 
 
+//////////////// HEADERS /////////////////////////////////////////////////////////
 
 void USART1_init(unsigned int baud_setting);
-
-// Headers for methods
 void SPI_slaveInit(void);
-
 void carInit(void);
-
 void Sens_info_read(struct Sensor_information*);
 
 
+//////////////// VARIABLES ///////////////////////////////////////////////////////
 
 int elapsedSeconds = 0;
 int SPI_FLAG = 0;
@@ -113,6 +120,11 @@ void SPI_slaveInit(void)
 
 
 
+/* This method initiates the car. PWM to servos are
+ * set initial values. There is a five second delay
+ * to allow the operator to turn on the ESC manually
+ * and set the neutral
+ */
 void carInit(void)
 {
 	pwmInit();
@@ -206,6 +218,10 @@ int16_t Get_Measurement(void) //TODO
 	return 140;
 }
 
+
+
+/* main function
+*/
 int main (void)
 {
 	/*
