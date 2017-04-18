@@ -27,6 +27,7 @@
 #include "stdint.h"
 #include "fuzzy_speed_controller.h"
 #include "general_FIS.h"
+#include "fuzzySteering.h"
 
 
 //////////////// STRUCTS /////////////////////////////////////////////////////////
@@ -227,29 +228,19 @@ int16_t Get_Measurement(void) //TODO
 */
 int main (void)
 {
-	/*
-		Init();
-		setESC(MANUAL_FORWARD);
-		uint8_t referenceValue, measurementValue = 0;
-		int8_t inputValue = 0;
-		
-		referenceValue =   Get_Reference();
-		measurementValue = Get_Measurement();
-		
-		inputValue = pid_Controller(referenceValue, measurementValue, &pidData);
-		setServo(STRAIGHT+inputValue);
 	
-	*/
+	
 	
 	
 	
 		carInit();
-		testSpeed();
 
-		/*
+		_delay_ms(1000);
 		
-		uint16_t referenceValue, measurementValue, inputValue = 0;
-		//TCNT0 =255;
+		setESC(NEUTRAL+70);
+		
+		
+		
 		sei();
 		DDRA = 0xFF;
 				
@@ -267,9 +258,8 @@ int main (void)
 		USART1_init(baud_setting);
 		//End of init for UART
 		
-		*/
 		
-		/*
+		
 		int distance;
 		
 		while (1) {
@@ -279,24 +269,18 @@ int main (void)
 			Sens_info_read(sens_info_ptr);
 						
 			PORTA = sensor_info.dist_right_line;			
-			gFlags.pidTimer = 1;
 			
 			}
-			if (gFlags.pidTimer == 1) {
 				cli();
 		
-				referenceValue   = 125;
 				distance = (int) sensor_info.dist_right_line;
-				set_fuzzySpeedInputs(OCR1A, distance);
-				FLC_road();
+				FLC_steering(OCR1B, distance);
 				// inputValue = pid_Controller(referenceValue, measurementValue, &pidData);
 
 				sei();
 				
-				
-			}
 		}
-		*/
+		
 }
 
 

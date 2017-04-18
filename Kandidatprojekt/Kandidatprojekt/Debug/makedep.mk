@@ -4,6 +4,8 @@
 
 src\fuzzyParkingRoutine.c
 
+src\fuzzySteering.c
+
 src\fuzzy_speed_controller.c
 
 src\general_FIS.c

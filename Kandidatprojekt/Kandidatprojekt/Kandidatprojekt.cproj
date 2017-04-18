@@ -206,6 +206,12 @@
     <Compile Include="src\fuzzyParkingRoutine.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\fuzzySteering.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\fuzzySteering.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\fuzzy_speed_controller.c">
       <SubType>compile</SubType>
     </Compile>

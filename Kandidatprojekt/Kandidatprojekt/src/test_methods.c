@@ -93,3 +93,14 @@ void testSpeed(void)
 	
 	setESC(NEUTRAL);
 }
+
+
+void testRoad(void)
+{
+	
+	_delay_ms(2000);
+	setESC(NEUTRAL+70);
+	
+	
+	
+}

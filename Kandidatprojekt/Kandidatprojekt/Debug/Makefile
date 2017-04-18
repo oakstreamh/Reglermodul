@@ -51,6 +51,7 @@ SUBDIRS :=  \
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
 ../src/fuzzyParkingRoutine.c \
+../src/fuzzySteering.c \
 ../src/fuzzy_speed_controller.c \
 ../src/general_FIS.c \
 ../src/main.c \
@@ -70,6 +71,7 @@ ASM_SRCS +=
 
 OBJS +=  \
 src/fuzzyParkingRoutine.o \
+src/fuzzySteering.o \
 src/fuzzy_speed_controller.o \
 src/general_FIS.o \
 src/main.o \
@@ -82,6 +84,7 @@ src/ASF/common/boards/user_board/init.o
 
 OBJS_AS_ARGS +=  \
 src/fuzzyParkingRoutine.o \
+src/fuzzySteering.o \
 src/fuzzy_speed_controller.o \
 src/general_FIS.o \
 src/main.o \
@@ -94,6 +97,7 @@ src/ASF/common/boards/user_board/init.o
 
 C_DEPS +=  \
 src/fuzzyParkingRoutine.d \
+src/fuzzySteering.d \
 src/fuzzy_speed_controller.d \
 src/general_FIS.d \
 src/main.d \
@@ -106,6 +110,7 @@ src/ASF/common/boards/user_board/init.d
 
 C_DEPS_AS_ARGS +=  \
 src/fuzzyParkingRoutine.d \
+src/fuzzySteering.d \
 src/fuzzy_speed_controller.d \
 src/general_FIS.d \
 src/main.d \
@@ -130,6 +135,8 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
 
 
 
