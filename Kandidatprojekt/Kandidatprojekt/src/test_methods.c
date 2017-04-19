@@ -18,7 +18,6 @@
 
 void testmanual(unsigned char commando)
 {
-	
 	if(commando == 'w')
 	{
 		setESC(MANUAL_FORWARD);

@@ -135,7 +135,7 @@ void carInit(void)
 	SPI_slaveInit();
 	setESC(NEUTRAL);
 	setServo(STRAIGHT);
-	_delay_ms(5000);
+	//_delay_ms(5000);
 }
 
 
@@ -259,7 +259,7 @@ struct GLOBAL_FLAGS {
 		
 		int distance;
 		while (1) {
-			
+			counter_UART1_reciever =2;
 			if (counter_UART1_reciever > 1) {
 				
 				Sens_info_read(sens_info_ptr);

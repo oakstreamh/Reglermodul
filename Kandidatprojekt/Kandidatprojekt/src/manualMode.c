@@ -1,4 +1,4 @@
-﻿/*
+﻿/*s
  * manualMode.c
  *
  * Created: 4/7/2017 11:44:01 AM
@@ -9,59 +9,50 @@
 #include <avr/interrupt.h>
 #include "manualMode.h"
 
-
-int manualInstruction[4] = {0,0,0,0}; // right,forward,left,reverse
+int MANUAL_FORWARD = 2840;
+int MANUAL_REVERSE = 2665;
+int VELOCITY = 0;
+int STEERING = 0;
+//int manualInstruction[4] = {0,0,0,0}; // right,forward,left,reverse
 
 /*
  * This method performs the manual mode of driving
  * The manual instructions are forward, left, right, reverse stored in array manualInstruction
+ *
  */
-void manualMode(void)
+void manualMode(char manualInstructions)
 {
-	cli(); //disable interrupts
+	cli(); //disable interrupts	
 	
-	// This if-statement controls the steering
-	if (manualInstruction[0]==1) // Right key is pressed
+	if (manualInstructions && (1<<5))
 	{
-		if (manualInstruction[2]==1) // Conflict with left key
-		{
-			setServo(STRAIGHT);
-		} 
-		else 
-		{
-			setServo(MAXRIGHT);
-		}
-	}
-	else if (manualInstruction[2]==1) // Only left key is pressed
+		VELOCITY += 5;
+	} 
+	if (manualInstructions && (1<<6))
 	{
-		setServo(MAXLEFT);
+		VELOCITY -= 5;
 	}
-	else
-	{ 
-		setServo(STRAIGHT);
-	}
-	
-	// This if-statement controls the speed
-	if (manualInstruction[1]==1) // Up key is pressed 
+	if (manualInstructions && (1<<1))
 	{
-		if (manualInstruction[3]==1) // Conflict with down key
-		{
-			setESC(NEUTRAL);	
-		}
-		else 
-		{
-			setESC(MANUAL_FORWARD);
-		}
+		STEERING += 15;
 	}
-	else if (manualInstruction[3]==1)
+	if (manualInstructions && (1<<2))
 	{
-		setESC(MANUAL_REVERSE);
+		STEERING -= 15;
+	}
+	if (manualInstructions && (1<<3))
+	{
+		STEERING = 0;
+	}
+	if (manualInstructions && (1<<4))
+	{
+		STEERING = 0;
+		VELOCITY = 0;
 	}
 	
-	else
-	{
-		setESC(NEUTRAL);
-	}
+	
+	setESC(NEUTRAL + VELOCITY);
+	setServo(STRAIGHT + STEERING);
 	
 	sei(); // enable global interrupts
 }

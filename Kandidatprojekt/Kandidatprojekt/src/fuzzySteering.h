@@ -9,7 +9,7 @@
 #ifndef FUZZYSTEERING_H_
 #define FUZZYSTEERING_H_
 
-void FLC_steering(int a, int e);
+void FLC_steering(int c, int steering, int v);
 
 
 

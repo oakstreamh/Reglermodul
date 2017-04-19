@@ -10,7 +10,5 @@
 #define MANUALMODE_H_
 
 void manualMode(void);
-int manualInstruction[4];
-
 
 #endif /* MANUALMODE_H_ */

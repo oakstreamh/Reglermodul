@@ -42,171 +42,132 @@
 * Inputs: measurement of speed, v (PWM counter), and distance, d, from sonic sensors
 * Output: speed, (PWM counter)
 */
-void FLC_steering(a, e)
-int a;
-int e;
+void FLC_steering(c, steering,	v)
+int c;
+int steering;
+int v;
 {
 	
 	
 	
-	// Declaration of I/Os
-	struct io_type error;		// input 1
-	struct io_type angle;       // input 2
-	struct io_type servo;         // output
-	struct rule_type rule1;		// first rule in rule base
-	strcpy(error.name, "error");
-	strcpy(angle.name, "angle");
-	strcpy(servo.name, "servo");
+	// DECLARATION OF C INPUT
+	struct io_type delta_C;	
+	strcpy(c.name, "delta_C");
+	//MFs
+	struct mf_type negative;
+	strcpy(negative.name, "negative");
+	negative.value = 0;
+	negative.point1 = 44;
+	negative.point2= 110;
+	negative.slope1 = 100;
+	negative.slope2 = 2;
+	struct mf_type zero;
+	strcpy(zero.name, "zero");
+	zero.value = 0;
+	zero.point1 = 75;
+	zero.point2= 175;
+	zero.slope1 = 50;
+	zero.slope2 = 50;
+	struct mf_type positive;
+	strcpy(positive.name, "positive");
+	positive.value = 0;
+	positive.point1 = 140;
+	positive.point2= 206;
+	positive.slope1 = 2;
+	positive.slope2 = 100;
+
+	delta_C.membership_functions = &negative;
+	negative.next = &zero;
+	zero.next = &positive;
+	positive.next = NULL;
 	
-	error.value = e;
-	angle.value = a;
-	
-	
-	/* MFS FOR THE ANGLE INPUT VARIABLE
-	*
-	* From MATLAB-file
-	* anlge variable interval: [2260 3060]
-	*
-	* MF shRight:				[2259 2260 2270 2370]
-	* MF right					[2270 2370 2380 2480]
-	* MF slRight:				[2400 2500 2550 2650]
-	* MF straight:				[2540 2640 2680 2780]
-	* MF SlLeft:				[2670 2770 2820 2920]
-	* MF left:				    [2840 2940 2950 3050]
-	* MF shLeft:				[2950 3050 3060 3061]
-	*/
-	struct mf_type shLeft;
-	strcpy(shLeft.name, "shLeft");
-	shLeft.value = 0;
-	shLeft.point1 = 2950;
-	shLeft.point2 = 3061;
-	shLeft.slope1 = 1;
-	shLeft.slope2 = 100;
-	shLeft.next = NULL;
-	
-	struct mf_type left;
-	strcpy(left.name, "left");
-	left.value = 0;
-	left.point1 = 2840;
-	left.point2 = 3050;
-	left.slope1 = 1;
-	left.slope2 = 1;
-	left.next = &shLeft;
-	
-	
-	struct mf_type slLeft;
-	strcpy(slLeft.name, "slLeft");
-	slLeft.value = 0;
-	slLeft.point1 = 2670;
-	slLeft.point2 = 2920;
-	slLeft.slope1 = 1;
-	slLeft.slope2 = 1;
-	slLeft.next = &left;
-	
-	
-	struct mf_type straight;
-	strcpy(straight.name, "straight");
-	straight.value = 0;
-	straight.point1 = 2540;
-	straight.point2 = 2780;
-	straight.slope1 = 1;
-	straight.slope2 = 1;
-	straight.next = &slLeft;
-	
-	struct mf_type slRight;
-	strcpy(slRight.name, "slRight");
-	slRight.value = 0;
-	slRight.point1 = 2400;
-	slRight.point2 = 2650;
-	slRight.slope1 = 1;
-	slRight.slope2 = 1;
-	slRight.next = &straight;
+	// DECLARATION OF STEERING INPUT
+	struct io_type steering;
+	strcpy(steering.name, "steering");
+	//MFs
+	struct mf_type inShRight;
+	strcpy(inShRight.name, "inShRight");
+	inShRight.value = 0;
+	inShRight.point1 = 2259;
+	inShRight.point2= 2400;
+	inShRight.slope1 = 100;
+	inShRight.slope2 = 1;
 	
 	struct mf_type right;
 	strcpy(right.name, "right");
 	right.value = 0;
-	right.point1 = 2270;
-	right.point2 = 2480;
+	right.point1 = 2300;
+	right.point2= 2580;
 	right.slope1 = 1;
 	right.slope2 = 1;
-	right.next = &slRight;
 	
-	struct mf_type shRight;
-	strcpy(shRight.name, "shRight");
-	shRight.value = 0;
-	shRight.point1 = 2259;
-	shRight.point2 = 2370;
-	shRight.slope1 = 100;
-	shRight.slope2 = 1;
-	shRight.next = &right;
+	struct mf_type inStraight;
+	strcpy(inStraight.name, "inStraight");
+	inStraight.value = 0;
+	inStraight.point1 = 2480;
+	inStraight.point2= 2840;
+	inStraight.slope1 = 1;
+	inStraight.slope2 = 1;
+
+	struct mf_type inLeft;
+	strcpy(inLeft.name, "inLeft");
+	inLeft.value = 0;
+	inLeft.point1 = 2740;
+	inLeft.point2= 3020;
+	inLeft.slope1 = 1;
+	inLeft.slope2 = 1;
 	
-	
-	angle.membership_functions = &shRight;
-	angle.next = NULL;
-	
-	
-	/* MFS FOR THE ERROR INPUT VARIABLE:
-	*
-	* From MATLAB-file
-	* speed variable interval: [2750 2930]
-	*
-	* MF farLeft:	[215 50 2765 2970]
-	* MF low:		[2765 2790 2810 2835]
-	* MF cruising:	[2800 2825 2855 2880]
-	* MF medium:	[2845 2878 2892 2925]
-	* MF high:		[2890 2900 2930 2931]
-	*
-	*/
-	struct mf_type farLeft;
-	strcpy(farLeft.name, "farLeft");
-	farLeft.value = 0;
-	farLeft.point1 = 215;
-	farLeft.point2 = 251;
-	farLeft.slope1 = 4;
-	farLeft.slope2 = 100;
-	farLeft.next = NULL;
-	
-	struct mf_type eLeft;
-	strcpy(eLeft.name, "eLeft");
-	eLeft.value = 0;
-	eLeft.point1 = 130;
-	eLeft.point2 = 240;
-	eLeft.slope1 = 2;
-	eLeft.slope2 = 2;
-	eLeft.next = &farLeft;
-	
-	struct mf_type center;
-	strcpy(center.name, "center");
-	center.value = 0;
-	center.point1 = 65;
-	center.point2= 185;
-	center.slope1 = 2;
-	center.slope2 = 2;
-	center.next = &eLeft;
-	
-	struct mf_type eRight;
-	strcpy(eRight.name, "eRight");
-	eRight.value = 0;
-	eRight.point1 = 10;
-	eRight.point2= 120;
-	eRight.slope1 = 2;
-	eRight.slope2 = 2;
-	eRight.next = &center;
+	struct mf_type inShLeft;
+	strcpy(inShLeft.name, "inShLeft");
+	inShLeft.value = 0;
+	inShLeft.point1 = 2920;
+	inShLeft.point2= 3061;
+	inShLeft.slope1 = 1;
+	inShLeft.slope2 = 100;
+
+	steering.membership_functions = &inShRight;
+	inShRight.next = &right;
+	right.next = &inStraight;
+	inStraight.next = &inLeft;
+	inLeft.next = &inShLeft;
+	inShLeft.next = NULL;
 	
 	
-	struct mf_type farRight;
-	strcpy(farRight.name, "farRight");
-	farRight.value = 0;
-	farRight.point1 = -1;
-	farRight.point2= 35;
-	farRight.slope1 = 100;
-	farRight.slope2 = 4;
-	farRight.next = &eRight;
-	
-	error.membership_functions = &farRight;
-	error.next = &angle;
-	
-	
+	// DECLARATION OF V INPUT
+	struct io_type delta_V;		
+	strcpy(v.name, "delta_V");
+	//MFs
+	struct mf_type small;
+	strcpy(small.name, "small");
+	small.value = 0;
+	small.point1 = 39;
+	small.point2= 60;
+	small.slope1 = 100;
+	small.slope2 = 5;
+	struct mf_type medium;
+	strcpy(medium.name, "medium");
+	medium.value = 0;
+	medium.point1 = 50;
+	medium.point2= 70;
+	medium.slope1 = 10;
+	medium.slope2 = 10;
+	struct mf_type high;
+	strcpy(high.name, "high");
+	high.value = 0;
+	high.point1 = 60;
+	high.point2= 101;
+	high.slope1 = 5;
+	high.slope2 = 100;
+
+	delta_V.membership_functions = &small;
+	small.next = &medium;
+	medium.next = &high;
+	high.next = NULL;
+	   
+	   
+
+	struct io_type servo;	
+	strcpy(servo.name, "servo");	
 	/* MFS FOR THE SPEED OUTPUT VARIABLE:
 	*
 	* From MATLAB
@@ -288,6 +249,13 @@ int e;
 	servo.membership_functions = &oShright;
 	servo.next = NULL;
 	
+	
+	/* THE NEW RULE BASE
+	* #1 IF 
+	*/
+	
+	
+	
 	/* THE RULE BASE
 	*
 	* From MATLAB:
@@ -305,7 +273,7 @@ int e;
 	* #11 IF speed is "still" AND distance is "oneM" THEN speed is "slow"
 	*
 	*/
-	
+		struct rule_type rule1;		// first rule in rule base
 	
 	/* rule # 15: if eRight and slRight then oSlLeft */
 	struct rule_element_type then15;
@@ -568,8 +536,37 @@ int e;
 	
 	// pointers to top of lists
 	Rule_Base = &rule1;
-	System_Inputs = &error;
+	System_Inputs = &delta_C;
 	System_Outputs = &servo;
+	
+	
+	// set iErr's input value to measErr value
+	if(measErr<0)				// if sensor value is smaller than delta_C's input set's lower limit
+	{
+		delta_C.value = 0;  // force input value to lowest point in delta_C's input set
+	}
+	else if(measErr>250)			// if sensor value is bigger than delta_C's input set's upper limit
+	{
+		delta_C.value = 250;  // force input value to lowest point in delta_C's input set
+	}
+	else
+	{
+		delta_C.value = measErr;
+	}
+	
+	// set iAng's input value to measAng value
+	if(measAng<2260)				// if sensor value is smaller than error's input set lower limit
+	{
+		angle.value = 2260;  // force input value to lowest point in delta_C's input set
+	}
+	else if(measAng>3060)			// if sensor value is bigger than error's input set's upper limit
+	{
+		angle.value = 3060;  // force input value to lowest point in error's input set
+	}
+	else
+	{
+		angle.value = measAng;
+	}
 	
 	// the methods performing the FLC
 	fuzzification();
