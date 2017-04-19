@@ -34,7 +34,7 @@
 
 struct Sensor_information{
 	unsigned char dist_right_line;
-	unsigned short dist_sonic_middle;
+	unsigned char dist_sonic_middle;
 	unsigned short dist_sonic_left;
 	unsigned short dist_sonic_right;
 	unsigned short dist_sonic_back;
@@ -75,7 +75,7 @@ volatile int counter_UART1_reciever;
 //----------Ending of UART Variables (temp)-----------
 
 
-ISR(USART1_RX_vect){   
+ISR(USART1_RX_vect){
 	/*
 	*This buffer is specialized for sensorinformation.
 	*May overwrite existing data in buffer
@@ -94,7 +94,7 @@ ISR(USART1_RX_vect){
 	if (in_value ==  0xFF){ // to check if in_value==0xFF
 		counter_UART1_reciever = 0;
 	}
-	else{ 
+	else{
 		//Write value to buffer
 		UART1_reciever_buffer[counter_UART1_reciever] = in_value;
 		counter_UART1_reciever++;
@@ -110,12 +110,12 @@ ISR(USART1_RX_vect){
 
 
 /*
- * SPI port definitions
- * PB7 SCK (Master clock)
- * PB6 Slave output (MISO)
- * PB5 Slave input (MOSI)
- * PB4 Slave select (SS)
- */
+* SPI port definitions
+* PB7 SCK (Master clock)
+* PB6 Slave output (MISO)
+* PB5 Slave input (MOSI)
+* PB4 Slave select (SS)
+*/
 void SPI_slaveInit(void)
 {
 	DDRB = (1<<DDB6); // Set MISO output, all others input
@@ -125,10 +125,10 @@ void SPI_slaveInit(void)
 
 
 /* This method initiates the car. PWM to servos are
- * set initial values. There is a five second delay
- * to allow the operator to turn on the ESC manually
- * and set the neutral
- */
+* set initial values. There is a five second delay
+* to allow the operator to turn on the ESC manually
+* and set the neutral
+*/
 void carInit(void)
 {
 	pwmInit();
@@ -163,7 +163,7 @@ void Sens_info_read(struct Sensor_information* sens_info_ptr) //There is no chec
 	
 	//Assigning values from buffer to sens_info
 	sens_info_ptr->dist_right_line = (unsigned) (char) UART1_reciever_buffer[0];
-	//sens_info_ptr->dist_sonic_middle = ((unsigned) (short) UART1_reciever_buffer[3] << 8) | (unsigned) (short) UART1_reciever_buffer[2];
+	sens_info_ptr->dist_sonic_middle = (unsigned) (char) UART1_reciever_buffer[1];
 	//sens_info_ptr->dist_sonic_left = ((unsigned) (short) UART1_reciever_buffer[5] << 8) | (unsigned) (short) UART1_reciever_buffer[4];
 	//sens_info_ptr->dist_sonic_right = ((unsigned) (short) UART1_reciever_buffer[7] << 8) | (unsigned) (short) UART1_reciever_buffer[6];
 	//sens_info_ptr->dist_sonic_back = ((unsigned) (short) UART1_reciever_buffer[9] << 8) | (unsigned) (short) UART1_reciever_buffer[8];
@@ -188,62 +188,59 @@ struct GLOBAL_FLAGS {
 	
 	struct PID_DATA pidData;
 
-#define TIME_INTERVAL 38555 //EXAMPLE //TODO
+	#define TIME_INTERVAL 38555 //EXAMPLE //TODO
 
-ISR(TIMER0_OVF_vect)
-{
-	static uint16_t i = 0;
+	ISR(TIMER0_OVF_vect)
+	{
+		static uint16_t i = 0;
 
-	if (i < TIME_INTERVAL) {
-		i++;
-		} else {
-		gFlags.pidTimer = TRUE;
-		i               = 0;
+		if (i < TIME_INTERVAL) {
+			i++;
+			} else {
+			gFlags.pidTimer = TRUE;
+			i               = 0;
+		}
 	}
-}
 
-void Init(void)
-{
-	pid_Init(K_P * SCALING_FACTOR, K_D * SCALING_FACTOR, &pidData);
+	void Init(void)
+	{
+		pid_Init(K_P * SCALING_FACTOR, K_D * SCALING_FACTOR, &pidData);
 
-	// Set up timer, enable timer/counter 0 overflow interrupt
-	TCCR0B = (1 << CS00); // clock source to be used by the Timer/Counter clkI/O
-	TIMSK0 = (1 << TOIE0);
-	TCNT0  = 0;
-}
+		// Set up timer, enable timer/counter 0 overflow interrupt
+		TCCR0B = (1 << CS00); // clock source to be used by the Timer/Counter clkI/O
+		TIMSK0 = (1 << TOIE0);
+		TCNT0  = 0;
+	}
 
-int16_t Get_Reference(void) //TODO
-{
-	return 125;
-}
+	int16_t Get_Reference(void) //TODO
+	{
+		return 125;
+	}
 
-int16_t Get_Measurement(void) //TODO
-{
-	return 140;
-}
-
+	int16_t Get_Measurement(void) //TODO
+	{
+		return 140;
+	}
 
 
-/* main function
-*/
-int main (void)
-{
-	
-	
-	
-	
-	
+
+	/* main function
+	*/
+	int main (void)
+	{
+		
+		
+		
+		
+		
 		carInit();
 
-		_delay_ms(1000);
-		
-		setESC(NEUTRAL+70);
 		
 		
 		
 		sei();
 		DDRA = 0xFF;
-				
+		
 		//-----Variables and pointers for Sensor information
 		//Er info finns i sensor_info.dist_right_line;
 		//om counter_UART1_reciever true, finns info att hemta
@@ -252,7 +249,7 @@ int main (void)
 		struct Sensor_information* sens_info_ptr;
 		sens_info_ptr = &sensor_info;
 		//--end of sensor information
-			
+		
 		//Init for UART
 		unsigned int baud_setting = 7;
 		USART1_init(baud_setting);
@@ -261,26 +258,26 @@ int main (void)
 		
 		
 		int distance;
-		
 		while (1) {
 			
-			if (counter_UART1_reciever) {			
+			if (counter_UART1_reciever > 1) {
 				
-			Sens_info_read(sens_info_ptr);
-						
-			PORTA = sensor_info.dist_right_line;			
-			
-			}
+				Sens_info_read(sens_info_ptr);
+				
+				PORTA = sensor_info.dist_right_line;
+				
+				
 				cli();
-		
+				
 				distance = (int) sensor_info.dist_right_line;
 				FLC_steering(OCR1B, distance);
 				// inputValue = pid_Controller(referenceValue, measurementValue, &pidData);
-
+				FLC_road(OCR1A,(int) sensor_info.dist_sonic_middle);
 				sei();
-				
+			}
 		}
 		
-}
+	}
+
 
 

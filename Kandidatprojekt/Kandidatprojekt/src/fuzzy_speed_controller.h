@@ -12,13 +12,8 @@
 #include <stdio.h>
 
 
-extern struct io_type distance;    // input 1
-extern struct io_type speed;       // input 2
-extern struct io_type pwm;         // output
-extern struct rule_type rule1;
 
-void FLC_road(void);
-void set_fuzzySpeedInputs(int v, int d);
+void FLC_road(int v, int d);
 void doFuzzySpeed(void);
 
 #endif /* fuzzy_speed_controller_h */

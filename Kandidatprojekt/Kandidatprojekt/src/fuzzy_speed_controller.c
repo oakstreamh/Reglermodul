@@ -17,10 +17,7 @@
 // DEFINITIONS OF I/O AND POINTERS TO TOP OF LISTS                              //
 //////////////////////////////////////////////////////////////////////////////////
 
-struct io_type distance;    // input 1
-struct io_type speed;       // input 2
-struct io_type pwm;         // output
-struct rule_type rule1;		// first rule in rule base
+
 struct io_type *speedP;		// pointer to top of inputs' linked list
 struct io_type *pwmP;		// pointer to top of output's linked list
 struct rule_type *rule1P;	// pointer to first rule in rule base
@@ -28,19 +25,6 @@ struct rule_type *rule1P;	// pointer to first rule in rule base
 //////////////////////////////////////////////////////////////////////////////////
 // METHODS                                                                      //
 //////////////////////////////////////////////////////////////////////////////////
-
-
-/* set_fuzzySpeedInputs purpose is to initialize the input parameters
- * with the latest measurements from sensor unit before the control loop
- *
- */
-void set_fuzzySpeedInputs(v, d)
-int v;
-int d;
-{
-    speed.value = v;
-    distance.value = d;
-}
 
 
 /* Initialization and execution of fuzzy speed controller.
@@ -59,14 +43,23 @@ int d;
  * Inputs: measurement of speed, v (PWM counter), and distance, d, from sonic sensors
  * Output: speed, (PWM counter)
  */
-void FLC_road(void)
+void FLC_road(int v, int d)
 {
-    
+   
+   	struct io_type distance;    // input 1
+   	struct io_type speed;       // input 2
+   	struct io_type pwm;         // output
+   	struct rule_type rule1;		// first rule in rule base 
 	// Declaration of I/Os
     strcpy(speed.name, "speed");
     strcpy(distance.name, "distance");
     strcpy(pwm.name, "pwm");
 
+
+	
+    speed.value = v;
+    distance.value = d;
+	
     /* MFS FOR THE DISTANCE INPUT VARIABLE
      *
      * From MATLAB-file
@@ -451,12 +444,11 @@ void FLC_road(void)
     rule1.next = &rule2;
     
 	// pointers to top of lists
-    rule1P = & rule1;
-    speedP = &speed;
-    pwmP = &pwm;
+    Rule_Base = &rule1;
+    System_Inputs = &speed;
+    System_Outputs = &pwm;
     
 	// the methods performing the FLC
-    setPointers(speedP, pwmP, rule1P);
     fuzzification();
     rule_evaluation();
     defuzzification();
