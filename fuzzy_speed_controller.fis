@@ -1,0 +1,54 @@
+[System]
+Name='fuzzy_speed_controller'
+Type='mamdani'
+Version=2.0
+NumInputs=2
+NumOutputs=1
+NumRules=11
+AndMethod='min'
+OrMethod='max'
+ImpMethod='min'
+AggMethod='max'
+DefuzzMethod='centroid'
+
+[Input1]
+Name='Speed'
+Range=[2750 2930]
+NumMFs=5
+MF1='low':'trapmf',[2765 2790 2810 2836]
+MF2='medium':'trapmf',[2844 2880 2890 2926]
+MF3='high':'trapmf',[2890 2926 2934 2970]
+MF4='still':'trapmf',[2710 2749 2765 2790]
+MF5='cruising':'trapmf',[2800 2836 2844 2880]
+
+[Input2]
+Name='Distance'
+Range=[0 250]
+NumMFs=4
+MF1='stoppingDistance':'trapmf',[-75 -8.333 12 62]
+MF2='oneMeter':'trapmf',[22 72 100 150]
+MF3='twoMeter':'trapmf',[110 160 172 222]
+MF4='threeMeter':'trapmf',[180 230 258.3 325]
+
+[Output1]
+Name='Speed'
+Range=[2750 2930]
+NumMFs=5
+MF1='noSpeed':'trapmf',[2710 2746 2765 2790]
+MF2='slow':'trapmf',[2765 2790 2810 2836]
+MF3='cruise':'trapmf',[2800 2836 2844 2880]
+MF4='medHigh':'trapmf',[2844 2880 2890 2926]
+MF5='max':'trapmf',[2890 2926 2934 2970]
+
+[Rules]
+0 1, 1 (1) : 1
+1 2, 2 (1) : 1
+5 2, 2 (1) : 1
+2 2, 3 (1) : 1
+3 2, 4 (1) : 1
+1 3, 3 (1) : 1
+5 3, 4 (1) : 1
+3 3, 4 (1) : 1
+0 4, 5 (1) : 1
+1 3, 3 (1) : 1
+4 2, 2 (1) : 1
