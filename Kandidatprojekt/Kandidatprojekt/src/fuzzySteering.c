@@ -42,17 +42,16 @@
 * Inputs: measurement of speed, v (PWM counter), and distance, d, from sonic sensors
 * Output: speed, (PWM counter)
 */
-void FLC_steering(c, steering,	v)
-int c;
-int steering;
-int v;
+void FLC_steering(int c, int s,	int v)
+
 {
 	
 	
 	
 	// DECLARATION OF C INPUT
 	struct io_type delta_C;	
-	strcpy(c.name, "delta_C");
+	strcpy(delta_C.name, "delta_C");
+	delta_C.value = c;
 	//MFs
 	struct mf_type negative;
 	strcpy(negative.name, "negative");
@@ -84,6 +83,7 @@ int v;
 	// DECLARATION OF STEERING INPUT
 	struct io_type steering;
 	strcpy(steering.name, "steering");
+	steering.value = s;
 	//MFs
 	struct mf_type inShRight;
 	strcpy(inShRight.name, "inShRight");
@@ -135,7 +135,8 @@ int v;
 	
 	// DECLARATION OF V INPUT
 	struct io_type delta_V;		
-	strcpy(v.name, "delta_V");
+	strcpy(delta_V.name, "delta_V");
+	delta_V.value = v;
 	//MFs
 	struct mf_type small;
 	strcpy(small.name, "small");
@@ -168,19 +169,7 @@ int v;
 
 	struct io_type servo;	
 	strcpy(servo.name, "servo");	
-	/* MFS FOR THE SPEED OUTPUT VARIABLE:
-	*
-	* From MATLAB
-	* speed interval [2750 2930]
-	*
-	* noSpeed		[2749 2750 2765 2790]
-	* slow			[2765 2790 2811 2836]
-	* cruise		[2800 2833 2847 2880]
-	* medHigh		[2844 2880 2890 2926]
-	* max			[2890 2926 2934 2970]
-	
-	*
-	*/
+
 	struct mf_type oShLeft;
 	strcpy(oShLeft.name, "oShLeft");
 	oShLeft.value = 0;
@@ -273,7 +262,7 @@ int v;
 	* #11 IF speed is "still" AND distance is "oneM" THEN speed is "slow"
 	*
 	*/
-		struct rule_type rule1;		// first rule in rule base
+	struct rule_type rule1;		// first rule in rule base
 	
 	/* rule # 15: if eRight and slRight then oSlLeft */
 	struct rule_element_type then15;
