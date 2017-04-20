@@ -11,7 +11,4 @@
 
 void FLC_steering(int c, int steering, int v);
 
-
-
-
 #endif /* FUZZYSTEERING_H_ */

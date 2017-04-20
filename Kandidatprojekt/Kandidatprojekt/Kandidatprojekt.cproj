@@ -243,6 +243,12 @@
     <Compile Include="src\manualMode.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\OldSteering.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\OldSteering.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\pid.c">
       <SubType>compile</SubType>
     </Compile>

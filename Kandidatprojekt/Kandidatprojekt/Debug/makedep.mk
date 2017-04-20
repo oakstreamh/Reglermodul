@@ -14,6 +14,8 @@ src\main.c
 
 src\manualMode.c
 
+src\OldSteering.c
+
 src\pid.c
 
 src\servo.c

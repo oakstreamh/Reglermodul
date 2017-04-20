@@ -45,13 +45,9 @@
 void FLC_steering(int c, int s,	int v)
 
 {
-	
-	
-	
 	// DECLARATION OF C INPUT
 	struct io_type delta_C;
 	strcpy(delta_C.name, "delta_C");
-	delta_C.value = c;
 	//MFs
 	struct mf_type negative;
 	strcpy(negative.name, "negative");
@@ -83,7 +79,7 @@ void FLC_steering(int c, int s,	int v)
 	// DECLARATION OF STEERING INPUT
 	struct io_type steering;
 	strcpy(steering.name, "steering");
-	steering.value = s;
+	
 	//MFs
 	struct mf_type inShRight;
 	strcpy(inShRight.name, "inShRight");
@@ -136,7 +132,7 @@ void FLC_steering(int c, int s,	int v)
 	// DECLARATION OF V INPUT
 	struct io_type delta_V;
 	strcpy(delta_V.name, "delta_V");
-	delta_V.value = v;
+
 	//MFs
 	struct mf_type small;
 	strcpy(small.name, "small");
@@ -237,13 +233,7 @@ void FLC_steering(int c, int s,	int v)
 	
 	servo.membership_functions = &oShright;
 	servo.next = NULL;
-	
-	
-	/* THE NEW RULE BASE
-	* #1 IF
-	*/
-	
-	
+		
 	
 	/* THE RULE BASE
 	*
@@ -265,172 +255,176 @@ void FLC_steering(int c, int s,	int v)
 
 	
 	/* rule # 9: if C is zero and V is high then servo is slightLeft */
-	struct rule_element_type then9;
-	then9.value = &oSlLeft;
-	then9.next = NULL;
-	
-	struct rule_element_type if92;
-	if92.value = &high.value;
-	if92.next = NULL;
-	
-	struct rule_element_type if91;
-	if91.value = &zero.value;
-	if91.next = &if92;
-	
-	struct rule_type rule9;
-	rule9.if_side = &if91;
-	rule9.then_side = &then9;
-	rule9.next = NULL;
-	
-	/* rule # 8: if positive and V is high then servo is slightRight */
-	struct rule_element_type then8;
-	then8.value = &oSlRight;
-	then8.next = NULL;
-	
-	struct rule_element_type if82;
-	if82.value = &high.value;
-	if82.next = NULL;
-	
-	struct rule_element_type if81;
-	if81.value = &positive.value;
-	if81.next = &if82;
-	
-	struct rule_type rule8;
-	rule8.if_side = &if81;
-	rule8.then_side = &then8;
-	rule8.next = &rule9;
-	
-	/* rule # 7: if C is positive and V is medium then servo is sharpRight */
-	struct rule_element_type then7;
-	then7.value = &oShright;
-	then7.next = NULL;
-	
-	struct rule_element_type if72;
-	if72.value = &medium.value;
-	if72.next = NULL;
-	
-	struct rule_element_type if71;
-	if71.value = &positive.value;
-	if71.next = &if72;
-	
-	struct rule_type rule7;
-	rule7.if_side = &if71;
-	rule7.then_side = &then7;
-	rule7.next = &rule8;
-	
-	/* rule # 6: if C is positive and V is medium then servo is sharpRight */
-	struct rule_element_type then6;
-	then6.value = &oShright;
-	then6.next = NULL;
-	
-	struct rule_element_type if62;
-	if62.value = &medium.value;
-	if62.next = NULL;
-	
-	struct rule_element_type if61;
-	if61.value = &positive.value;
-	if61.next = &if62;
-	
-	struct rule_type rule6;
-	rule6.if_side = &if61;
-	rule6.then_side = &then6;
-	rule6.next = &rule7;
-	
-	/* rule # 5: if C is negative and V is medium then servo is sharpLeft */
-	struct rule_element_type then5;
-	then5.value = &oShLeft;
-	then5.next = NULL;
-	
-	struct rule_element_type if52;
-	if52.value = &medium.value;
-	if52.next = NULL;
-	
-	struct rule_element_type if51;
-	if51.value = &negative.value;
-	if51.next = &if52;
-	
-	struct rule_type rule5;
-	rule5.if_side = &if51;
-	rule5.then_side = &then5;
-	rule5.next = &rule6;
-	
-	/* rule # 4: if C is zero and V is medium then servo is straight */
-	struct rule_element_type then4;
-	then4.value = &oStraight;
-	then4.next = NULL;
-	
-	struct rule_element_type if42;
-	if42.value = &medium.value;
-	if42.next = NULL;
-	
-	struct rule_element_type if41;
-	if41.value = &zero.value;
-	if41.next = &if42;
-	
-	struct rule_type rule4;
-	rule4.if_side = &if41;
-	rule4.then_side = &then4;
-	rule4.next = &rule5;
-	
-	
-	/* rule # 3: if C is negative and V is medium then servo is sharpLeft */
-	struct rule_element_type then3;
-	then3.value = &oShLeft;
-	then3.next = NULL;
-	
-	struct rule_element_type if32;
-	if32.value = &medium.value;
-	if32.next = NULL;
-	
-	struct rule_element_type if31;
-	if31.value = &negative.value;
-	if31.next = &if32;
-	
-	struct rule_type rule3;
-	rule3.if_side = &if31;
-	rule3.then_side = &then3;
-	rule3.next = &rule4;
-	
-	/* rule # 2: if C is negative and V is small then servo is slightLeft */
-	struct rule_element_type then2;
-	then2.value = &oSlLeft;
-	then2.next = NULL;
-	
-	struct rule_element_type if22;
-	if22.value = &small.value;
-	if22.next = NULL;
-	
-	struct rule_element_type if21;
-	if21.value = &negative.value;
-	if21.next = &if22;
-	
-	struct rule_type rule2;
-	rule2.if_side = &if21;
-	rule2.then_side = &then2;
-	rule2.next = &rule3;
-	
-	/* rule # 1: if C is zero and V is small then servo is slightRight */
-	struct rule_element_type then1;
-	then1.value = &oSlRight;
-	then1.next = NULL;
-	
-	struct rule_element_type if12;
-	if12.value = &small.value;
-	if12.next = NULL;
-	
-	struct rule_element_type if11;
-	if11.value = &negative.value;
-	if11.next = &if12;
-	
-	struct rule_type rule1;
-	rule1.if_side = &if11;
-	rule1.then_side = &then1;
-	rule1.next = &rule2;
+		struct rule_element_type then9;
+		then9.value = &oSlLeft.value;
+		then9.next = NULL;
 		
+		struct rule_element_type if92;
+		if92.value = &high.value;
+		if92.next = NULL;
+		
+		struct rule_element_type if91;
+		if91.value = &zero.value;
+		if91.next = &if92;
+		
+		struct rule_type rule9;
+		rule9.if_side = &if91;
+		rule9.then_side = &then9;
+		rule9.next = NULL;
+		
+		/* rule # 8: if positive and V is high then servo is slightRight */
+		struct rule_element_type then8;
+		then8.value = &oSlRight.value;
+		then8.next = NULL;
+		
+		struct rule_element_type if82;
+		if82.value = &high.value;
+		if82.next = NULL;
+		
+		struct rule_element_type if81;
+		if81.value = &positive.value;
+		if81.next = &if82;
+		
+		struct rule_type rule8;
+		rule8.if_side = &if81;
+		rule8.then_side = &then8;
+		rule8.next = &rule9;
+		
+		/* rule # 7: if C is positive and V is medium then servo is sharpRight */
+		struct rule_element_type then7;
+		then7.value = &oShright.value;
+		then7.next = NULL;
+		
+		struct rule_element_type if72;
+		if72.value = &medium.value;
+		if72.next = NULL;
+		
+		struct rule_element_type if71;
+		if71.value = &positive.value;
+		if71.next = &if72;
+		
+		struct rule_type rule7;
+		rule7.if_side = &if71;
+		rule7.then_side = &then7;
+		rule7.next = &rule8;
+		
+		/* rule # 6: if C is positive and V is medium then servo is sharpRight */
+		struct rule_element_type then6;
+		then6.value = &oShright.value;
+		then6.next = NULL;
+		
+		struct rule_element_type if62;
+		if62.value = &medium.value;
+		if62.next = NULL;
+		
+		struct rule_element_type if61;
+		if61.value = &positive.value;
+		if61.next = &if62;
+		
+		struct rule_type rule6;
+		rule6.if_side = &if61;
+		rule6.then_side = &then6;
+		rule6.next = &rule7;
+		
+		/* rule # 5: if C is negative and V is medium then servo is sharpLeft */
+		struct rule_element_type then5;
+		then5.value = &oShLeft.value;
+		then5.next = NULL;
+		
+		struct rule_element_type if52;
+		if52.value = &medium.value;
+		if52.next = NULL;
+		
+		struct rule_element_type if51;
+		if51.value = &negative.value;
+		if51.next = &if52;
+		
+		struct rule_type rule5;
+		rule5.if_side = &if51;
+		rule5.then_side = &then5;
+		rule5.next = &rule6;
+		
+		/* rule # 4: if C is zero and V is medium then servo is straight */
+		struct rule_element_type then4;
+		then4.value = &oStraight.value;
+		then4.next = NULL;
+		
+		struct rule_element_type if42;
+		if42.value = &medium.value;
+		if42.next = NULL;
+		
+		struct rule_element_type if41;
+		if41.value = &zero.value;
+		if41.next = &if42;
+		
+		struct rule_type rule4;
+		rule4.if_side = &if41;
+		rule4.then_side = &then4;
+		rule4.next = &rule5;
+		
+		
+		/* rule # 3: if C is negative and V is medium then servo is sharpLeft */
+		struct rule_element_type then3;
+		then3.value = &oShLeft.value;
+		then3.next = NULL;
+		
+		struct rule_element_type if32;
+		if32.value = &medium.value;
+		if32.next = NULL;
+		
+		struct rule_element_type if31;
+		if31.value = &negative.value;
+		if31.next = &if32;
+		
+		struct rule_type rule3;
+		rule3.if_side = &if31;
+		rule3.then_side = &then3;
+		rule3.next = &rule4;
+		
+		/* rule # 2: if C is negative and V is small then servo is slightLeft */
+		struct rule_element_type then2;
+		then2.value = &oSlLeft.value;
+		then2.next = NULL;
+		
+		struct rule_element_type if22;
+		if22.value = &small.value;
+		if22.next = NULL;
+		
+		struct rule_element_type if21;
+		if21.value = &negative.value;
+		if21.next = &if22;
+		
+		struct rule_type rule2;
+		rule2.if_side = &if21;
+		rule2.then_side = &then2;
+		rule2.next = &rule3;
+		
+		/* rule # 1: if C is zero and V is small then servo is slightRight */
+		struct rule_element_type then1;
+		then1.value = &oSlRight.value;
+		then1.next = NULL;
+		
+		struct rule_element_type if12;
+		if12.value = &small.value;
+		if12.next = NULL;
+		
+		struct rule_element_type if11;
+		if11.value = &negative.value;
+		if11.next = &if12;
+		
+		struct rule_type rule1;
+		rule1.if_side = &if11;
+		rule1.then_side = &then1;
+		rule1.next = &rule2;
+
+
+	
 	// pointers to top of lists
 	Rule_Base = &rule1;
 	System_Inputs = &delta_C;
 	System_Outputs = &servo;
+	
+	
 	
 	
 	// set iErr's input value to measErr value
@@ -462,17 +456,17 @@ void FLC_steering(int c, int s,	int v)
 	}
 	
 	// set V's input value to V´s value
-	if(s<0)				// if sensor value is smaller than error's input set lower limit
+	if(v<0)				// if sensor value is smaller than error's input set lower limit
 	{
 		delta_V.value = 0;  // force input value to lowest point in delta_V's input set
 	}
-	else if(s>80)			// if sensor value is bigger than error's input set's upper limit
+	else if(v>80)			// if sensor value is bigger than error's input set's upper limit
 	{
 		delta_V.value = 80;  // force input value to lowest point in error's input set
 	}
 	else
 	{
-		delta_V.value = s;
+		delta_V.value = v;
 	}
 	
 	// the methods performing the FLC

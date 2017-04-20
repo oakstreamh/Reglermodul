@@ -56,6 +56,7 @@ C_SRCS +=  \
 ../src/general_FIS.c \
 ../src/main.c \
 ../src/manualMode.c \
+../src/OldSteering.c \
 ../src/pid.c \
 ../src/servo.c \
 ../src/test_methods.c \
@@ -76,6 +77,7 @@ src/fuzzy_speed_controller.o \
 src/general_FIS.o \
 src/main.o \
 src/manualMode.o \
+src/OldSteering.o \
 src/pid.o \
 src/servo.o \
 src/test_methods.o \
@@ -89,6 +91,7 @@ src/fuzzy_speed_controller.o \
 src/general_FIS.o \
 src/main.o \
 src/manualMode.o \
+src/OldSteering.o \
 src/pid.o \
 src/servo.o \
 src/test_methods.o \
@@ -102,6 +105,7 @@ src/fuzzy_speed_controller.d \
 src/general_FIS.d \
 src/main.d \
 src/manualMode.d \
+src/OldSteering.d \
 src/pid.d \
 src/servo.d \
 src/test_methods.d \
@@ -115,6 +119,7 @@ src/fuzzy_speed_controller.d \
 src/general_FIS.d \
 src/main.d \
 src/manualMode.d \
+src/OldSteering.d \
 src/pid.d \
 src/servo.d \
 src/test_methods.d \
@@ -135,6 +140,8 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
 
 
 

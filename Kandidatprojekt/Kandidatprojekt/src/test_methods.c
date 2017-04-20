@@ -7,7 +7,8 @@
 
 #define F_CPU 14745600
 
-
+#define MANUAL_REVERSE 0
+#define MANUAL_FORWARD 0
 #include "test_methods.h"
 #include "servo.h"
 #include <util/delay.h>

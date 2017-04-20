@@ -27,7 +27,8 @@
 #include "stdint.h"
 #include "fuzzy_speed_controller.h"
 #include "general_FIS.h"
-#include "fuzzySteering.h"
+//#include "fuzzySteering.h"
+#include "OldSteering.h"
 
 
 //////////////// STRUCTS /////////////////////////////////////////////////////////
@@ -41,6 +42,7 @@ struct Sensor_information{
 	unsigned short ang_acc;
 	unsigned short car_speed;
 	unsigned short dist_to_stop_line;
+	unsigned char angular_diff;
 	unsigned char sign_type; //Not sure we gonna use this one. Depends if camera can detect signs
 };
 
@@ -135,7 +137,7 @@ void carInit(void)
 	SPI_slaveInit();
 	setESC(NEUTRAL);
 	setServo(STRAIGHT);
-	//_delay_ms(5000);
+	_delay_ms(5000);
 }
 
 
@@ -150,7 +152,7 @@ void USART1_init(unsigned int baud_setting)
 	UCSR1B = (1<<RXEN1) | (0<<TXEN1) | (1<<RXCIE1) | (0<<TXCIE1)| (0<<UDRIE1);
 	//Set frame format: 8data, 2 stop bit
 	UCSR1C = (1<<USBS1) | (3<<UCSZ10);
-	//Setting baud rate
+	//Setting baud rateS
 	UBRR1 = baud_setting;
 }
 
@@ -163,7 +165,8 @@ void Sens_info_read(struct Sensor_information* sens_info_ptr) //There is no chec
 	
 	//Assigning values from buffer to sens_info
 	sens_info_ptr->dist_right_line = (unsigned) (char) UART1_reciever_buffer[0];
-	sens_info_ptr->dist_sonic_middle = (unsigned) (char) UART1_reciever_buffer[1];
+	sens_info_ptr->dist_sonic_middle = (unsigned) (char) UART1_reciever_buffer[2];
+	sens_info_ptr->angular_diff = (unsigned) (char) UART1_reciever_buffer[1];
 	//sens_info_ptr->dist_sonic_left = ((unsigned) (short) UART1_reciever_buffer[5] << 8) | (unsigned) (short) UART1_reciever_buffer[4];
 	//sens_info_ptr->dist_sonic_right = ((unsigned) (short) UART1_reciever_buffer[7] << 8) | (unsigned) (short) UART1_reciever_buffer[6];
 	//sens_info_ptr->dist_sonic_back = ((unsigned) (short) UART1_reciever_buffer[9] << 8) | (unsigned) (short) UART1_reciever_buffer[8];
@@ -212,73 +215,65 @@ struct GLOBAL_FLAGS {
 		TCNT0  = 0;
 	}
 
-	int16_t Get_Reference(void) //TODO
-	{
-		return 125;
-	}
-
-	int16_t Get_Measurement(void) //TODO
-	{
-		return 140;
-	}
-
-
-
 	/* main function
 	*/
 	int main (void)
 	{
 		
-		
-		
-		
-		
-		carInit();
-		setESC(2765+50);
-
-		
-		
-		
 		sei();
-		DDRA = 0xFF;
 		
 		//-----Variables and pointers for Sensor information
 		//Er info finns i sensor_info.dist_right_line;
 		//om counter_UART1_reciever true, finns info att hemta
 		
-		struct Sensor_information sensor_info;
-		struct Sensor_information* sens_info_ptr;
-		sens_info_ptr = &sensor_info;
-		//--end of sensor information
-		
-		//Init for UART
-		unsigned int baud_setting = 7;
-		USART1_init(baud_setting);
-		//End of init for UART
 		
 		
-		int c;
-		int v;
-		
-		while (1) {
-			counter_UART1_reciever =2;
-			if (counter_UART1_reciever > 1) {
+		if (1==0)
+		{
+			struct Sensor_information sensor_info;
+			struct Sensor_information* sens_info_ptr;
+			sens_info_ptr = &sensor_info;
+			//--end of sensor information
+			
+			//Init for UART
+			unsigned int baud_setting = 7;
+			USART1_init(baud_setting);
+			//End of init for UART
+			
+			
+			int c;
+			int v;
+			int d;
+			
+			
+			
+			while (1) {
 				
-				Sens_info_read(sens_info_ptr);
+				if (counter_UART1_reciever > 2) {
+					
+					Sens_info_read(sens_info_ptr);
+					
+					cli();
+					c = (int) sensor_info.dist_right_line;
+					v = (int) sensor_info.angular_diff;
+					d = (int) sensor_info.dist_sonic_middle;
+					
+					
+					
+					//FLC_steeringOld(OCR1B, c);
+					//FLC_road(OCR1A,d);
+					sei();
+				}
 				
-				PORTA = sensor_info.dist_right_line;
 				
 				
-				cli();
-				
-				v = (int) sensor_info.dist_right_line;
-				FLC_steering(c,OCR1B, v);
-				//inputValue = pid_Controller(referenceValue, measurementValue, &pidData);
-				FLC_road(OCR1A,(int) sensor_info.dist_sonic_middle);
-				sei();
 			}
 		}
 		
+		carInit();
+	
+	setESC(NEUTRAL + 100);
+	
 	}
 
 
