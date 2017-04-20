@@ -234,6 +234,7 @@ struct GLOBAL_FLAGS {
 		
 		
 		carInit();
+		setESC(2765+50);
 
 		
 		
@@ -256,8 +257,9 @@ struct GLOBAL_FLAGS {
 		//End of init for UART
 		
 		
+		int c;
+		int v;
 		
-		int distance;
 		while (1) {
 			counter_UART1_reciever =2;
 			if (counter_UART1_reciever > 1) {
@@ -269,9 +271,9 @@ struct GLOBAL_FLAGS {
 				
 				cli();
 				
-				distance = (int) sensor_info.dist_right_line;
-				FLC_steering(OCR1B, distance);
-				// inputValue = pid_Controller(referenceValue, measurementValue, &pidData);
+				v = (int) sensor_info.dist_right_line;
+				FLC_steering(c,OCR1B, v);
+				//inputValue = pid_Controller(referenceValue, measurementValue, &pidData);
 				FLC_road(OCR1A,(int) sensor_info.dist_sonic_middle);
 				sei();
 			}

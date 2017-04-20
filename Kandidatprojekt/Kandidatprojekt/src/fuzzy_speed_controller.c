@@ -7,7 +7,7 @@
 // INCLUDES                                                                     //
 //////////////////////////////////////////////////////////////////////////////////
 
-#include <strin	g.h>
+#include <string.h>
 #include "fuzzy_speed_controller.h"
 #include "general_FIS.h"
 #include "servo.h"
@@ -18,10 +18,10 @@
 // DEFINITIONS OF I/O AND POINTERS TO TOP OF LISTS                              //
 //////////////////////////////////////////////////////////////////////////////////
 
-#define MIN_DISTANCE 
-#define MAX_DISTANCE
-#define MIN_SPEED
-#define MAX_SPEED
+#define MIN_DISTANCE 0 
+#define MAX_DISTANCE 300
+#define MIN_SPEED 2750
+#define MAX_SPEED 2930
 
 
 struct io_type *speedP;		// pointer to top of inputs' linked list
