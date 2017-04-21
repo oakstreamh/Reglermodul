@@ -42,13 +42,58 @@
 * Inputs: measurement of speed, v (PWM counter), and distance, d, from sonic sensors
 * Output: speed, (PWM counter)
 */
-void FLC_steering(c, s, v)
-int c;
-int s;
-int v;
+void FLC_steering(int c, int s, int v)
+
 {
-	// DECLARATION OF C INPUT
+
 	struct io_type delta_C;
+	struct io_type steering;
+	struct io_type delta_V;
+		
+			// set iErr's input value to measErr value
+	if(c<0)				// if sensor value is smaller than delta_C's input set's lower limit
+	{
+		delta_C.value = 0;  // force input value to lowest point in delta_C's input set
+	}
+	else if(c>205)			// if sensor value is bigger than delta_C's input set's upper limit
+	{
+		delta_C.value = 205;  // force input value to lowest point in delta_C's input set
+	}
+	else
+	{
+		delta_C.value = c;
+	}
+	// set iAng's input value to measAng value
+	if(s<2260)				// if sensor value is smaller than error's input set lower limit
+	{
+		steering.value = 2260;  // force input value to lowest point in delta_C's input set
+	}
+	else if(s>3060)			// if sensor value is bigger than error's input set's upper limit
+	{
+		steering.value = 3060;  // force input value to lowest point in error's input set
+	}
+	else
+	{
+		steering.value = s;
+	}
+	
+	// set V's input value to V´s value
+	if(v<0)				// if sensor value is smaller than error's input set lower limit
+	{
+		delta_V.value = 0;  // force input value to lowest point in delta_V's input set
+	}
+	else if(v>80)			// if sensor value is bigger than error's input set's upper limit
+	{
+		delta_V.value = 80;  // force input value to lowest point in error's input set
+	}
+	else
+	{
+		delta_V.value = v;
+	}
+	
+	
+	// DECLARATION OF C INPUT INPUT 1
+	//struct io_type delta_C;
 	strcpy(delta_C.name, "delta_C");
 	//MFs
 	struct mf_type negative;
@@ -63,8 +108,8 @@ int v;
 	zer.value = 0;
 	zer.point1 = 75;
 	zer.point2= 175;
-	zer.slope1 = 50;
-	zer.slope2 = 50;
+	zer.slope1 = 2;
+	zer.slope2 = 2;
 	struct mf_type positive;
 	strcpy(positive.name, "positive");
 	positive.value = 0;
@@ -79,7 +124,7 @@ int v;
 	positive.next = NULL;
 	
 	// DECLARATION OF STEERING INPUT
-	struct io_type steering;
+	
 	strcpy(steering.name, "steering");
 	
 	//MFs
@@ -91,13 +136,13 @@ int v;
 	inShRight.slope1 = 100;
 	inShRight.slope2 = 1;
 	
-	struct mf_type right;
-	strcpy(right.name, "right");
-	right.value = 0;
-	right.point1 = 2300;
-	right.point2= 2580;
-	right.slope1 = 1;
-	right.slope2 = 1;
+	struct mf_type inRight;
+	strcpy(inRight.name, "inRight");
+	inRight.value = 0;
+	inRight.point1 = 2300;
+	inRight.point2= 2580;
+	inRight.slope1 = 1;
+	inRight.slope2 = 1;
 	
 	struct mf_type inStraight;
 	strcpy(inStraight.name, "inStraight");
@@ -124,15 +169,15 @@ int v;
 	inShLeft.slope2 = 100;
 
 	steering.membership_functions = &inShRight;
-	inShRight.next = &right;
-	right.next = &inStraight;
+	inShRight.next = &inRight;
+	inRight.next = &inStraight;
 	inStraight.next = &inLeft;
 	inLeft.next = &inShLeft;
 	inShLeft.next = NULL;
 	
 	
 	// DECLARATION OF V INPUT
-	struct io_type delta_V;
+	
 	strcpy(delta_V.name, "delta_V");
 
 	//MFs
@@ -425,51 +470,6 @@ int v;
 	Rule_Base = &rule1;
 	System_Inputs = &delta_C;
 	System_Outputs = &servo;
-	
-	
-	
-	
-	// set iErr's input value to measErr value
-	if(c<0)				// if sensor value is smaller than delta_C's input set's lower limit
-	{
-		delta_C.value = 0;  // force input value to lowest point in delta_C's input set
-	}
-	else if(c>250)			// if sensor value is bigger than delta_C's input set's upper limit
-	{
-		delta_C.value = 250;  // force input value to lowest point in delta_C's input set
-	}
-	else
-	{
-		delta_C.value = c;
-	}
-	
-	// set iAng's input value to measAng value
-	if(s<2260)				// if sensor value is smaller than error's input set lower limit
-	{
-		steering.value = 2260;  // force input value to lowest point in delta_C's input set
-	}
-	else if(s>3060)			// if sensor value is bigger than error's input set's upper limit
-	{
-		steering.value = 3060;  // force input value to lowest point in error's input set
-	}
-	else
-	{
-		steering.value = s;
-	}
-	
-	// set V's input value to V´s value
-	if(v<0)				// if sensor value is smaller than error's input set lower limit
-	{
-		delta_V.value = 0;  // force input value to lowest point in delta_V's input set
-	}
-	else if(v>80)			// if sensor value is bigger than error's input set's upper limit
-	{
-		delta_V.value = 80;  // force input value to lowest point in error's input set
-	}
-	else
-	{
-		delta_V.value = v;
-	}
 	
 	// the methods performing the FLC
 	fuzzification();

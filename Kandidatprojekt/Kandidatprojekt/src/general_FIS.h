@@ -17,9 +17,9 @@
 #define MAXNAME 10          /* max number of characters in names           */
 #define UPPER_LIMIT 100    /* max number assigned as degree of membership */
 
-extern struct io_type *System_Outputs;
-extern struct io_type *System_Inputs;
-extern struct rule_type *Rule_Base;
+volatile extern struct io_type *System_Outputs;
+volatile extern struct io_type *System_Inputs;
+volatile extern struct rule_type *Rule_Base;
 
 
 //////////////////////////////////////////////////////////////////////////////////

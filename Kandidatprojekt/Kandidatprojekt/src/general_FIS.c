@@ -32,9 +32,9 @@
 // VARIABLES & HEADERS                                                          //
 //////////////////////////////////////////////////////////////////////////////////
 
-struct io_type *System_Outputs;
-struct io_type *System_Inputs;
-struct rule_type *Rule_Base;
+volatile struct io_type *System_Outputs;
+volatile struct io_type *System_Inputs;
+volatile struct rule_type *Rule_Base;
 int max(int arg1, int arg2);
 int min(int arg1, int arg2);
 void compute_degree_of_membership(mf,input);
