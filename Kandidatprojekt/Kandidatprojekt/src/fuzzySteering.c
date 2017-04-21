@@ -42,8 +42,10 @@
 * Inputs: measurement of speed, v (PWM counter), and distance, d, from sonic sensors
 * Output: speed, (PWM counter)
 */
-void FLC_steering(int c, int s,	int v)
-
+void FLC_steering(c, s, v)
+int c;
+int s;
+int v;
 {
 	// DECLARATION OF C INPUT
 	struct io_type delta_C;
@@ -56,13 +58,13 @@ void FLC_steering(int c, int s,	int v)
 	negative.point2= 110;
 	negative.slope1 = 100;
 	negative.slope2 = 2;
-	struct mf_type zero;
-	strcpy(zero.name, "zero");
-	zero.value = 0;
-	zero.point1 = 75;
-	zero.point2= 175;
-	zero.slope1 = 50;
-	zero.slope2 = 50;
+	struct mf_type zer;
+	strcpy(zer.name, "zer");
+	zer.value = 0;
+	zer.point1 = 75;
+	zer.point2= 175;
+	zer.slope1 = 50;
+	zer.slope2 = 50;
 	struct mf_type positive;
 	strcpy(positive.name, "positive");
 	positive.value = 0;
@@ -72,8 +74,8 @@ void FLC_steering(int c, int s,	int v)
 	positive.slope2 = 100;
 
 	delta_C.membership_functions = &negative;
-	negative.next = &zero;
-	zero.next = &positive;
+	negative.next = &zer;
+	zer.next = &positive;
 	positive.next = NULL;
 	
 	// DECLARATION OF STEERING INPUT
@@ -264,7 +266,7 @@ void FLC_steering(int c, int s,	int v)
 		if92.next = NULL;
 		
 		struct rule_element_type if91;
-		if91.value = &zero.value;
+		if91.value = &zer.value;
 		if91.next = &if92;
 		
 		struct rule_type rule9;
@@ -354,7 +356,7 @@ void FLC_steering(int c, int s,	int v)
 		if42.next = NULL;
 		
 		struct rule_element_type if41;
-		if41.value = &zero.value;
+		if41.value = &zer.value;
 		if41.next = &if42;
 		
 		struct rule_type rule4;

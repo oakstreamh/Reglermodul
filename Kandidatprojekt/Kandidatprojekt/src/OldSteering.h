@@ -10,7 +10,7 @@
 #define OLDSTEERING_H_
 
 
-void FLC_steeringOld(measAng, measErr);
+void FLC_steeringOld(int measAng, int measErr);
 
 
 #endif /* OLDSTEERING_H_ */

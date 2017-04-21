@@ -8,7 +8,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 #include <string.h>
-#include "fuzzySteering.h"
+#include "OldSteering.h"
 #include "general_FIS.h"
 #include <stdio.h>
 #include "servo.h"
@@ -42,9 +42,8 @@
 * Inputs: measurement of speed, v (PWM counter), and distance, d, from sonic sensors
 * Output: speed, (PWM counter)
 */
-void FLC_steeringOld(measAng, measErr)
-int measAng;
-int measErr;
+void FLC_steeringOld(int measAng, int measErr)
+
 {
 	
 	
@@ -98,11 +97,6 @@ int measErr;
 	
 	struct io_type angle;       // input 2
 	struct io_type servo;         // output
-	
-	
-	
-	
-	
 	
 	
 	
@@ -210,18 +204,6 @@ int measErr;
 	*
 	*/
 
-
-
-
-
-
-
-
-
-
-
-
-	
 
 
 	
