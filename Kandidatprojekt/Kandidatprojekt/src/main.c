@@ -260,7 +260,7 @@ struct GLOBAL_FLAGS {
 				
 				cli();
 				
-				FLC_steering(125, 2400, 70);
+				FLC_steering(125, 2660, 40);
 				//FLC_road(2830,300);
 				sei();
 		//	}

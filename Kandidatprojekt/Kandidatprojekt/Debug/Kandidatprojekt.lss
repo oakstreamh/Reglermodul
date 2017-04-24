@@ -1931,7 +1931,7 @@ void FLC_steering(int c, int s, int v)
 	if13.next = NULL;
      b62:	13 82       	std	Z+3, r1	; 0x03
      b64:	12 82       	std	Z+2, r1	; 0x02
-	
+
 	struct rule_element_type if12;
 	if12.value = &inLeft.value;
      b66:	2c 5d       	subi	r18, 0xDC	; 220
@@ -1942,7 +1942,7 @@ void FLC_steering(int c, int s, int v)
 	if12.next = &if13;
      b70:	93 83       	std	Z+3, r25	; 0x03
      b72:	82 83       	std	Z+2, r24	; 0x02
-	
+
 	struct rule_element_type if11;
 	if11.value = &zer.value;
      b74:	08 96       	adiw	r24, 0x08	; 8
@@ -2866,11 +2866,11 @@ void defuzzification()
 				cli();
     107a:	f8 94       	cli
 				
-				FLC_steering(125, 2400, 70);
-    107c:	46 e4       	ldi	r20, 0x46	; 70
+				FLC_steering(125, 2660, 40);
+    107c:	48 e2       	ldi	r20, 0x28	; 40
     107e:	50 e0       	ldi	r21, 0x00	; 0
-    1080:	60 e6       	ldi	r22, 0x60	; 96
-    1082:	79 e0       	ldi	r23, 0x09	; 9
+    1080:	64 e6       	ldi	r22, 0x64	; 100
+    1082:	7a e0       	ldi	r23, 0x0A	; 10
     1084:	8d e7       	ldi	r24, 0x7D	; 125
     1086:	90 e0       	ldi	r25, 0x00	; 0
     1088:	20 d8       	rcall	.-4032   	; 0xca <FLC_steering>

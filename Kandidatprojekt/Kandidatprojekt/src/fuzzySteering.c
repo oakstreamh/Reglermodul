@@ -484,11 +484,11 @@ void FLC_steering(int c, int s, int v)
 	struct rule_element_type if13;
 	if13.value = &small.value;
 	if13.next = NULL;
-	
+
 	struct rule_element_type if12;
 	if12.value = &inLeft.value;
 	if12.next = &if13;
-	
+
 	struct rule_element_type if11;
 	if11.value = &zer.value;
 	if11.next = &if12;
