@@ -221,7 +221,6 @@ struct GLOBAL_FLAGS {
 	{
 		carInit();
 		setESC(NEUTRAL+70);
-		
 		sei();
 		
 		//-----Variables and pointers for Sensor information
@@ -243,6 +242,7 @@ struct GLOBAL_FLAGS {
 			int c;
 			int v;
 			int d;
+			
 
 			//Setting for Testing
 			DDRA = 0xFF;
@@ -257,13 +257,11 @@ struct GLOBAL_FLAGS {
 					c = (int) sensor_info.dist_right_line;
 					v = (int) sensor_info.angular_diff;
 					d = (int) sensor_info.dist_sonic_middle;
+				
+					cli();			
 					
-					PORTA = sensor_info.dist_right_line;
-					
-					cli();
-					
-					FLC_steering(200, OCR1B, 50);
-					//FLC_road(OCR1A,d);
+					FLC_steering(125, 2450, 70);
+					//FLC_road(2830,300);
 					sei();
 		//	}
 		
