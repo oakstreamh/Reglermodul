@@ -320,9 +320,7 @@ void FLC_steering(int c, int s, int v)
 	rule9.if_side = &if91;
 	rule9.then_side = &then9;
 	rule9.next = NULL;
-	
 
-	
 	
 	//RULE 8 "if C is positive AND steering is straight AND V is high then servo is slightRight"
 	struct rule_element_type then8;
@@ -434,7 +432,7 @@ void FLC_steering(int c, int s, int v)
 	rule4.then_side = &then4;
 	rule4.next = &rule5;
 
-	//RULE 3 "if C is negative AND steering is right AND V is medium then servo is SharpLeft"
+	//RULE 3 "if C is negative AND steering is SharpRight AND V is medium then servo is SharpLeft"
 	struct rule_element_type then3;
 	then3.value = &oShLeft.value;
 	then3.next = NULL;
@@ -444,7 +442,7 @@ void FLC_steering(int c, int s, int v)
 	if33.next = NULL;
 	
 	struct rule_element_type if32;
-	if32.value = &inRight.value;
+	if32.value = &inShRight.value;
 	if32.next = &if33;
 	
 	struct rule_element_type if31;

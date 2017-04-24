@@ -137,7 +137,7 @@ void carInit(void)
 	setESC(NEUTRAL);
 	setServo(STRAIGHT);
 	//_delay_ms(5000);
-} 
+}
 
 
 
@@ -225,53 +225,53 @@ struct GLOBAL_FLAGS {
 		
 		//-----Variables and pointers for Sensor information
 		//Er info finns i sensor_info.dist_right_line;
-		//om counter_UART1_reciever true, finns info att hemta		
+		//om counter_UART1_reciever true, finns info att hemta
 
 		
-			struct Sensor_information sensor_info;
-			struct Sensor_information* sens_info_ptr;
-			sens_info_ptr = &sensor_info;
-			//--end of sensor information
-			
-			//Init for UART
-			unsigned int baud_setting = 7;
-			USART1_init(baud_setting);
-			//End of init for UART
-			
-			
-			int c;
-			int v;
-			int d;
-			
+		struct Sensor_information sensor_info;
+		struct Sensor_information* sens_info_ptr;
+		sens_info_ptr = &sensor_info;
+		//--end of sensor information
+		
+		//Init for UART
+		unsigned int baud_setting = 7;
+		USART1_init(baud_setting);
+		//End of init for UART
+		
+		
+		int c;
+		int v;
+		int d;
+		
 
-			//Setting for Testing
-			DDRA = 0xFF;
-			//End of test setting
+		//Setting for Testing
+		DDRA = 0xFF;
+		//End of test setting
 		
 		while (1) {
+			
+			// if (counter_UART1_reciever > 2) {
 				
-				// if (counter_UART1_reciever > 2) {
-					
-					Sens_info_read(sens_info_ptr);
-					
-					c = (int) sensor_info.dist_right_line;
-					v = (int) sensor_info.angular_diff;
-					d = (int) sensor_info.dist_sonic_middle;
+				Sens_info_read(sens_info_ptr);
 				
-					cli();			
-					
-					FLC_steering(125, 2450, 70);
-					//FLC_road(2830,300);
-					sei();
+				c = (int) sensor_info.dist_right_line;
+				v = (int) sensor_info.angular_diff;
+				d = (int) sensor_info.dist_sonic_middle;
+				
+				cli();
+				
+				FLC_steering(125, 2400, 70);
+				//FLC_road(2830,300);
+				sei();
 		//	}
-		
-				
+			
+			
 			
 			
 		}
 		
 
-}
+	}
 
 
 
