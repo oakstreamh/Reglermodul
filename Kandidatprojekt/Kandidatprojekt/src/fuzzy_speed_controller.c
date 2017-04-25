@@ -132,7 +132,7 @@ void FLC_road(int currentOCR1A, int midSonicRange)
     
     // Set MFs
     struct mf_type still;
-    set_newMf(&still, "still", 2749, 2750, 2765, 2970);
+    set_newMf(&still, "still", 2749, 2750, 2765, 2770);
     struct mf_type low;
     set_newMf(&low, "low", 2765, 2790, 2810, 2835);
     struct mf_type cruising;
