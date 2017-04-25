@@ -262,7 +262,7 @@ void MATLAB_MF(struct mf_type *newMf, char newname[MAXNAME], int p1, int p2, int
 
 /* Creates a new rule_element_type and attach to linked lists
  * for if_side and then_side
- */
+ 
 void pushElement(struct rule_element_type **head, int *val){
     struct rule_element_type *new_element = (struct rule_element_type*) malloc (sizeof (struct rule_element_type));
     new_element->value = val;
@@ -272,7 +272,7 @@ void pushElement(struct rule_element_type **head, int *val){
 
 
 /* Creates a new rule according to the parameter inputs 
- */
+ 
 void set_newRule(struct rule_type *newRule, int* args[], int noOfArgs, int* cons[], int noOfCons)
 {
     
@@ -286,3 +286,4 @@ void set_newRule(struct rule_type *newRule, int* args[], int noOfArgs, int* cons
         pushElement(&newRule->then_side, cons[j-1]);
     }
 }
+´*/

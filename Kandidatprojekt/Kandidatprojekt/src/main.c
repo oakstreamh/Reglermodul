@@ -219,6 +219,7 @@ struct GLOBAL_FLAGS {
 	*/
 	int main (void)
 	{
+		FLC_road(2660, 160);
 		carInit();
 		setESC(NEUTRAL+70);
 		sei();
