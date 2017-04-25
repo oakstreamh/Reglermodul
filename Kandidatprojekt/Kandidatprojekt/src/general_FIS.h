@@ -15,7 +15,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 #define MAXNAME 10          /* max number of characters in names           */
-#define UPPER_LIMIT 100    /* max number assigned as degree of membership */
+#define UPPER_LIMIT 256    /* max number assigned as degree of membership */
 
 volatile extern struct io_type *System_Outputs;
 volatile extern struct io_type *System_Inputs;
@@ -78,7 +78,7 @@ void defuzzification(void);
 // DECLARATION OF POINTERS TO TOP OF LINKED LISTS                               //
 //////////////////////////////////////////////////////////////////////////////////
 
-void setPointers(struct io_type*, struct io_type*, struct rule_type*);
+void MATLAB_MF(struct mf_type *newMf, char newname[MAXNAME], int p1, int p2, int p3, int p4);
 
 
 #endif /* general_FIS_h */

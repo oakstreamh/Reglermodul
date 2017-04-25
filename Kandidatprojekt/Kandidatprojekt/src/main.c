@@ -136,7 +136,7 @@ void carInit(void)
 	SPI_slaveInit();
 	setESC(NEUTRAL);
 	setServo(STRAIGHT);
-	//_delay_ms(5000);
+	
 }
 
 
@@ -219,10 +219,13 @@ struct GLOBAL_FLAGS {
 	*/
 	int main (void)
 	{
-		FLC_road(2660, 160);
+		
 		carInit();
-		setESC(NEUTRAL+70);
+		_delay_ms(5000);
 		sei();
+		
+	
+		
 		
 		//-----Variables and pointers for Sensor information
 		//Er info finns i sensor_info.dist_right_line;
@@ -251,20 +254,20 @@ struct GLOBAL_FLAGS {
 		
 		while (1) {
 			
-			// if (counter_UART1_reciever > 2) {
+			 if (counter_UART1_reciever > 2) {
 				
 				Sens_info_read(sens_info_ptr);
 				
 				c = (int) sensor_info.dist_right_line;
 				v = (int) sensor_info.angular_diff;
 				d = (int) sensor_info.dist_sonic_middle;
-				
+				PORTA = sensor_info.dist_sonic_middle;
 				cli();
 				
-				FLC_steering(125, 2660, 40);
-				//FLC_road(2830,300);
+				FLC_obstacle(OCR1A, d);
+				//FLC_steering(125, 2660, 40);
 				sei();
-		//	}
+			}
 			
 			
 			

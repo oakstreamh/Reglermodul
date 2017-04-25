@@ -13,7 +13,6 @@
 
 
 
-void FLC_road(int v, int d);
-void doFuzzySpeed(void);
+void FLC_obstacle(int v, int d);
 
 #endif /* fuzzy_speed_controller_h */
