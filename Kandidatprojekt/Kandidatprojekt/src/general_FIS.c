@@ -32,13 +32,13 @@
 // VARIABLES & HEADERS                                                          //
 //////////////////////////////////////////////////////////////////////////////////
 
-volatile struct io_type *System_Outputs;
-volatile struct io_type *System_Inputs;
-volatile struct rule_type *Rule_Base;
+struct io_type *System_Outputs;
+struct io_type *System_Inputs;
+struct rule_type *Rule_Base;
 int max(int arg1, int arg2);
 int min(int arg1, int arg2);
-void compute_degree_of_membership(mf,input);
-int compute_area_of_trapezoid(mf);
+void compute_degree_of_membership(struct mf_type *mf, int input);
+int compute_area_of_trapezoid(struct mf_type *mf);
 
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -254,36 +254,3 @@ void MATLAB_MF(struct mf_type *newMf, char newname[MAXNAME], int p1, int p2, int
     newMf->slope1 = (int)UPPER_LIMIT/(p2-p1);
     newMf->slope2 = (int)UPPER_LIMIT/(p4-p3);
 }
-
-
-//////////////////////////////////////////////////////////////////////////////////
-// RULE GENERATION                                                              //
-//////////////////////////////////////////////////////////////////////////////////
-
-/* Creates a new rule_element_type and attach to linked lists
- * for if_side and then_side
- 
-void pushElement(struct rule_element_type **head, int *val){
-    struct rule_element_type *new_element = (struct rule_element_type*) malloc (sizeof (struct rule_element_type));
-    new_element->value = val;
-    new_element->next = *head;
-    *head = new_element;
-}
-
-
-/* Creates a new rule according to the parameter inputs 
- 
-void set_newRule(struct rule_type *newRule, int* args[], int noOfArgs, int* cons[], int noOfCons)
-{
-    
-    for (int i = 1; i<= noOfArgs ; i++)				// creates   g
-    {
-        pushElement(&newRule->if_side, args[i-1]);
-    }
-    
-    for (int j = 1; j<= noOfCons ; j++)
-    {
-        pushElement(&newRule->then_side, cons[j-1]);
-    }
-}
-´*/
