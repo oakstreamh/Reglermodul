@@ -32,13 +32,13 @@
 // VARIABLES & HEADERS                                                          //
 //////////////////////////////////////////////////////////////////////////////////
 
-volatile struct io_type *System_Outputs;
-volatile struct io_type *System_Inputs;
-volatile struct rule_type *Rule_Base;
+struct io_type *System_Outputs;
+struct io_type *System_Inputs;
+struct rule_type *Rule_Base;
 int max(int arg1, int arg2);
 int min(int arg1, int arg2);
-void compute_degree_of_membership(mf,input);
-int compute_area_of_trapezoid(mf);
+void compute_degree_of_membership(struct mf_type *mf, int input);
+int compute_area_of_trapezoid(struct mf_type *mf);
 
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -242,6 +242,7 @@ void MATLAB_MF(struct mf_type *newMf, char newname[MAXNAME], int p1, int p2, int
     newMf->slope1 = (int)UPPER_LIMIT/(p2-p1);
     newMf->slope2 = (int)UPPER_LIMIT/(p4-p3);
 }
+<<<<<<< HEAD
 
 
 
@@ -285,3 +286,5 @@ void setupRule(struct rule_type *rule, struct rule_element_type *elements[], int
 		
 	}
 }
+=======
+>>>>>>> origin/master
