@@ -25,11 +25,9 @@
 #define MAX_DISTANCE 250
 #define MIN_SPEED 2740
 #define MAX_SPEED 2900
+#define MAX_OUTPUT 2830
+#define MIN_OUTPUT
 
-
-struct io_type *speedP;		// pointer to top of inputs' linked list
-struct io_type *pwmP;		// pointer to top of output's linked list
-struct rule_type *rule1P;	// pointer to first rule in rule base
 
 //////////////////////////////////////////////////////////////////////////////////
 // METHODS                                                                      //
@@ -172,7 +170,7 @@ void FLC_obstacle(int currentOCR1A, int midSonicRange)
     
     // Declaration of rules and lists
     
-    struct rule_type rule1;
+    struct rule_type rule1; 
     struct rule_type rule2;
     struct rule_type rule3;
     struct rule_type rule4;
@@ -184,7 +182,7 @@ void FLC_obstacle(int currentOCR1A, int midSonicRange)
     struct rule_type rule10;
     struct rule_type rule11;
     struct rule_type rule12;
-    struct rule_type rule13;
+ 
     
     
     Rule_Base = &rule1;
@@ -199,8 +197,8 @@ void FLC_obstacle(int currentOCR1A, int midSonicRange)
     rule9.next = &rule10;
     rule10.next = &rule11;
     rule11.next = &rule12;
-    rule12.next = &rule13;
-    rule13.next = NULL;
+    rule12.next = NULL;
+
     
     // if distance is stopDist then pwm is noSpeed
     struct rule_element_type if11;
@@ -396,8 +394,19 @@ void FLC_obstacle(int currentOCR1A, int midSonicRange)
     fuzzification();
     rule_evaluation();
     defuzzification();
-    setESC(pwm.value);
-
+	if (pwm.value > 2825)
+	{
+		setESC(2825);
+	}
+	else if (pwm.value < 2750)
+	{
+		setESC(2750);
+	}
+	else
+	{
+		setESC(pwm.value);
+	}
+	
 } 
 
 

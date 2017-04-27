@@ -19,7 +19,8 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-
+struct io_type delta_C;
+struct io_type delta_V;
 
 //////////////////////////////////////////////////////////////////////////////////
 // METHODS                                                                      //
@@ -42,7 +43,7 @@
 * Inputs: measurement of speed, v (PWM counter), and distance, d, from sonic sensors
 * Output: speed, (PWM counter)
 */
-void FLC_steering(int c, int s, int v)
+void FLC_steering(int c, int v)
 
 {
 	
@@ -55,7 +56,7 @@ void FLC_steering(int c, int s, int v)
 	struct mf_type inZero;
 	MATLAB_MF(&inZero, "inZero", 75, 125, 125, 175);
 	struct mf_type inPositive;
-	MATLAB_MF(&inPositive, "inPositive", 140, 190, 205, 206);	
+	MATLAB_MF(&inPositive, "inPositive", 140, 190, 205, 206);
 	
 	delta_C.membership_functions = &inNegative;
 	inNegative.next = &inZero;
@@ -74,18 +75,18 @@ void FLC_steering(int c, int s, int v)
 	else
 	{
 		delta_C.value = c;
-	}	
-		
+	}
+	
 	///// DECLARATION OF V INPUT VARIABLE ///////////////////////////////////
 	
 	struct io_type delta_V; strcpy(delta_V.name, "delta_V");
 	
 	struct mf_type inMinus;
-	MATLAB_MF(&inMinus, "inMinus", 39, 40, 40, 60);
+	MATLAB_MF(&inMinus, "inMinus", -1, 0, 10, 30);
 	struct mf_type inNyll;
-	MATLAB_MF(&inNyll, "inNyll", 50 ,60 , 60, 70);
+	MATLAB_MF(&inNyll, "inNyll", 20 , 40, 40, 60);
 	struct mf_type inPlus;
-	MATLAB_MF(&inPlus, "inPlus", 60, 80, 80, 81);
+	MATLAB_MF(&inPlus, "inPlus", 50, 70, 80, 81);
 	
 	delta_V.membership_functions = &inMinus;
 	inMinus.next = &inNyll;
@@ -128,23 +129,29 @@ void FLC_steering(int c, int s, int v)
 	left.next = &sharpLeft;
 	sharpLeft.next = NULL;
 	
+	
+	
+	// pointers to top of lists
 
-		
-	//RULE 9 "if C is zero AND steering is right AND V is high then servo is slightLeft"
+	System_Inputs = &delta_C;
+	delta_C.next = &delta_V;
+	delta_V.next = NULL;
+	System_Outputs = &steering;
+	steering.next = NULL;
+	
+	
+	
+	//RULE 9 "if C is zero AND V is high then servo is left"
 	struct rule_element_type then9;
-	then9.value = &oSlLeft.value;
+	then9.value = &left.value;
 	then9.next = NULL;
 
-	struct rule_element_type if93;
-	if93.value = &high.value;
-	if93.next = NULL;
-
 	struct rule_element_type if92;
-	if92.value = &inRight.value;
-	if92.next = &if93;
+	if92.value = &inPlus.value;
+	if92.next = NULL;
 
 	struct rule_element_type if91;
-	if91.value = &zer.value;
+	if91.value = &inZero.value;
 	if91.next = &if92;
 
 	struct rule_type rule9;
@@ -153,21 +160,17 @@ void FLC_steering(int c, int s, int v)
 	rule9.next = NULL;
 
 	
-	//RULE 8 "if C is positive AND steering is straight AND V is high then servo is slightRight"
+	//RULE 8 "if C is positive AND V is inPlus then servo is right"
 	struct rule_element_type then8;
-	then8.value = &oSlRight.value;
+	then8.value = &right.value;
 	then8.next = NULL;
 
-	struct rule_element_type if83;
-	if83.value = &high.value;
-	if83.next = NULL;
-
 	struct rule_element_type if82;
-	if82.value = &inStraight.value;
-	if82.next = &if83;
+	if82.value = &inPlus.value;
+	if82.next = NULL;
 
 	struct rule_element_type if81;
-	if81.value = &positive.value;
+	if81.value = &inPositive.value;
 	if81.next = &if82;
 
 	struct rule_type rule8;
@@ -175,21 +178,17 @@ void FLC_steering(int c, int s, int v)
 	rule8.then_side = &then8;
 	rule8.next = &rule9;
 	
-	//RULE 7 "if C is positive AND steering is left AND V is medium then servo is sharpRight"
+	//RULE 7 "if C is positive AND V is inNyll then servo is sharpRight"
 	struct rule_element_type then7;
-	then7.value = &oShright.value;
+	then7.value = &sharpRight.value;
 	then7.next = NULL;
 
-	struct rule_element_type if73;
-	if73.value = &medium.value;
-	if73.next = NULL;
-
 	struct rule_element_type if72;
-	if72.value = &inLeft.value;
-	if72.next = &if73;
+	if72.value = &inNyll.value;
+	if72.next = NULL;
 
 	struct rule_element_type if71;
-	if71.value = &positive.value;
+	if71.value = &inPositive.value;
 	if71.next = &if72;
 
 	struct rule_type rule7;
@@ -197,27 +196,26 @@ void FLC_steering(int c, int s, int v)
 	rule7.then_side = &then7;
 	rule7.next = &rule8;
 	
-	//RULE 6 "if C is zero AND V is nyll then servo is sharpRight"
+	/*
+	//RULE 6 "if C is zero AND V is nyll then servo is sharpRight" ta bort
 	struct rule_element_type then6;
-	then6.value = &oShright.value;
+	then6.value = &sharpRight.value;
 	then6.next = NULL;
 
-	struct rule_element_type if63;
-	if63.value = &medium.value;
-	if63.next = NULL;
-
 	struct rule_element_type if62;
-	if62.value = &inLeft.value;
-	if62.next = &if63;
+	if62.value = &inNyll.value;
+	if62.next = NULL;
 
 	struct rule_element_type if61;
-	if61.value = &zer.value;
+	if61.value = &inZero.value;
 	if61.next = &if62;
 
 	struct rule_type rule6;
 	rule6.if_side = &if61;
 	rule6.then_side = &then6;
 	rule6.next = &rule7;
+
+	*/
 
 	//RULE 5 "if C is negative  AND V is nyll then servo is sharpLeft"
 	struct rule_element_type then5;
@@ -235,7 +233,9 @@ void FLC_steering(int c, int s, int v)
 	struct rule_type rule5;
 	rule5.if_side = &if51;
 	rule5.then_side = &then5;
-	rule5.next = &rule6;
+	rule5.next = &rule7;
+
+	
 
 	//RULE 4 "if C is zero t AND V is nyll then servo is Straight"
 	struct rule_element_type then4;
@@ -254,8 +254,8 @@ void FLC_steering(int c, int s, int v)
 	rule4.if_side = &if41;
 	rule4.then_side = &then4;
 	rule4.next = &rule5;
-
-	//RULE 3 "if C is negative AND  AND V is nyll then servo is SharpLeft"
+	/*
+	//RULE 3 "if C is negative AND V is nyll then servo is SharpLeft"
 	struct rule_element_type then3;
 	then3.value = &sharpLeft.value;
 	then3.next = NULL;
@@ -273,6 +273,7 @@ void FLC_steering(int c, int s, int v)
 	rule3.then_side = &then3;
 	rule3.next = &rule4;
 	
+	*/
 	//RULE 2 "if C is negative AND V is minus then servo is Left"
 	struct rule_element_type then2;
 	then2.value = &left.value;
@@ -289,7 +290,7 @@ void FLC_steering(int c, int s, int v)
 	struct rule_type rule2;
 	rule2.if_side = &if21;
 	rule2.then_side = &then2;
-	rule2.next = &rule3;
+	rule2.next = &rule4;
 
 	//RULE 1 "if C is zero AND V is minus then steering is right"
 	struct rule_element_type then1;
@@ -308,21 +309,33 @@ void FLC_steering(int c, int s, int v)
 	rule1.if_side = &if11;
 	rule1.then_side = &then1;
 	rule1.next = &rule2;
-
-	// Connecting INPUTS
-	delta_C.next = &delta_V;
-	delta_V.next = NULL;
-	
-	// pointers to top of lists
 	Rule_Base = &rule1;
-	System_Inputs = &delta_C;
-	System_Outputs = &steering;
-	steering.next = NULL;
+	
+	
+	// Connecting INPUTS
+	
+
+	
+	
+	
+
+	
 	
 	// the methods performing the FLC
 	fuzzification();
 	rule_evaluation();
 	defuzzification();
-	setServo(servo.value);
+	if (steering.value < 2260)
+	{
+		setServo(2260);
+	}
+	else if (steering.value >3060)
+	{
+		setServo(3060);
+	}
+	else
+	{
+		setServo(steering.value);
+	}
 }
 

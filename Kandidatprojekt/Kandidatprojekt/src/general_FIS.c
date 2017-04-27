@@ -42,18 +42,6 @@ int compute_area_of_trapezoid(mf);
 
 
 //////////////////////////////////////////////////////////////////////////////////
-// METHODS TO SET POINTERS                                                      //
-//////////////////////////////////////////////////////////////////////////////////
-
-void setPointers(struct io_type *inPoint, struct io_type *outPoint, struct rule_type *rulePoint)
-{
-	System_Inputs = inPoint;
-	System_Outputs = outPoint;
-	Rule_Base = rulePoint;
-}
-
-
-//////////////////////////////////////////////////////////////////////////////////
 // METHODS TO PERFORM MAX AND MIN CALCULATIONS                                  //
 //////////////////////////////////////////////////////////////////////////////////
 
@@ -256,34 +244,44 @@ void MATLAB_MF(struct mf_type *newMf, char newname[MAXNAME], int p1, int p2, int
 }
 
 
+
 //////////////////////////////////////////////////////////////////////////////////
 // RULE GENERATION                                                              //
 //////////////////////////////////////////////////////////////////////////////////
 
-/* Creates a new rule_element_type and attach to linked lists
- * for if_side and then_side
- 
-void pushElement(struct rule_element_type **head, int *val){
-    struct rule_element_type *new_element = (struct rule_element_type*) malloc (sizeof (struct rule_element_type));
-    new_element->value = val;
-    new_element->next = *head;
-    *head = new_element;
-}
-
-
-/* Creates a new rule according to the parameter inputs 
- 
-void set_newRule(struct rule_type *newRule, int* args[], int noOfArgs, int* cons[], int noOfCons)
+/* Creates a linked list and assigns values according to inputs */
+void setupRule(struct rule_type *rule, struct rule_element_type *elements[], int* args[], int* cons[])
 {
-    
-    for (int i = 1; i<= noOfArgs ; i++)				// creates   g
-    {
-        pushElement(&newRule->if_side, args[i-1]);
-    }
-    
-    for (int j = 1; j<= noOfCons ; j++)
-    {
-        pushElement(&newRule->then_side, cons[j-1]);
-    }
+	
+	int noArgs = (int)(*(&args+1)-args);
+	int noCons = (int)(*(&cons+1)-cons);
+	
+	rule->if_side = elements[0];
+	
+	for (int i = 1; i<= noArgs ; i++)
+	{
+		elements[i-1]->value = args[i-1];
+		if (i==noArgs) {
+			elements[i-1]->next = NULL;
+		}
+		else
+		{
+			elements[i-1]->next = elements[i];
+		}
+	}
+	
+	rule->then_side = elements[noArgs];
+	
+	for (int j = noArgs ; j <= noArgs+noCons-1 ; j++)
+	{
+		elements[j]->value = cons[j-noArgs];
+		if (j==noCons+noArgs-1) {
+			elements[j]->next = NULL;
+		}
+		else
+		{
+			elements[j]->next = elements[j+1];
+		}
+		
+	}
 }
-´*/

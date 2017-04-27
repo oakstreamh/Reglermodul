@@ -17,9 +17,9 @@
 #define MAXNAME 10          /* max number of characters in names           */
 #define UPPER_LIMIT 256    /* max number assigned as degree of membership */
 
-volatile extern struct io_type *System_Outputs;
-volatile extern struct io_type *System_Inputs;
-volatile extern struct rule_type *Rule_Base;
+extern volatile struct io_type *System_Outputs;
+extern volatile struct io_type *System_Inputs;
+extern volatile struct rule_type *Rule_Base;
 
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -79,6 +79,7 @@ void defuzzification(void);
 //////////////////////////////////////////////////////////////////////////////////
 
 void MATLAB_MF(struct mf_type *newMf, char newname[MAXNAME], int p1, int p2, int p3, int p4);
+void setupRule(struct rule_type *rule, struct rule_element_type *elements[], int* args[],int* cons[]);
 
 
 #endif /* general_FIS_h */

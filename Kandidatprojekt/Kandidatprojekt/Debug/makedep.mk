@@ -2,8 +2,6 @@
 # Automatically-generated file. Do not edit or delete the file
 ################################################################################
 
-src\fuzzyParkingRoutine.c
-
 src\fuzzySteering.c
 
 src\fuzzy_speed_controller.c
@@ -19,6 +17,8 @@ src\OldSteering.c
 src\pid.c
 
 src\servo.c
+
+src\spi_buffer_slave.c
 
 src\test_methods.c
 
