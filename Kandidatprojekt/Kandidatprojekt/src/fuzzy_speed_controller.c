@@ -140,6 +140,7 @@ void FLC_obstacle(int currentOCR1A, int midSonicRange)
     System_Outputs = &pwm;
     pwm.next = NULL;
     
+
     
     // DECLARATION OF RULES AND LISTS
     //////////////////////////////////////////////////////////////////////////////
@@ -231,8 +232,19 @@ void FLC_obstacle(int currentOCR1A, int midSonicRange)
     fuzzification();
     rule_evaluation();
     defuzzification();
-    setESC(pwm.value);
-
+	if (pwm.value > 2825)
+	{
+		setESC(2825);
+	}
+	else if (pwm.value < 2750)
+	{
+		setESC(2750);
+	}
+	else
+	{
+		setESC(pwm.value);
+	}
+	
 } 
 
 

@@ -213,9 +213,6 @@
     <Folder Include="src\config\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="src\fuzzyParkingRoutine.c">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="src\fuzzySteering.c">
       <SubType>compile</SubType>
     </Compile>
@@ -262,6 +259,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\servo.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\spi_buffer_slave.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\spi_buffer_slave.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\test_methods.c">

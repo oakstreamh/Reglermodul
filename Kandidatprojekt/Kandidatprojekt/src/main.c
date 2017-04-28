@@ -28,39 +28,29 @@
 #include "fuzzy_speed_controller.h"
 #include "general_FIS.h"
 #include "fuzzySteering.h"
+#include "spi_buffer_slave.h"
 
 
 //////////////// STRUCTS /////////////////////////////////////////////////////////
 
-struct Sensor_information{
-	unsigned char dist_right_line;
-	unsigned char dist_sonic_middle;
-	unsigned short dist_sonic_left;
-	unsigned short dist_sonic_right;
-	unsigned short dist_sonic_back;
-	unsigned short ang_acc;
-	unsigned short car_speed;
-	unsigned short dist_to_stop_line;
-	unsigned char angular_diff;
-	unsigned char sign_type; //Not sure we gonna use this one. Depends if camera can detect signs
-};
+
 
 
 //////////////// HEADERS /////////////////////////////////////////////////////////
 
 void USART1_init(unsigned int baud_setting);
-void SPI_slaveInit(void);
 void carInit(void);
 void Sens_info_read(struct Sensor_information*);
 void Init(void);
 int16_t Get_Measurement(void);
 int16_t Get_Reference(void);
+volatile unsigned char spi_rx_not_empty_flag = 0;
 
 
 //////////////// VARIABLES ///////////////////////////////////////////////////////
 
 int elapsedSeconds = 0;
-int SPI_FLAG = 0;
+
 
 // Declaration of input signals
 int carInitialized = 0;
@@ -117,11 +107,7 @@ ISR(USART1_RX_vect){
 * PB5 Slave input (MOSI)
 * PB4 Slave select (SS)
 */
-void SPI_slaveInit(void)
-{
-	DDRB = (1<<DDB6); // Set MISO output, all others input
-	SPCR = (1<<SPE)|(1<<SPIE); // Enables SPI
-}
+
 
 
 
@@ -133,7 +119,7 @@ void SPI_slaveInit(void)
 void carInit(void)
 {
 	pwmInit();
-	SPI_slaveInit();
+	spi_slave_init();
 	setESC(NEUTRAL);
 	setServo(STRAIGHT);
 	
@@ -219,12 +205,16 @@ struct GLOBAL_FLAGS {
 	*/
 	int main (void)
 	{
-		
+	
+	// FOR TESTING
+	//	FLC_obstacle(2800, 150);
+	//	FLC_steering(170, 70);
+	
+	
 		carInit();
 		_delay_ms(5000);
-		sei();
+		sei();		
 		
-	
 		
 		
 		//-----Variables and pointers for Sensor information
@@ -235,6 +225,7 @@ struct GLOBAL_FLAGS {
 		struct Sensor_information sensor_info;
 		struct Sensor_information* sens_info_ptr;
 		sens_info_ptr = &sensor_info;
+		unsigned char control_mode;
 		//--end of sensor information
 		
 		//Init for UART
@@ -254,9 +245,10 @@ struct GLOBAL_FLAGS {
 		
 		while (1) {
 			
-			 if (counter_UART1_reciever > 2) {
+			 if (is_package_recieved()) {
 				
-				Sens_info_read(sens_info_ptr);
+				//Reading Information
+				read_sensor_info(&control_mode, sens_info_ptr);
 				
 				c = (int) sensor_info.dist_right_line;
 				v = (int) sensor_info.angular_diff;
@@ -265,8 +257,19 @@ struct GLOBAL_FLAGS {
 				cli();
 				
 				FLC_obstacle(OCR1A, d);
-				//FLC_steering(125, 2660, 40);
+				FLC_steering(c, v);
 				sei();
+				
+				//Sending back information
+				unsigned int esc_value_to_send;
+				esc_value_to_send = (unsigned) (short) OCR1A;
+				unsigned int steering_value_to_send;
+				steering_value_to_send = (unsigned) (short) OCR1B;
+				//Big endian
+				spi_send_byte((unsigned) (char) (esc_value_to_send<<8)); 
+				spi_send_byte((unsigned) (char) (esc_value_to_send));
+				spi_send_byte((unsigned) (char) (steering_value_to_send<<8));
+				spi_send_byte((unsigned) (char) (steering_value_to_send));
 			}
 			
 			
