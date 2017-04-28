@@ -3,8 +3,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-//////////////////////////////////////////////////////////////////////////////////
-// INCLUDES                                                                     //
+// INCLUDES
 //////////////////////////////////////////////////////////////////////////////////
 
 #include <string.h>
@@ -14,63 +13,35 @@
 #include <stdio.h>
 
 
-//////////////////////////////////////////////////////////////////////////////////
-// DEFINITIONS OF I/O AND POINTERS TO TOP OF LISTS                              //
-//////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-#define MIN_DISTANCE 0 
-#define MAX_DISTANCE 250
-#define MIN_SPEED 2740
-#define MAX_SPEED 2900
-
-
-struct io_type *speedP;		// pointer to top of inputs' linked list
-struct io_type *pwmP;		// pointer to top of output's linked list
-struct rule_type *rule1P;	// pointer to first rule in rule base
-
-//////////////////////////////////////////////////////////////////////////////////
-// METHODS                                                                      //
+// DEFINITIONS
 //////////////////////////////////////////////////////////////////////////////////
 
+#define MIN_DISTANCE 0          // lower limit of distance variable
+#define MAX_DISTANCE 250        // upper limit of distance variable
+#define MIN_SPEED 2740          // lower limit of speed input variable
+#define MAX_SPEED 2900          // upper limit of speed input variable
 
 
-/* Initialization and execution of fuzzy speed controller.
- * Only top of linked lists are global variables. The controller can
- * be tuned in the MATLAB FLC-tool. The file name is "fuzzy_speed_controller.fis".
- *
- * In the fuzzy logic tool used in this application, trapezoidal functions are defined
- * by the two end points  of membership, [a, d], and two slopes.
- * In MATLAB trapezoidal membership functions (MFs) are defined by four points
- * [a,b,c,d] according to:
- *
- *        b__________c
- *        /          \
- * _____a/............\d________
- *
- * Inputs: measurement of speed, v (PWM counter), and distance, d, from sonic sensors
- * Output: speed, (PWM counter)
- */
+// FLC OBSTACLE AVOIDER
+//////////////////////////////////////////////////////////////////////////////////
+
 void FLC_obstacle(int currentOCR1A, int midSonicRange)
 {
     
-	
-	
+    // DECLARATION OF DISTANCE INPUT VARIABLE
+    //////////////////////////////////////////////////////////////////////////////
     
-   ///// DECLARATION OF DISTANCE INPUT VARIABLE ///////////////////////////////////
    	struct io_type distance; strcpy(distance.name, "distance");
     
     // Set MFs
     struct mf_type stopDist;
-    MATLAB_MF(&stopDist, "stopDist", -1, 0, 12, 52);
+    MATLAB_MF(&stopDist, "stopDist", MIN_DISTANCE-1, 0, 12, 52);
     struct mf_type oneM;
     MATLAB_MF(&oneM, "oneM", 30, 60, 60, 95);
     struct mf_type twoM;
     MATLAB_MF(&twoM, "twoM", 75, 125, 125, 175);
     struct mf_type threeM;
-    MATLAB_MF(&threeM, "threeM", 150, 250, 250, 251);
+    MATLAB_MF(&threeM, "threeM", 150, 250, 250, MAX_DISTANCE+1);
     
     // Linked list for MFs
     distance.membership_functions = &stopDist;
@@ -94,12 +65,14 @@ void FLC_obstacle(int currentOCR1A, int midSonicRange)
     }
     
     
-    ////// DECLARATION OF SPEED INPUT VARIABLE ///////////////////////////////////
+    // DECLARATION OF SPEED INPUT VARIABLE
+    //////////////////////////////////////////////////////////////////////////////
+    
     struct io_type speed; strcpy(speed.name, "speed");
     
     // Set MFs
     struct mf_type still;
-    MATLAB_MF(&still, "still", 2739, 2740, 2740, 2815);
+    MATLAB_MF(&still, "still", MIN_SPEED-1, 2740, 2740, 2815);
     struct mf_type low;
     MATLAB_MF(&low, "low", 2804, 2820, 2820, 2836);
     struct mf_type cruising;
@@ -107,7 +80,7 @@ void FLC_obstacle(int currentOCR1A, int midSonicRange)
     struct mf_type medium;
     MATLAB_MF(&medium, "medium", 2849, 2865, 2865, 2881);
     struct mf_type high;
-    MATLAB_MF(&high, "high", 2870, 2900, 2900, 2901);
+    MATLAB_MF(&high, "high", 2870, 2900, 2900, MAX_SPEED+1);
     
     // Linked list for MFs
     speed.membership_functions = &still;
@@ -117,7 +90,7 @@ void FLC_obstacle(int currentOCR1A, int midSonicRange)
     medium.next = &high;
     high.next = NULL;
     
-    // Variable assigned it's reference value
+    // Variable assigned its reference value
     if (currentOCR1A<MIN_SPEED) {
         speed.value = MIN_SPEED;
     }
@@ -131,8 +104,10 @@ void FLC_obstacle(int currentOCR1A, int midSonicRange)
     }
     
     
-    ////// DECLARATION OF PWM OUTPUT VARIABLE ///////////////////////////////////
-   	struct io_type pwm; strcpy(pwm.name, "pwm");
+    // DECLARATION OF PWM OUTPUT VARIABLE
+    //////////////////////////////////////////////////////////////////////////////
+   	
+    struct io_type pwm; strcpy(pwm.name, "pwm");
     
     // Set MFs
     struct mf_type noSpeed;
@@ -155,11 +130,8 @@ void FLC_obstacle(int currentOCR1A, int midSonicRange)
     max.next = NULL;
     
     
-    
-    
-    
-    
-    ////// SETTING I/O LINKED LISTS ///////////////////////////////////
+    // SETTING I/O LINKED LISTS
+    //////////////////////////////////////////////////////////////////////////////
     
     System_Inputs = &distance;
     distance.next = &speed;
@@ -168,231 +140,94 @@ void FLC_obstacle(int currentOCR1A, int midSonicRange)
     System_Outputs = &pwm;
     pwm.next = NULL;
     
-   
     
-    // Declaration of rules and lists
+    // DECLARATION OF RULES AND LISTS
+    //////////////////////////////////////////////////////////////////////////////
     
-    struct rule_type rule1;
-    struct rule_type rule2;
-    struct rule_type rule3;
-    struct rule_type rule4;
-    struct rule_type rule5;
-    struct rule_type rule6;
-    struct rule_type rule7;
-    struct rule_type rule8;
-    struct rule_type rule9;
-    struct rule_type rule10;
-    struct rule_type rule11;
-    struct rule_type rule12;
-    struct rule_type rule13;
+    struct rule_type rule1; Rule_Base = &rule1;
+    struct rule_type rule2; rule1.next = &rule2;
+    struct rule_type rule3; rule2.next = &rule3;
+    struct rule_type rule4; rule3.next = &rule4;
+    struct rule_type rule5; rule4.next = &rule5;
+    struct rule_type rule6; rule5.next = &rule6;
+    struct rule_type rule7; rule6.next = &rule7;
+    struct rule_type rule8; rule7.next = &rule8;
+    struct rule_type rule9; rule8.next = &rule9;
+    struct rule_type rule10; rule9.next = &rule10;
+    struct rule_type rule11; rule10.next = &rule11;
+    struct rule_type rule12; rule11.next = &rule12; rule12.next = NULL;
     
     
-    Rule_Base = &rule1;
-    rule1.next = &rule2;
-    rule2.next = &rule3;
-    rule3.next = &rule4;
-    rule4.next = &rule5;
-    rule5.next = &rule6;
-    rule6.next = &rule7;
-    rule7.next = &rule8;
-    rule8.next = &rule9;
-    rule9.next = &rule10;
-    rule10.next = &rule11;
-    rule11.next = &rule12;
-    rule12.next = &rule13;
-    rule13.next = NULL;
+    // RULE SETUP
+    //////////////////////////////////////////////////////////////////////////////
     
     // if distance is stopDist then pwm is noSpeed
-    struct rule_element_type if11;
-    if11.value = &stopDist.value;
-    if11.next = NULL;
-    struct rule_element_type then1;
-    then1.next = NULL;
-    then1.value = &noSpeed.value;
+    struct rule_element_type if11, then1;
+    rule1.if_side = &if11; if11.next = NULL; rule1.then_side = &then1; then1.next = NULL;
+    if11.value = &stopDist.value; then1.value = &noSpeed.value;
     
-    rule1.if_side = &if11;
-    rule1.then_side = &then1;
-    
-    // if speed is low and distance is oneM then speed is slow
-    struct rule_element_type if22;
-    if22.value = &oneM.value;
-    if22.next = NULL;
-    struct rule_element_type if21;
-    if21.value = &low.value;
-    if21.next = &if22;
-    struct rule_element_type then2;
-    then2.value = &slow.value;
-    then2.next = NULL;
-    
-    rule2.if_side = &if21;
-    rule2.then_side = &then2;
+    // if speed is low and distance is oneM then speed is slow    struct rule_element_type if21, if22, then2;
+    struct rule_element_type if21, if22, then2;
+    rule2.if_side = &if21; if21.next = &if22; if22.next = NULL; rule2.then_side = &then2; then2.next = NULL;
+    if21.value = &low.value; if22.value = &oneM.value; then2.value = &slow.value;
     
     // if speed is medium and distance is oneM then speed is cruise
-    
-    struct rule_element_type then3;
-    then3.value = &cruise.value;
-    then3.next = NULL;
-    
-    struct rule_element_type if32;
-    if32.value = &oneM.value;
-    if32.next = NULL;
-    
-    struct rule_element_type if31;
-    if31.value = &medium.value;
-    if31.next = &if32;
-    
-    rule3.if_side = &if31;
-    rule3.then_side = &then3;
+    struct rule_element_type if31, if32, then3;
+    rule3.if_side = &if31; if31.next = &if32; if32.next = NULL; rule3.then_side = &then3; then3.next = NULL;
+    if31.value = &medium.value; if32.value = &oneM.value; then3.value = &cruise.value;
     
     // if speed is high and distance is oneM then speed is cruise
-    struct rule_element_type then4;
-    then4.value = &cruise.value;
-    then4.next = NULL;
-    
-    struct rule_element_type if42;
-    if42.value = &oneM.value;
-    if42.next = NULL;
-    
-    struct rule_element_type if41;
-    if41.value = &high.value;
-    if41.next = &if42;
-    
-    rule4.if_side = &if41;
-    rule4.then_side = &then4;
+    struct rule_element_type if41, if42, then4;
+    rule4.if_side = &if41; if41.next = &if42; if42.next = NULL; rule4.then_side = &then4; then4.next = NULL;
+    if41.value = &high.value; if42.value = &oneM.value; then4.value = &cruise.value;
     
     // if speed is still and distance is oneM then speed is slow
-    
-    struct rule_element_type then5;
-    then5.value = &slow.value;
-    then5.next = NULL;
-    
-    struct rule_element_type if52;
-    if52.value = &oneM.value;
-    if52.next = NULL;
-    
-    struct rule_element_type if51;
-    if51.value = &still.value;
-    if51.next = &if52;
-    
-    rule5.if_side = &if51;
-    rule5.then_side = &then5;
+    struct rule_element_type if51, if52, then5;
+    rule5.if_side = &if51; if51.next = &if52; if52.next = NULL; rule5.then_side = &then5; then5.next = NULL;
+    if51.value = &still.value; if52.value = &oneM.value; then5.value = &slow.value;
     
     // if speed is cruising and distance is oneM then speed is slow
-    struct rule_element_type then6;
-    then6.value = &slow.value;
-    then6.next = NULL;
-    
-    struct rule_element_type if62;
-    if62.value = &oneM.value;
-    if62.next = NULL;
-    
-    struct rule_element_type if61;
-    if61.value = &cruising.value;
-    if61.next = &if62;
-    
-    rule6.if_side = &if61;
-    rule6.then_side = &then6;
+    struct rule_element_type if61, if62, then6;
+    rule6.if_side = &if61; if61.next = &if62; if62.next = NULL; rule6.then_side = &then6; then6.next = NULL;
+    if61.value = &cruising.value; if62.value = &oneM.value; then6.value = &slow.value;
     
     // if speed is low and distance is twoM then speed is cruise
-    struct rule_element_type then7;
-    then7.value = &cruise.value;
-    then7.next = NULL;
-    
-    struct rule_element_type if72;
-    if72.value = &twoM.value;
-    if72.next = NULL;
-    
-    struct rule_element_type if71;
-    if71.value = &low.value;
-    if71.next = &if72;
-    
-    rule7.if_side = &if71;
-    rule7.then_side = &then7;
+    struct rule_element_type if21, if22, then7;
+    rule7.if_side = &if71; if71.next = &if72; if72.next = NULL; rule7.then_side = &then7; then7.next = NULL;
+    if71.value = &low.value; if72.value = &twoM.value; then7.value = &cruise.value;
     
     // if speed is medium and distance is twoM then speed is medHigh
-    
-    struct rule_element_type then8;
-    then8.value = &medHigh.value;
-    then8.next = NULL;
-    
-    struct rule_element_type if82;
-    if82.value = &twoM.value;
-    if82.next = NULL;
-    
-    struct rule_element_type if81;
-    if81.value = &medium.value;
-    if81.next = &if82;
-    
-    rule8.if_side = &if81;
-    rule8.then_side = &then8;
+    struct rule_element_type if81, if82, then8;
+    rule8.if_side = &if81; if81.next = &if82; if82.next = NULL; rule8.then_side = &then8; then8.next = NULL;
+    if81.value = &medium.value; if82.value = &twoM.value; then8.value = &medHigh.value;
     
     // if speed is high and distance is twoM then speed is medHigh
-    struct rule_element_type then9;
-    then9.value = &medHigh.value;
-    then9.next = NULL;
-    
-    struct rule_element_type if92;
-    if92.value = &twoM.value;
-    if92.next = NULL;
-    
-    struct rule_element_type if91;
-    if91.value = &high.value;
-    if91.next = &if92;
-    
-    rule9.if_side = &if91;
-    rule9.then_side = &then9;
+    struct rule_element_type if91, if92, then9;
+    rule9.if_side = &if91; if91.next = &if92; if92.next = NULL; rule9.then_side = &then9; then9.next = NULL;
+    if91.value = &high.value; if92.value = &twoM.value; then9.value = &medHigh.value;
     
     // if speed is still and distance is twoM then speed is cruise
-    struct rule_element_type then10;
-    then10.value = &cruise.value;
-    then10.next = NULL;
+    struct rule_element_type if101, if102, then10;
     
+    rule10.if_side = &if101; if101.next = &if102; if102.next = NULL; rule10.then_side = &then10; then10.next = NULL;
+    if101.value = &still.value; if102.value = &twoM.value; then10.value = &cruise.value;
     struct rule_element_type if102;
-    if102.value = &twoM.value;
-    if102.next = NULL;
-    
-    struct rule_element_type if101;
-    if101.value = &still.value;
-    if101.next = &if102;
-    
-    rule10.if_side = &if101;
-    rule10.then_side = &then10;
     
     // if speed is cruising and distance is twoM then speed is medHigh
-    struct rule_element_type then11;
-    then11.value = &medHigh.value;
-    then11.next = NULL;
-    
-    struct rule_element_type if112;
-    if112.value = &twoM.value;
-    if112.next = NULL;
-    
-    struct rule_element_type if111;
-    if111.value = &cruising.value;
-    if111.next = &if112;
-    
-    rule11.if_side = &if111;
-    rule11.then_side = &then11;
+    struct rule_element_type if111, if112, then11;
+    rule11.if_side = &if111; if111.next = &if112; if112.next = NULL; rule11.then_side = &then11; then11.next = NULL;
+    if111.value = &cruising.value; if112.value = &twoM.value; then11.value = &medHigh.value;
     
     // if distance is threeM then speed is max
-    struct rule_element_type then12;
-    then12.value = &max.value;
-    then12.next = NULL;
-    
-    struct rule_element_type if121;
-    if121.value = &threeM.value;
-    if121.next = NULL;
-    
-    rule12.if_side = &if121;
-    rule12.then_side = &then12;
+    struct rule_element_type if121, if122, then12;
+    rule12.if_side = &if121; if121.next = NULL; rule12.then_side = &then12; then12.next = NULL;
+    if121.value = &threeM.value; then12.value = &max.value;
     
     
     
+    // EXECUTING FUZZY LOGIC & OUTPUT VALUE
+    //////////////////////////////////////////////////////////////////////////////
     
-
-    
-    
-    // the methods performing the FLC
     fuzzification();
     rule_evaluation();
     defuzzification();

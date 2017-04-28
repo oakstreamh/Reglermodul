@@ -237,13 +237,26 @@ void defuzzification()
 }
 
 
-//////////////////////////////////////////////////////////////////////////////////
-// MATLAB MF FUNCTIONS                                                          //
+
+// MATLAB MF FUNCTIONS
 //////////////////////////////////////////////////////////////////////////////////
 
-/* This function takes four parameters defining a trapezoid or triangular mf
+/* Initialization of membership functions. Membership functions are tuned using
+ * MATLAB's FLC-tool.
+ *
+ * In the fuzzy logic tool used in this application, trapezoidal functions are defined
+ * by the two end points  of membership, [a, d], and two slopes.
+ * In MATLAB trapezoidal membership functions (MFs) are defined by four points
+ * [a,b,c,d] according to:
+ *
+ *        b__________c
+ *        /          \
+ * _____a/............\d________
+ *
+ *
+ * MATLAB_MF takes four parameters defining a trapezoid or triangular mf
  * function in MATLAB's tool for fuzzy logic design and returns a MF according
- * to the format in general_FIS.c with two end points and two slopes
+ * to the format of general_FIS.c with two end points and two slopes
  */
 void MATLAB_MF(struct mf_type *newMf, char newname[MAXNAME], int p1, int p2, int p3, int p4)
 {
