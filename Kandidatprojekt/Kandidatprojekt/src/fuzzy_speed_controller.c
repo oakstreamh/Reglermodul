@@ -193,7 +193,7 @@ void FLC_obstacle(int currentOCR1A, int midSonicRange)
     if61.value = &cruising.value; if62.value = &oneM.value; then6.value = &slow.value;
     
     // if speed is low and distance is twoM then speed is cruise
-    struct rule_element_type if21, if22, then7;
+    struct rule_element_type if71, if72, then7;
     rule7.if_side = &if71; if71.next = &if72; if72.next = NULL; rule7.then_side = &then7; then7.next = NULL;
     if71.value = &low.value; if72.value = &twoM.value; then7.value = &cruise.value;
     
@@ -209,10 +209,8 @@ void FLC_obstacle(int currentOCR1A, int midSonicRange)
     
     // if speed is still and distance is twoM then speed is cruise
     struct rule_element_type if101, if102, then10;
-    
     rule10.if_side = &if101; if101.next = &if102; if102.next = NULL; rule10.then_side = &then10; then10.next = NULL;
     if101.value = &still.value; if102.value = &twoM.value; then10.value = &cruise.value;
-    struct rule_element_type if102;
     
     // if speed is cruising and distance is twoM then speed is medHigh
     struct rule_element_type if111, if112, then11;

@@ -164,13 +164,16 @@ void Sens_info_read(struct Sensor_information* sens_info_ptr) //There is no chec
 	UCSR1B &= ~(1<<RXCIE1);
 	
 	//Assigning values from buffer to sens_info
-	sens_info_ptr->dist_right_line = (unsigned) (char) UART1_reciever_buffer[0];
-	sens_info_ptr->angular_diff = (unsigned) (char) UART1_reciever_buffer[1];
-	sens_info_ptr->dist_sonic_middle = (unsigned) (char) UART1_reciever_buffer[2];
+	//	sens_info_ptr->dist_right_line = (unsigned) (char) UART1_reciever_buffer[0];
+	//	sens_info_ptr->angular_diff = (unsigned) (char) UART1_reciever_buffer[1];
+	sens_info_ptr->dist_sonic_right = (unsigned) (char) UART1_reciever_buffer[0];
+	sens_info_ptr->dist_sonic_middle = (unsigned) (char) UART1_reciever_buffer[1];
+	sens_info_ptr->dist_sonic_left = (unsigned) (char) UART1_reciever_buffer[2];
+	sens_info_ptr->dist_sonic_back = (unsigned) (char) UART1_reciever_buffer[3];
 	
-	//sens_info_ptr->dist_sonic_left = ((unsigned) (short) UART1_reciever_buffer[5] << 8) | (unsigned) (short) UART1_reciever_buffer[4];
+	
 	//sens_info_ptr->dist_sonic_right = ((unsigned) (short) UART1_reciever_buffer[7] << 8) | (unsigned) (short) UART1_reciever_buffer[6];
-	//sens_info_ptr->dist_sonic_back = ((unsigned) (short) UART1_reciever_buffer[9] << 8) | (unsigned) (short) UART1_reciever_buffer[8];
+	
 	//sens_info_ptr->ang_acc = ((unsigned) (short) UART1_reciever_buffer[11] << 8) | (unsigned) (short) UART1_reciever_buffer[10];
 	//sens_info_ptr->car_speed = ((unsigned) (short) UART1_reciever_buffer[13] << 8) | (unsigned) (short) UART1_reciever_buffer[12];
 	//sens_info_ptr->dist_to_stop_line = ((unsigned) (short) UART1_reciever_buffer[15] << 8) | (unsigned) (short) UART1_reciever_buffer[14];
@@ -181,123 +184,91 @@ void Sens_info_read(struct Sensor_information* sens_info_ptr) //There is no chec
 	UCSR1B |= (1<<RXCIE1);
 }
 
-#define K_P 1.00
-#define K_D 0.00
 
-struct GLOBAL_FLAGS {
-	//! True when PID control loop should run one time
-	uint8_t pidTimer : 1;
-	uint8_t dummy : 7;
-	} gFlags = {0, 0};
+
+
+
+int main (void)
+{
 	
-	struct PID_DATA pidData;
-
-	#define TIME_INTERVAL 38555 //EXAMPLE //TODO
-
-	//ISR(TIMER0_OVF_vect)
-	//{
-	//static uint16_t i = 0;
-	//
-	//if (i < TIME_INTERVAL) {
-	//i++;
-	//} else {
-	//gFlags.pidTimer = TRUE;
-	//i               = 0;
-	//}
-	//}
-
-	void Init(void)
-	{
-		pid_Init(K_P * SCALING_FACTOR, K_D * SCALING_FACTOR, &pidData);
-
-		// Set up timer, enable timer/counter 0 overflow interrupt
-		TCCR0B = (1 << CS00); // clock source to be used by the Timer/Counter clkI/O
-		TIMSK0 = (1 << TOIE0);
-		TCNT0  = 0;
-	}
-
-	/* main function
-	*/
-	int main (void)
-	{
-		
-		// FOR TESTING
-		//	FLC_obstacle(2800, 150);
-		
-		carInit();
-		_delay_ms(5000);
-		
-		
-		
-		sei();
-		
-		
-		
+	
+	// FOR TESTING
+	//	FLC_obstacle(2800, 150);
+	
+	carInit();
+	_delay_ms(5000);
+	
+	
+	
+	sei();
+	
+	
+	
 	//-----Variables and pointers for Sensor information
-		//Er info finns i sensor_info.dist_right_line;
-		//om counter_UART1_reciever true, finns info att hemta
+	//Er info finns i sensor_info.dist_right_line;
+	//om counter_UART1_reciever true, finns info att hemta
+	
+	
+	struct Sensor_information sensor_info;
+	struct Sensor_information* sens_info_ptr;
+	sens_info_ptr = &sensor_info;
+	unsigned char control_mode;
+	//--end of sensor information
+	
+	//Init for UART
+	unsigned int baud_setting = 7;
+	USART1_init(baud_setting);
+	//End of init for UART
+	
+	
+	int d;
+	
+	
+	//Setting for Testing
+	//DDRA = 0xFF;
+	//End of test setting
+	
+	while (1) {
 		
-		
-		struct Sensor_information sensor_info;
-		struct Sensor_information* sens_info_ptr;
-		sens_info_ptr = &sensor_info;
-		unsigned char control_mode;
-		//--end of sensor information
-		
-		//Init for UART
-		unsigned int baud_setting = 7;
-		USART1_init(baud_setting);
-		//End of init for UART
-		
-		
-		int c;
-		int v;
-		int d;
-		
-		
-		//Setting for Testing
-		//DDRA = 0xFF;
-		//End of test setting
-		
-		while (1) {
-		
-		if (counter_UART1_reciever > 2) {
-		
-		//Reading Information
-		//read_sensor_info(&control_mode, sens_info_ptr);
-		Sens_info_read(sens_info_ptr);
-		
-		c = (int) sensor_info.dist_right_line;
-		v = (int) sensor_info.angular_diff;
-		//d = (int) sensor_info.dist_sonic_middle;
-		
-		cli();
-		
-		//FLC_obstacle(OCR1A, d);
-		//FLC_steering(c, v);
-		fuzzy_parking(c,v, OCR1A);
-		sei();
-		
-		//Sending back information
-		unsigned int esc_value_to_send;
-		esc_value_to_send = (unsigned) (short) OCR1A;
-		unsigned int steering_value_to_send;
-		steering_value_to_send = (unsigned) (short) OCR1B;
-		//Big endian
-		//spi_send_byte((unsigned) (char) (esc_value_to_send<<8));
-		//spi_send_byte((unsigned) (char) (esc_value_to_send));
-		//spi_send_byte((unsigned) (char) (steering_value_to_send<<8));
-		//spi_send_byte((unsigned) (char) (steering_value_to_send));
+		if (counter_UART1_reciever > 3) {
+			
+			//Reading Information
+			//read_sensor_info(&control_mode, sens_info_ptr);
+			Sens_info_read(sens_info_ptr);
+			
+			int sR = (int) sensor_info.dist_sonic_right;
+			int sF = (int) sensor_info.dist_sonic_middle;
+			int sL = (int) sensor_info.dist_sonic_left;
+			int sB = (int) sensor_info.dist_sonic_back;
+			//d = (int) sensor_info.dist_sonic_middle;
+			
+			cli();
+			
+			//FLC_obstacle(OCR1A, d);
+			//FLC_steering(c, v);
+			fuzzy_parking(sL,sF, OCR1A);
+			sei();
+			
+			//Sending back information
+			unsigned int esc_value_to_send;
+			esc_value_to_send = (unsigned) (short) OCR1A;
+			unsigned int steering_value_to_send;
+			steering_value_to_send = (unsigned) (short) OCR1B;
+			//Big endian
+			//spi_send_byte((unsigned) (char) (esc_value_to_send<<8));
+			//spi_send_byte((unsigned) (char) (esc_value_to_send));
+			//spi_send_byte((unsigned) (char) (steering_value_to_send<<8));
+			//spi_send_byte((unsigned) (char) (steering_value_to_send));
 		}
 		
 		
 		
 		
-		}
-		
-
 	}
 	
+
+}
+
 
 
 

@@ -1,16 +1,16 @@
-<<<<<<< HEAD
-=======
+
 //////////////////////////////////////////////////////////////////////////////////
 // FUZZY PARKING ALGORITHM                                                      //
 //////////////////////////////////////////////////////////////////////////////////
 
-
+/*
 // INCLUSIONS
 //////////////////////////////////////////////////////////////////////////////////
 
 #include "parkingAlgorithm.h"
 #include "general_FIS.h"
 #include "string.h"
+#include "servo.h"
 
 // DEFINITIONS AND INTEGERS
 //////////////////////////////////////////////////////////////////////////////////
@@ -201,7 +201,7 @@ void gettingReady(int sonicR, int sonicF)
 }
 
 
-void parkCar(int sonicRight, int sonicForward, int speedCount)
+void parkCar(int sonicR, int sonicF, int speedCount)
 {
     
     // DECLARATION OF INPUT VARIABLE DISTF
@@ -373,7 +373,7 @@ void parkCar(int sonicRight, int sonicForward, int speedCount)
 
 
 
-void fuzzyParking(int sonicRight, int sonicForward, int sonicLeft, int sonicBack, int speedCount)
+void fuzzyParking(int sonicR, int sonicF, int sonicL, int sonicB, int speedCount)
 {
     
     if (parkingMode == 0)
@@ -383,21 +383,17 @@ void fuzzyParking(int sonicRight, int sonicForward, int sonicLeft, int sonicBack
     
     if (parkingMode == 1)
     {
-        if (sonicForward<5) {
-            setEsc(PARK_SPEED_REVERSE);
+        if (sonicF<10) {
+            setESC(PARK_SPEED_REVERSE);
         }
-        else if (sonicForward>40)
+        else if (sonicF>40)
         {
-            setEsc(PARK_SPEED_FORWARD);
+            setESC(PARK_SPEED_FORWARD);
         }
         
-        parkCar(sonicRight, sonicForward, speedCount);
+        parkCar(sonicR, sonicF, speedCount);
         
     }
     
     
-}
-
-
-
->>>>>>> origin/master
+}*/
