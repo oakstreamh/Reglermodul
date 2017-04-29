@@ -74,12 +74,6 @@ struct rule_type{
 void fuzzification(void);
 void rule_evaluation(void);
 void defuzzification(void);
-
-
-//////////////////////////////////////////////////////////////////////////////////
-// DECLARATION OF POINTERS TO TOP OF LINKED LISTS                               //
-//////////////////////////////////////////////////////////////////////////////////
-
 void MATLAB_MF(struct mf_type *newMf, char newname[MAXNAME], int p1, int p2, int p3, int p4);
 void setupRule(struct rule_type *rule, struct rule_element_type *elements[], int* args[],int* cons[]);
 
