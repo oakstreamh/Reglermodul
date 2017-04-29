@@ -2,6 +2,8 @@
 # Automatically-generated file. Do not edit or delete the file
 ################################################################################
 
+src\fuzzyParkingAlgorithm.c
+
 src\fuzzySteering.c
 
 src\fuzzy_speed_controller.c
@@ -13,6 +15,8 @@ src\main.c
 src\manualMode.c
 
 src\OldSteering.c
+
+src\parkingAlgorithm.c
 
 src\pid.c
 

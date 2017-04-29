@@ -37,9 +37,9 @@ c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-t
 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_exit.o)
                               c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm1284p.o (exit)
 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_copy_data.o)
-                              src/fuzzySteering.o (__do_copy_data)
+                              src/fuzzyParkingAlgorithm.o (__do_copy_data)
 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_clear_bss.o)
-                              src/fuzzySteering.o (__do_clear_bss)
+                              src/fuzzyParkingAlgorithm.o (__do_clear_bss)
 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_udivmodhi4.o)
                               c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_divmodhi4.o) (__udivmodhi4)
 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(strcpy.o)
@@ -73,6 +73,17 @@ Discarded input sections
 
  .data          0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm1284p.o
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm1284p.o
+ .group         0x00000000        0x8 src/fuzzyParkingAlgorithm.o
+ .group         0x00000000        0x8 src/fuzzyParkingAlgorithm.o
+ .group         0x00000000        0x8 src/fuzzyParkingAlgorithm.o
+ .group         0x00000000        0x8 src/fuzzyParkingAlgorithm.o
+ .group         0x00000000        0x8 src/fuzzyParkingAlgorithm.o
+ .group         0x00000000        0x8 src/fuzzyParkingAlgorithm.o
+ .text          0x00000000        0x0 src/fuzzyParkingAlgorithm.o
+ .data          0x00000000        0x0 src/fuzzyParkingAlgorithm.o
+ .bss           0x00000000        0x0 src/fuzzyParkingAlgorithm.o
+ .bss.parkingFinished
+                0x00000000        0x2 src/fuzzyParkingAlgorithm.o
  .group         0x00000000        0x8 src/fuzzySteering.o
  .group         0x00000000        0x8 src/fuzzySteering.o
  .group         0x00000000        0x8 src/fuzzySteering.o
@@ -88,6 +99,33 @@ Discarded input sections
  .text          0x00000000        0x0 src/fuzzySteering.o
  .data          0x00000000        0x0 src/fuzzySteering.o
  .bss           0x00000000        0x0 src/fuzzySteering.o
+ .rodata.str1.1
+                0x00000000       0x75 src/fuzzySteering.o
+ .text.FLC_steering
+                0x00000000      0x6fc src/fuzzySteering.o
+ .debug_info    0x00000000      0x9b8 src/fuzzySteering.o
+ .debug_abbrev  0x00000000      0x147 src/fuzzySteering.o
+ .debug_loc     0x00000000      0x184 src/fuzzySteering.o
+ .debug_aranges
+                0x00000000       0x20 src/fuzzySteering.o
+ .debug_ranges  0x00000000       0x10 src/fuzzySteering.o
+ .debug_macro   0x00000000       0x8c src/fuzzySteering.o
+ .debug_macro   0x00000000      0xa48 src/fuzzySteering.o
+ .debug_macro   0x00000000       0x16 src/fuzzySteering.o
+ .debug_macro   0x00000000       0x97 src/fuzzySteering.o
+ .debug_macro   0x00000000       0x16 src/fuzzySteering.o
+ .debug_macro   0x00000000       0x16 src/fuzzySteering.o
+ .debug_macro   0x00000000      0x1ad src/fuzzySteering.o
+ .debug_macro   0x00000000      0x293 src/fuzzySteering.o
+ .debug_macro   0x00000000       0x58 src/fuzzySteering.o
+ .debug_macro   0x00000000       0x10 src/fuzzySteering.o
+ .debug_macro   0x00000000       0x20 src/fuzzySteering.o
+ .debug_macro   0x00000000       0xeb src/fuzzySteering.o
+ .debug_macro   0x00000000       0x2e src/fuzzySteering.o
+ .debug_line    0x00000000      0x4dc src/fuzzySteering.o
+ .debug_str     0x00000000     0x41eb src/fuzzySteering.o
+ .comment       0x00000000       0x31 src/fuzzySteering.o
+ .debug_frame   0x00000000       0x88 src/fuzzySteering.o
  COMMON         0x00000000       0x20 src/fuzzySteering.o
  .group         0x00000000        0x8 src/fuzzy_speed_controller.o
  .group         0x00000000        0x8 src/fuzzy_speed_controller.o
@@ -104,6 +142,17 @@ Discarded input sections
  .text          0x00000000        0x0 src/fuzzy_speed_controller.o
  .data          0x00000000        0x0 src/fuzzy_speed_controller.o
  .bss           0x00000000        0x0 src/fuzzy_speed_controller.o
+ .rodata.str1.1
+                0x00000000       0x68 src/fuzzy_speed_controller.o
+ .text.FLC_obstacle
+                0x00000000      0x8b4 src/fuzzy_speed_controller.o
+ .debug_info    0x00000000      0xb25 src/fuzzy_speed_controller.o
+ .debug_abbrev  0x00000000      0x12f src/fuzzy_speed_controller.o
+ .debug_loc     0x00000000      0x184 src/fuzzy_speed_controller.o
+ .debug_aranges
+                0x00000000       0x20 src/fuzzy_speed_controller.o
+ .debug_ranges  0x00000000       0x10 src/fuzzy_speed_controller.o
+ .debug_macro   0x00000000       0xb0 src/fuzzy_speed_controller.o
  .debug_macro   0x00000000      0xa48 src/fuzzy_speed_controller.o
  .debug_macro   0x00000000       0x16 src/fuzzy_speed_controller.o
  .debug_macro   0x00000000       0x97 src/fuzzy_speed_controller.o
@@ -116,6 +165,10 @@ Discarded input sections
  .debug_macro   0x00000000       0xeb src/fuzzy_speed_controller.o
  .debug_macro   0x00000000       0x16 src/fuzzy_speed_controller.o
  .debug_macro   0x00000000       0x2e src/fuzzy_speed_controller.o
+ .debug_line    0x00000000      0x584 src/fuzzy_speed_controller.o
+ .debug_str     0x00000000     0x429d src/fuzzy_speed_controller.o
+ .comment       0x00000000       0x31 src/fuzzy_speed_controller.o
+ .debug_frame   0x00000000       0x88 src/fuzzy_speed_controller.o
  .group         0x00000000        0x8 src/general_FIS.o
  .group         0x00000000        0x8 src/general_FIS.o
  .group         0x00000000        0x8 src/general_FIS.o
@@ -132,8 +185,6 @@ Discarded input sections
  .bss           0x00000000        0x0 src/general_FIS.o
  .text.max      0x00000000        0xa src/general_FIS.o
  .text.min      0x00000000        0xa src/general_FIS.o
- .text.setupRule
-                0x00000000      0x13a src/general_FIS.o
  .debug_macro   0x00000000      0xa48 src/general_FIS.o
  .debug_macro   0x00000000      0x1ad src/general_FIS.o
  .debug_macro   0x00000000      0x293 src/general_FIS.o
@@ -179,13 +230,11 @@ Discarded input sections
  .group         0x00000000        0x8 src/main.o
  .group         0x00000000        0x8 src/main.o
  .group         0x00000000        0x8 src/main.o
- .group         0x00000000        0x8 src/main.o
  .text          0x00000000        0x0 src/main.o
  .data          0x00000000        0x0 src/main.o
  .bss           0x00000000        0x0 src/main.o
- .text.Sens_info_read
-                0x00000000       0x34 src/main.o
  .text.Init     0x00000000       0x1c src/main.o
+ .bss.gFlags    0x00000000        0x1 src/main.o
  .data.circleArch
                 0x00000000        0x4 src/main.o
  .bss.speedInterrupt
@@ -274,8 +323,8 @@ Discarded input sections
                 0x00000000       0xa2 src/OldSteering.o
  .text.FLC_steeringOld
                 0x00000000      0xdb2 src/OldSteering.o
- .debug_info    0x00000000      0x757 src/OldSteering.o
- .debug_abbrev  0x00000000       0xfb src/OldSteering.o
+ .debug_info    0x00000000      0x741 src/OldSteering.o
+ .debug_abbrev  0x00000000       0xf4 src/OldSteering.o
  .debug_loc     0x00000000      0x160 src/OldSteering.o
  .debug_aranges
                 0x00000000       0x20 src/OldSteering.o
@@ -297,6 +346,19 @@ Discarded input sections
  .debug_str     0x00000000     0x42aa src/OldSteering.o
  .comment       0x00000000       0x31 src/OldSteering.o
  .debug_frame   0x00000000       0x88 src/OldSteering.o
+ .group         0x00000000        0x8 src/parkingAlgorithm.o
+ .text          0x00000000        0x0 src/parkingAlgorithm.o
+ .data          0x00000000        0x0 src/parkingAlgorithm.o
+ .bss           0x00000000        0x0 src/parkingAlgorithm.o
+ .debug_info    0x00000000       0x21 src/parkingAlgorithm.o
+ .debug_abbrev  0x00000000       0x13 src/parkingAlgorithm.o
+ .debug_aranges
+                0x00000000       0x18 src/parkingAlgorithm.o
+ .debug_macro   0x00000000       0x11 src/parkingAlgorithm.o
+ .debug_macro   0x00000000      0xa48 src/parkingAlgorithm.o
+ .debug_line    0x00000000       0x37 src/parkingAlgorithm.o
+ .debug_str     0x00000000     0x2ac9 src/parkingAlgorithm.o
+ .comment       0x00000000       0x31 src/parkingAlgorithm.o
  .group         0x00000000        0x8 src/pid.o
  .group         0x00000000        0x8 src/pid.o
  .group         0x00000000        0x8 src/pid.o
@@ -392,6 +454,16 @@ Discarded input sections
  .text          0x00000000        0x0 src/spi_buffer_slave.o
  .data          0x00000000        0x0 src/spi_buffer_slave.o
  .bss           0x00000000        0x0 src/spi_buffer_slave.o
+ .text.spi_slave_init
+                0x00000000       0x12 src/spi_buffer_slave.o
+ .text.spi_get_byte
+                0x00000000       0x5a src/spi_buffer_slave.o
+ .text.spi_send_byte
+                0x00000000       0xac src/spi_buffer_slave.o
+ .text.is_package_recieved
+                0x00000000       0x14 src/spi_buffer_slave.o
+ .text.read_sensor_info
+                0x00000000       0x6e src/spi_buffer_slave.o
  .debug_macro   0x00000000      0xa48 src/spi_buffer_slave.o
  .debug_macro   0x00000000       0x10 src/spi_buffer_slave.o
  .debug_macro   0x00000000      0x1ad src/spi_buffer_slave.o
@@ -404,7 +476,6 @@ Discarded input sections
  .debug_macro   0x00000000       0x18 src/spi_buffer_slave.o
  .debug_macro   0x00000000       0x6c src/spi_buffer_slave.o
  .debug_macro   0x00000000       0x69 src/spi_buffer_slave.o
- .debug_macro   0x00000000       0x16 src/spi_buffer_slave.o
  .group         0x00000000        0x8 src/test_methods.o
  .group         0x00000000        0x8 src/test_methods.o
  .group         0x00000000        0x8 src/test_methods.o
@@ -680,12 +751,14 @@ Linker script and memory map
 
 Address of section .data set to 0x800100
 LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm1284p.o
+LOAD src/fuzzyParkingAlgorithm.o
 LOAD src/fuzzySteering.o
 LOAD src/fuzzy_speed_controller.o
 LOAD src/general_FIS.o
 LOAD src/main.o
 LOAD src/manualMode.o
 LOAD src/OldSteering.o
+LOAD src/parkingAlgorithm.o
 LOAD src/pid.o
 LOAD src/servo.o
 LOAD src/spi_buffer_slave.o
@@ -791,7 +864,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000     0x1c84
+.text           0x00000000     0x12e4
  *(.vectors)
  .vectors       0x00000000       0x8c c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm1284p.o
                 0x00000000                __vector_default
@@ -844,179 +917,165 @@ END GROUP
  *(.init8)
  *(.init8)
  *(.init9)
- .init9         0x000000c2        0x8 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm1284p.o
+ .init9         0x000000c2        0x6 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm1284p.o
  *(.init9)
  *(.text)
- .text          0x000000ca        0x2 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm1284p.o
-                0x000000ca                __vector_1
-                0x000000ca                __vector_32
-                0x000000ca                __vector_34
-                0x000000ca                __vector_24
-                0x000000ca                __vector_12
-                0x000000ca                __bad_interrupt
-                0x000000ca                __vector_6
-                0x000000ca                __vector_31
-                0x000000ca                __vector_3
-                0x000000ca                __vector_23
-                0x000000ca                __vector_30
-                0x000000ca                __vector_25
-                0x000000ca                __vector_11
-                0x000000ca                __vector_13
-                0x000000ca                __vector_17
-                0x000000ca                __vector_7
-                0x000000ca                __vector_27
-                0x000000ca                __vector_5
-                0x000000ca                __vector_33
-                0x000000ca                __vector_4
-                0x000000ca                __vector_9
-                0x000000ca                __vector_2
-                0x000000ca                __vector_21
-                0x000000ca                __vector_15
-                0x000000ca                __vector_29
-                0x000000ca                __vector_8
-                0x000000ca                __vector_26
-                0x000000ca                __vector_14
-                0x000000ca                __vector_10
-                0x000000ca                __vector_16
-                0x000000cc                . = ALIGN (0x2)
+ .text          0x000000c8        0x2 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm1284p.o
+                0x000000c8                __vector_1
+                0x000000c8                __vector_32
+                0x000000c8                __vector_34
+                0x000000c8                __vector_24
+                0x000000c8                __vector_12
+                0x000000c8                __bad_interrupt
+                0x000000c8                __vector_6
+                0x000000c8                __vector_31
+                0x000000c8                __vector_3
+                0x000000c8                __vector_23
+                0x000000c8                __vector_30
+                0x000000c8                __vector_25
+                0x000000c8                __vector_11
+                0x000000c8                __vector_13
+                0x000000c8                __vector_17
+                0x000000c8                __vector_7
+                0x000000c8                __vector_27
+                0x000000c8                __vector_5
+                0x000000c8                __vector_33
+                0x000000c8                __vector_4
+                0x000000c8                __vector_9
+                0x000000c8                __vector_2
+                0x000000c8                __vector_21
+                0x000000c8                __vector_15
+                0x000000c8                __vector_29
+                0x000000c8                __vector_8
+                0x000000c8                __vector_26
+                0x000000c8                __vector_14
+                0x000000c8                __vector_10
+                0x000000c8                __vector_16
+                0x000000c8                __vector_18
+                0x000000ca                . = ALIGN (0x2)
  *(.text.*)
- .text.FLC_steering
-                0x000000cc      0x5a8 src/fuzzySteering.o
-                0x000000cc                FLC_steering
- .text.FLC_obstacle
-                0x00000674      0x88c src/fuzzy_speed_controller.o
-                0x00000674                FLC_obstacle
+ .text.gettingReady
+                0x000000ca      0x636 src/fuzzyParkingAlgorithm.o
+                0x000000ca                gettingReady
+ .text.fuzzy_parking
+                0x00000700       0x40 src/fuzzyParkingAlgorithm.o
+                0x00000700                fuzzy_parking
  .text.compute_degree_of_membership
-                0x00000f00       0x6c src/general_FIS.o
-                0x00000f00                compute_degree_of_membership
+                0x00000740       0x6c src/general_FIS.o
+                0x00000740                compute_degree_of_membership
  .text.compute_area_of_trapezoid
-                0x00000f6c       0x5a src/general_FIS.o
-                0x00000f6c                compute_area_of_trapezoid
+                0x000007ac       0x5a src/general_FIS.o
+                0x000007ac                compute_area_of_trapezoid
  .text.fuzzification
-                0x00000fc6       0x4e src/general_FIS.o
-                0x00000fc6                fuzzification
+                0x00000806       0x4e src/general_FIS.o
+                0x00000806                fuzzification
  .text.rule_evaluation
-                0x00001014       0x8c src/general_FIS.o
-                0x00001014                rule_evaluation
+                0x00000854       0x8c src/general_FIS.o
+                0x00000854                rule_evaluation
  .text.defuzzification
-                0x000010a0      0x17a src/general_FIS.o
-                0x000010a0                defuzzification
+                0x000008e0      0x17a src/general_FIS.o
+                0x000008e0                defuzzification
  .text.MATLAB_MF
-                0x0000121a       0x5e src/general_FIS.o
-                0x0000121a                MATLAB_MF
+                0x00000a5a       0x5e src/general_FIS.o
+                0x00000a5a                MATLAB_MF
  .text.__vector_28
-                0x00001278       0x5e src/main.o
-                0x00001278                __vector_28
- .text.carInit  0x000012d6       0x12 src/main.o
-                0x000012d6                carInit
+                0x00000ab8       0x5e src/main.o
+                0x00000ab8                __vector_28
+ .text.carInit  0x00000b16       0x10 src/main.o
+                0x00000b16                carInit
  .text.USART1_init
-                0x000012e8       0x1a src/main.o
-                0x000012e8                USART1_init
- .text.__vector_18
-                0x00001302       0x4e src/main.o
-                0x00001302                __vector_18
- .text.main     0x00001350       0x94 src/main.o
-                0x00001350                main
- .text.pwmInit  0x000013e4       0x1e src/servo.o
-                0x000013e4                pwmInit
- .text.setESC   0x00001402       0x36 src/servo.o
-                0x00001402                setESC
+                0x00000b26       0x1a src/main.o
+                0x00000b26                USART1_init
+ .text.Sens_info_read
+                0x00000b40       0x34 src/main.o
+                0x00000b40                Sens_info_read
+ .text.main     0x00000b74       0x78 src/main.o
+                0x00000b74                main
+ .text.pwmInit  0x00000bec       0x1e src/servo.o
+                0x00000bec                pwmInit
+ .text.setESC   0x00000c0a       0x36 src/servo.o
+                0x00000c0a                setESC
  .text.setServo
-                0x00001438       0x36 src/servo.o
-                0x00001438                setServo
+                0x00000c40       0x36 src/servo.o
+                0x00000c40                setServo
  .text.__vector_19
-                0x0000146e       0xd8 src/spi_buffer_slave.o
-                0x0000146e                __vector_19
- .text.spi_slave_init
-                0x00001546       0x12 src/spi_buffer_slave.o
-                0x00001546                spi_slave_init
- .text.spi_get_byte
-                0x00001558       0x5a src/spi_buffer_slave.o
-                0x00001558                spi_get_byte
- .text.spi_send_byte
-                0x000015b2       0xac src/spi_buffer_slave.o
-                0x000015b2                spi_send_byte
- .text.is_package_recieved
-                0x0000165e       0x14 src/spi_buffer_slave.o
-                0x0000165e                is_package_recieved
- .text.read_sensor_info
-                0x00001672       0x7c src/spi_buffer_slave.o
-                0x00001672                read_sensor_info
+                0x00000c76       0xd8 src/spi_buffer_slave.o
+                0x00000c76                __vector_19
  .text.__vector_20
-                0x000016ee       0xb6 src/uart_buffer.o
-                0x000016ee                __vector_20
+                0x00000d4e       0xb6 src/uart_buffer.o
+                0x00000d4e                __vector_20
  .text.__vector_22
-                0x000017a4       0xa2 src/uart_buffer.o
-                0x000017a4                __vector_22
+                0x00000e04       0xa2 src/uart_buffer.o
+                0x00000e04                __vector_22
  .text.avr-libc.fplib
-                0x00001846        0xa c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(addsf3.o)
-                0x00001846                __subsf3
-                0x00001848                __addsf3
+                0x00000ea6        0xa c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(addsf3.o)
+                0x00000ea6                __subsf3
+                0x00000ea8                __addsf3
  .text.avr-libc.fplib
-                0x00001850       0xc0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(addsf3x.o)
-                0x0000186a                __addsf3x
+                0x00000eb0       0xc0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(addsf3x.o)
+                0x00000eca                __addsf3x
  .text.avr-libc.fplib
-                0x00001910        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(divsf3.o)
-                0x00001910                __divsf3
+                0x00000f70        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(divsf3.o)
+                0x00000f70                __divsf3
  .text.avr-libc.fplib
-                0x00001914       0xcc c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(divsf3x.o)
-                0x0000192a                __divsf3x
-                0x0000192e                __divsf3_pse
+                0x00000f74       0xcc c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(divsf3x.o)
+                0x00000f8a                __divsf3x
+                0x00000f8e                __divsf3_pse
  .text.avr-libc.fplib
-                0x000019e0        0xa c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(fixsfsi.o)
-                0x000019e0                __fixsfsi
+                0x00001040        0xa c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(fixsfsi.o)
+                0x00001040                __fixsfsi
  .text.avr-libc.fplib
-                0x000019ea       0x58 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(fixunssfsi.o)
-                0x000019ea                __fixunssfsi
+                0x0000104a       0x58 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(fixunssfsi.o)
+                0x0000104a                __fixunssfsi
  .text.avr-libc.fplib
-                0x00001a42       0x7a c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(floatsisf.o)
-                0x00001a42                __floatunsisf
-                0x00001a46                __floatsisf
+                0x000010a2       0x7a c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(floatsisf.o)
+                0x000010a2                __floatunsisf
+                0x000010a6                __floatsisf
  .text.avr-libc.fplib
-                0x00001abc        0xc c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(fp_inf.o)
-                0x00001abc                __fp_inf
+                0x0000111c        0xc c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(fp_inf.o)
+                0x0000111c                __fp_inf
  .text.avr-libc.fplib
-                0x00001ac8        0x6 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(fp_nan.o)
-                0x00001ac8                __fp_nan
+                0x00001128        0x6 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(fp_nan.o)
+                0x00001128                __fp_nan
  .text.avr-libc.fplib
-                0x00001ace        0xe c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(fp_pscA.o)
-                0x00001ace                __fp_pscA
+                0x0000112e        0xe c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(fp_pscA.o)
+                0x0000112e                __fp_pscA
  .text.avr-libc.fplib
-                0x00001adc        0xe c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(fp_pscB.o)
-                0x00001adc                __fp_pscB
+                0x0000113c        0xe c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(fp_pscB.o)
+                0x0000113c                __fp_pscB
  .text.avr-libc.fplib
-                0x00001aea       0x22 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(fp_round.o)
-                0x00001aea                __fp_round
+                0x0000114a       0x22 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(fp_round.o)
+                0x0000114a                __fp_round
  .text.avr-libc.fplib
-                0x00001b0c       0x44 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(fp_split3.o)
-                0x00001b0c                __fp_split3
-                0x00001b1c                __fp_splitA
+                0x0000116c       0x44 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(fp_split3.o)
+                0x0000116c                __fp_split3
+                0x0000117c                __fp_splitA
  .text.avr-libc.fplib
-                0x00001b50        0xe c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(fp_zero.o)
-                0x00001b50                __fp_zero
-                0x00001b52                __fp_szero
+                0x000011b0        0xe c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(fp_zero.o)
+                0x000011b0                __fp_zero
+                0x000011b2                __fp_szero
  .text.avr-libc.fplib
-                0x00001b5e        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(mulsf3.o)
-                0x00001b5e                __mulsf3
+                0x000011be        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(mulsf3.o)
+                0x000011be                __mulsf3
  .text.avr-libc.fplib
-                0x00001b62       0xc2 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(mulsf3x.o)
-                0x00001b76                __mulsf3x
-                0x00001b7a                __mulsf3_pse
+                0x000011c2       0xc2 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(mulsf3x.o)
+                0x000011d6                __mulsf3x
+                0x000011da                __mulsf3_pse
  .text.libgcc.div
-                0x00001c24       0x26 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_divmodhi4.o)
-                0x00001c24                _div
-                0x00001c24                __divmodhi4
+                0x00001284       0x26 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_divmodhi4.o)
+                0x00001284                _div
+                0x00001284                __divmodhi4
  .text.libgcc.div
-                0x00001c4a       0x28 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_udivmodhi4.o)
-                0x00001c4a                __udivmodhi4
+                0x000012aa       0x28 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_udivmodhi4.o)
+                0x000012aa                __udivmodhi4
  .text.avr-libc
-                0x00001c72        0xe c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(strcpy.o)
-                0x00001c72                strcpy
-                0x00001c80                . = ALIGN (0x2)
+                0x000012d2        0xe c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(strcpy.o)
+                0x000012d2                strcpy
+                0x000012e0                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x00001c80        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_exit.o)
-                0x00001c80                _exit
-                0x00001c80                exit
+ .fini9         0x000012e0        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_exit.o)
+                0x000012e0                _exit
+                0x000012e0                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -1035,74 +1094,70 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00001c80        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_exit.o)
+ .fini0         0x000012e0        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_exit.o)
  *(.fini0)
-                0x00001c84                _etext = .
+                0x000012e4                _etext = .
 
-.data           0x00800100       0xda load address 0x00001c84
+.data           0x00800100       0x4e load address 0x000012e4
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
  *(.rodata)
  *(.rodata*)
  .rodata.str1.1
-                0x00800100       0x75 src/fuzzySteering.o
- .rodata.str1.1
-                0x00800175       0x64 src/fuzzy_speed_controller.o
-                                 0x68 (size before relaxing)
+                0x00800100       0x4e src/fuzzyParkingAlgorithm.o
  *(.gnu.linkonce.d*)
-                0x008001da                . = ALIGN (0x2)
- *fill*         0x008001d9        0x1 
-                0x008001da                _edata = .
-                0x008001da                PROVIDE (__data_end, .)
+                0x0080014e                . = ALIGN (0x2)
+                0x0080014e                _edata = .
+                0x0080014e                PROVIDE (__data_end, .)
 
-.bss            0x008001da      0x153
-                0x008001da                PROVIDE (__bss_start, .)
+.bss            0x0080014e      0x152
+                0x0080014e                PROVIDE (__bss_start, .)
  *(.bss)
  *(.bss*)
- .bss.i.2357    0x008001da        0x2 src/main.o
- .bss.gFlags    0x008001dc        0x1 src/main.o
-                0x008001dc                gFlags
+ .bss.readyToPark
+                0x0080014e        0x2 src/fuzzyParkingAlgorithm.o
+                0x0080014e                readyToPark
  .bss.spi_rx_not_empty_flag
-                0x008001dd        0x1 src/main.o
-                0x008001dd                spi_rx_not_empty_flag
+                0x00800150        0x1 src/main.o
+                0x00800150                spi_rx_not_empty_flag
  .bss.spi_stc_chain_in_work
-                0x008001de        0x1 src/spi_buffer_slave.o
-                0x008001de                spi_stc_chain_in_work
- .bss.tx_spi    0x008001df       0x46 src/spi_buffer_slave.o
-                0x008001df                tx_spi
- .bss.rx_spi    0x00800225       0x46 src/spi_buffer_slave.o
-                0x00800225                rx_spi
- .bss.tx_uart0  0x0080026b       0x46 src/uart_buffer.o
-                0x0080026b                tx_uart0
- .bss.rx_uart0  0x008002b1       0x46 src/uart_buffer.o
-                0x008002b1                rx_uart0
+                0x00800151        0x1 src/spi_buffer_slave.o
+                0x00800151                spi_stc_chain_in_work
+ .bss.tx_spi    0x00800152       0x46 src/spi_buffer_slave.o
+                0x00800152                tx_spi
+ .bss.rx_spi    0x00800198       0x46 src/spi_buffer_slave.o
+                0x00800198                rx_spi
+ .bss.tx_uart0  0x008001de       0x46 src/uart_buffer.o
+                0x008001de                tx_uart0
+ .bss.rx_uart0  0x00800224       0x46 src/uart_buffer.o
+                0x00800224                rx_uart0
  *(COMMON)
- COMMON         0x008002f7        0x6 src/general_FIS.o
-                0x008002f7                System_Outputs
-                0x008002f9                System_Inputs
-                0x008002fb                Rule_Base
- COMMON         0x008002fd       0x2a src/main.o
-                0x008002fd                UART1_reciever_buffer
-                0x0080031d                counter_UART1_reciever
-                0x0080031f                pidData
- COMMON         0x00800327        0x6 src/uart_buffer.o
-                0x00800327                uart0_tx_full_flag
-                0x00800328                uart0_rx_not_empty_flag
-                0x00800329                uart0_rx_full_flag
-                0x0080032a                uart0_tx_not_empty_flag
-                0x0080032b                uart0_rx_overf_flag
-                0x0080032c                uart0_tx_overf_flag
-                0x0080032d                PROVIDE (__bss_end, .)
-                0x00001c84                __data_load_start = LOADADDR (.data)
-                0x00001d5e                __data_load_end = (__data_load_start + SIZEOF (.data))
+ COMMON         0x0080026a        0x6 src/general_FIS.o
+                0x0080026a                System_Outputs
+                0x0080026c                System_Inputs
+                0x0080026e                Rule_Base
+ COMMON         0x00800270       0x2a src/main.o
+                0x00800270                UART1_reciever_buffer
+                0x00800290                counter_UART1_reciever
+                0x00800292                pidData
+ COMMON         0x0080029a        0x6 src/uart_buffer.o
+                0x0080029a                uart0_tx_full_flag
+                0x0080029b                uart0_rx_not_empty_flag
+                0x0080029c                uart0_rx_full_flag
+                0x0080029d                uart0_tx_not_empty_flag
+                0x0080029e                uart0_rx_overf_flag
+                0x0080029f                uart0_tx_overf_flag
+                0x008002a0                PROVIDE (__bss_end, .)
+                0x000012e4                __data_load_start = LOADADDR (.data)
+                0x00001332                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x0080032d        0x0
-                0x0080032d                PROVIDE (__noinit_start, .)
+.noinit         0x008002a0        0x0
+                0x008002a0                PROVIDE (__noinit_start, .)
  *(.noinit*)
-                0x0080032d                PROVIDE (__noinit_end, .)
-                0x0080032d                _end = .
-                0x0080032d                PROVIDE (__heap_start, .)
+                0x008002a0                PROVIDE (__noinit_end, .)
+                0x008002a0                _end = .
+                0x008002a0                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0
  *(.eeprom*)
@@ -1143,9 +1198,8 @@ END GROUP
 
 .comment        0x00000000       0x30
  *(.comment)
- .comment       0x00000000       0x30 src/fuzzySteering.o
+ .comment       0x00000000       0x30 src/fuzzyParkingAlgorithm.o
                                  0x31 (size before relaxing)
- .comment       0x00000000       0x31 src/fuzzy_speed_controller.o
  .comment       0x00000000       0x31 src/general_FIS.o
  .comment       0x00000000       0x31 src/main.o
  .comment       0x00000000       0x31 src/servo.o
@@ -1167,92 +1221,83 @@ END GROUP
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000      0x1a0
+.debug_aranges  0x00000000      0x178
  *(.debug_aranges)
  .debug_aranges
-                0x00000000       0x20 src/fuzzySteering.o
+                0x00000000       0x28 src/fuzzyParkingAlgorithm.o
  .debug_aranges
-                0x00000020       0x20 src/fuzzy_speed_controller.o
+                0x00000028       0x58 src/general_FIS.o
  .debug_aranges
-                0x00000040       0x60 src/general_FIS.o
+                0x00000080       0x48 src/main.o
  .debug_aranges
-                0x000000a0       0x50 src/main.o
+                0x000000c8       0x30 src/servo.o
  .debug_aranges
-                0x000000f0       0x30 src/servo.o
+                0x000000f8       0x48 src/spi_buffer_slave.o
  .debug_aranges
-                0x00000120       0x48 src/spi_buffer_slave.o
- .debug_aranges
-                0x00000168       0x38 src/uart_buffer.o
+                0x00000140       0x38 src/uart_buffer.o
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x27cd
+.debug_info     0x00000000     0x1a5c
  *(.debug_info .gnu.linkonce.wi.*)
- .debug_info    0x00000000      0x913 src/fuzzySteering.o
- .debug_info    0x00000913      0xb3b src/fuzzy_speed_controller.o
- .debug_info    0x0000144e      0x677 src/general_FIS.o
- .debug_info    0x00001ac5      0x6b0 src/main.o
- .debug_info    0x00002175       0xe2 src/servo.o
- .debug_info    0x00002257      0x372 src/spi_buffer_slave.o
- .debug_info    0x000025c9      0x204 src/uart_buffer.o
+ .debug_info    0x00000000      0x8e0 src/fuzzyParkingAlgorithm.o
+ .debug_info    0x000008e0      0x5a6 src/general_FIS.o
+ .debug_info    0x00000e86      0x5af src/main.o
+ .debug_info    0x00001435       0xe2 src/servo.o
+ .debug_info    0x00001517      0x341 src/spi_buffer_slave.o
+ .debug_info    0x00001858      0x204 src/uart_buffer.o
 
-.debug_abbrev   0x00000000      0xa3a
+.debug_abbrev   0x00000000      0x88d
  *(.debug_abbrev)
- .debug_abbrev  0x00000000      0x138 src/fuzzySteering.o
- .debug_abbrev  0x00000138      0x136 src/fuzzy_speed_controller.o
- .debug_abbrev  0x0000026e      0x217 src/general_FIS.o
- .debug_abbrev  0x00000485      0x266 src/main.o
- .debug_abbrev  0x000006eb       0x95 src/servo.o
- .debug_abbrev  0x00000780      0x1a1 src/spi_buffer_slave.o
- .debug_abbrev  0x00000921      0x119 src/uart_buffer.o
+ .debug_abbrev  0x00000000      0x12d src/fuzzyParkingAlgorithm.o
+ .debug_abbrev  0x0000012d      0x1c4 src/general_FIS.o
+ .debug_abbrev  0x000002f1      0x24d src/main.o
+ .debug_abbrev  0x0000053e       0x95 src/servo.o
+ .debug_abbrev  0x000005d3      0x1a1 src/spi_buffer_slave.o
+ .debug_abbrev  0x00000774      0x119 src/uart_buffer.o
 
-.debug_line     0x00000000     0x2051
+.debug_line     0x00000000     0x18c7
  *(.debug_line .debug_line.* .debug_line_end)
- .debug_line    0x00000000      0x458 src/fuzzySteering.o
- .debug_line    0x00000458      0x584 src/fuzzy_speed_controller.o
- .debug_line    0x000009dc      0x408 src/general_FIS.o
- .debug_line    0x00000de4      0x65b src/main.o
- .debug_line    0x0000143f      0x3ee src/servo.o
- .debug_line    0x0000182d      0x455 src/spi_buffer_slave.o
- .debug_line    0x00001c82      0x3cf src/uart_buffer.o
+ .debug_line    0x00000000      0x358 src/fuzzyParkingAlgorithm.o
+ .debug_line    0x00000358      0x391 src/general_FIS.o
+ .debug_line    0x000006e9      0x5f6 src/main.o
+ .debug_line    0x00000cdf      0x3ee src/servo.o
+ .debug_line    0x000010cd      0x42b src/spi_buffer_slave.o
+ .debug_line    0x000014f8      0x3cf src/uart_buffer.o
 
-.debug_frame    0x00000000      0x544
+.debug_frame    0x00000000      0x460
  *(.debug_frame)
- .debug_frame   0x00000000       0x88 src/fuzzySteering.o
- .debug_frame   0x00000088       0x88 src/fuzzy_speed_controller.o
- .debug_frame   0x00000110      0x1b8 src/general_FIS.o
- .debug_frame   0x000002c8       0xd0 src/main.o
- .debug_frame   0x00000398       0x44 src/servo.o
- .debug_frame   0x000003dc       0xbc src/spi_buffer_slave.o
- .debug_frame   0x00000498       0xac src/uart_buffer.o
+ .debug_frame   0x00000000       0xac src/fuzzyParkingAlgorithm.o
+ .debug_frame   0x000000ac      0x164 src/general_FIS.o
+ .debug_frame   0x00000210       0xa4 src/main.o
+ .debug_frame   0x000002b4       0x44 src/servo.o
+ .debug_frame   0x000002f8       0xbc src/spi_buffer_slave.o
+ .debug_frame   0x000003b4       0xac src/uart_buffer.o
 
-.debug_str      0x00000000    0x10c57
+.debug_str      0x00000000    0x10b90
  *(.debug_str)
- .debug_str     0x00000000     0x40c8 src/fuzzySteering.o
-                               0x41bf (size before relaxing)
- .debug_str     0x000040c8      0x191 src/fuzzy_speed_controller.o
-                               0x429d (size before relaxing)
- .debug_str     0x00004259      0x113 src/general_FIS.o
-                               0x412c (size before relaxing)
- .debug_str     0x0000436c     0xc71f src/main.o
-                              0x10853 (size before relaxing)
- .debug_str     0x00010a8b       0x27 src/servo.o
+ .debug_str     0x00000000     0x30cd src/fuzzyParkingAlgorithm.o
+                               0x3133 (size before relaxing)
+ .debug_str     0x000030cd     0x11aa src/general_FIS.o
+                               0x4101 (size before relaxing)
+ .debug_str     0x00004277     0xc6c3 src/main.o
+                              0x107d0 (size before relaxing)
+ .debug_str     0x0001093a       0x27 src/servo.o
                                0xfa3a (size before relaxing)
- .debug_str     0x00010ab2       0xaf src/spi_buffer_slave.o
-                               0x7454 (size before relaxing)
- .debug_str     0x00010b61       0xf6 src/uart_buffer.o
+ .debug_str     0x00010961      0x139 src/spi_buffer_slave.o
+                               0x7459 (size before relaxing)
+ .debug_str     0x00010a9a       0xf6 src/uart_buffer.o
                                0x7381 (size before relaxing)
 
-.debug_loc      0x00000000     0x14ee
+.debug_loc      0x00000000     0x112d
  *(.debug_loc)
- .debug_loc     0x00000000      0x184 src/fuzzySteering.o
- .debug_loc     0x00000184      0x184 src/fuzzy_speed_controller.o
- .debug_loc     0x00000308      0xc40 src/general_FIS.o
- .debug_loc     0x00000f48      0x18f src/main.o
- .debug_loc     0x000010d7       0xa8 src/servo.o
- .debug_loc     0x0000117f      0x203 src/spi_buffer_slave.o
- .debug_loc     0x00001382      0x16c src/uart_buffer.o
+ .debug_loc     0x00000000      0x25f src/fuzzyParkingAlgorithm.o
+ .debug_loc     0x0000025f      0x996 src/general_FIS.o
+ .debug_loc     0x00000bf5      0x121 src/main.o
+ .debug_loc     0x00000d16       0xa8 src/servo.o
+ .debug_loc     0x00000dbe      0x203 src/spi_buffer_slave.o
+ .debug_loc     0x00000fc1      0x16c src/uart_buffer.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -1272,63 +1317,55 @@ END GROUP
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_ranges   0x00000000      0x178
+.debug_ranges   0x00000000      0x160
  *(.debug_ranges)
- .debug_ranges  0x00000000       0x10 src/fuzzySteering.o
- .debug_ranges  0x00000010       0x10 src/fuzzy_speed_controller.o
- .debug_ranges  0x00000020       0x80 src/general_FIS.o
- .debug_ranges  0x000000a0       0x58 src/main.o
- .debug_ranges  0x000000f8       0x20 src/servo.o
- .debug_ranges  0x00000118       0x38 src/spi_buffer_slave.o
- .debug_ranges  0x00000150       0x28 src/uart_buffer.o
+ .debug_ranges  0x00000000       0x18 src/fuzzyParkingAlgorithm.o
+ .debug_ranges  0x00000018       0x78 src/general_FIS.o
+ .debug_ranges  0x00000090       0x50 src/main.o
+ .debug_ranges  0x000000e0       0x20 src/servo.o
+ .debug_ranges  0x00000100       0x38 src/spi_buffer_slave.o
+ .debug_ranges  0x00000138       0x28 src/uart_buffer.o
 
-.debug_macro    0x00000000     0x4397
+.debug_macro    0x00000000     0x3d05
  *(.debug_macro)
- .debug_macro   0x00000000       0x8c src/fuzzySteering.o
- .debug_macro   0x0000008c      0xa48 src/fuzzySteering.o
- .debug_macro   0x00000ad4       0x16 src/fuzzySteering.o
- .debug_macro   0x00000aea       0x97 src/fuzzySteering.o
- .debug_macro   0x00000b81       0x16 src/fuzzySteering.o
- .debug_macro   0x00000b97       0x16 src/fuzzySteering.o
- .debug_macro   0x00000bad      0x1ad src/fuzzySteering.o
- .debug_macro   0x00000d5a      0x293 src/fuzzySteering.o
- .debug_macro   0x00000fed       0x58 src/fuzzySteering.o
- .debug_macro   0x00001045       0x10 src/fuzzySteering.o
- .debug_macro   0x00001055       0x20 src/fuzzySteering.o
- .debug_macro   0x00001075       0xeb src/fuzzySteering.o
- .debug_macro   0x00001160       0x2e src/fuzzySteering.o
- .debug_macro   0x0000118e       0xb0 src/fuzzy_speed_controller.o
- .debug_macro   0x0000123e       0x79 src/general_FIS.o
- .debug_macro   0x000012b7      0x213 src/main.o
- .debug_macro   0x000014ca       0x10 src/main.o
- .debug_macro   0x000014da       0x9e src/main.o
- .debug_macro   0x00001578     0x1a23 src/main.o
- .debug_macro   0x00002f9b      0x171 src/main.o
- .debug_macro   0x0000310c       0xcb src/main.o
- .debug_macro   0x000031d7       0x34 src/main.o
- .debug_macro   0x0000320b       0x18 src/main.o
- .debug_macro   0x00003223       0x6c src/main.o
- .debug_macro   0x0000328f       0x22 src/main.o
- .debug_macro   0x000032b1      0x166 src/main.o
- .debug_macro   0x00003417       0x1c src/main.o
- .debug_macro   0x00003433       0x35 src/main.o
- .debug_macro   0x00003468       0x66 src/main.o
- .debug_macro   0x000034ce      0x4ae src/main.o
- .debug_macro   0x0000397c       0x44 src/main.o
- .debug_macro   0x000039c0       0x69 src/main.o
- .debug_macro   0x00003a29       0x2c src/main.o
- .debug_macro   0x00003a55       0x10 src/main.o
- .debug_macro   0x00003a65      0x175 src/main.o
- .debug_macro   0x00003bda       0x40 src/main.o
- .debug_macro   0x00003c1a      0x100 src/main.o
- .debug_macro   0x00003d1a      0x231 src/main.o
- .debug_macro   0x00003f4b       0x10 src/main.o
- .debug_macro   0x00003f5b      0x167 src/main.o
- .debug_macro   0x000040c2       0x22 src/main.o
- .debug_macro   0x000040e4       0x16 src/main.o
- .debug_macro   0x000040fa      0x15b src/servo.o
- .debug_macro   0x00004255       0x99 src/spi_buffer_slave.o
- .debug_macro   0x000042ee       0x99 src/uart_buffer.o
- .debug_macro   0x00004387       0x10 src/uart_buffer.o
+ .debug_macro   0x00000000       0x5c src/fuzzyParkingAlgorithm.o
+ .debug_macro   0x0000005c      0xa48 src/fuzzyParkingAlgorithm.o
+ .debug_macro   0x00000aa4       0x16 src/fuzzyParkingAlgorithm.o
+ .debug_macro   0x00000aba       0x16 src/fuzzyParkingAlgorithm.o
+ .debug_macro   0x00000ad0       0x97 src/fuzzyParkingAlgorithm.o
+ .debug_macro   0x00000b67       0x16 src/fuzzyParkingAlgorithm.o
+ .debug_macro   0x00000b7d       0x2e src/fuzzyParkingAlgorithm.o
+ .debug_macro   0x00000bab       0x79 src/general_FIS.o
+ .debug_macro   0x00000c24      0x214 src/main.o
+ .debug_macro   0x00000e38       0x10 src/main.o
+ .debug_macro   0x00000e48       0x9e src/main.o
+ .debug_macro   0x00000ee6     0x1a23 src/main.o
+ .debug_macro   0x00002909      0x171 src/main.o
+ .debug_macro   0x00002a7a       0xcb src/main.o
+ .debug_macro   0x00002b45       0x34 src/main.o
+ .debug_macro   0x00002b79       0x18 src/main.o
+ .debug_macro   0x00002b91       0x6c src/main.o
+ .debug_macro   0x00002bfd       0x22 src/main.o
+ .debug_macro   0x00002c1f      0x166 src/main.o
+ .debug_macro   0x00002d85       0x1c src/main.o
+ .debug_macro   0x00002da1       0x35 src/main.o
+ .debug_macro   0x00002dd6       0x66 src/main.o
+ .debug_macro   0x00002e3c      0x4ae src/main.o
+ .debug_macro   0x000032ea       0x44 src/main.o
+ .debug_macro   0x0000332e       0x69 src/main.o
+ .debug_macro   0x00003397       0x2c src/main.o
+ .debug_macro   0x000033c3       0x10 src/main.o
+ .debug_macro   0x000033d3      0x175 src/main.o
+ .debug_macro   0x00003548       0x40 src/main.o
+ .debug_macro   0x00003588      0x100 src/main.o
+ .debug_macro   0x00003688      0x231 src/main.o
+ .debug_macro   0x000038b9       0x10 src/main.o
+ .debug_macro   0x000038c9      0x167 src/main.o
+ .debug_macro   0x00003a30       0x22 src/main.o
+ .debug_macro   0x00003a52      0x15b src/servo.o
+ .debug_macro   0x00003bad       0x99 src/spi_buffer_slave.o
+ .debug_macro   0x00003c46       0x16 src/spi_buffer_slave.o
+ .debug_macro   0x00003c5c       0x99 src/uart_buffer.o
+ .debug_macro   0x00003cf5       0x10 src/uart_buffer.o
 OUTPUT(Kandidatprojekt.elf elf32-avr)
 LOAD linker stubs

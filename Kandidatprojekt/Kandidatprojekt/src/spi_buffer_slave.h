@@ -8,16 +8,17 @@
 #define SPI_SLAVE_INCL_GUARD_BUFFER
 
 #define SPI_BUFFER_SIZE 64
-#define RECEIVED_PACKAGE_SIZE 11
+#define RECEIVED_PACKAGE_SIZE 4
 
 struct Sensor_information{
 	unsigned char dist_right_line;
+	unsigned char angular_diff;
 	unsigned char dist_sonic_middle;
 	unsigned char dist_sonic_left;
 	unsigned char dist_sonic_right;
 	unsigned char dist_sonic_back;
-	unsigned char angular_diff;
 	unsigned char car_speed;
+	unsigned char angle;
 	unsigned char dist_to_stop_line;
 	unsigned char sign_type; //Not sure we gonna use this one. Depends if camera can detect signs
 };

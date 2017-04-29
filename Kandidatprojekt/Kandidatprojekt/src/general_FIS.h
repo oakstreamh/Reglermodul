@@ -17,15 +17,11 @@
 #define MAXNAME 10          /* max number of characters in names           */
 #define UPPER_LIMIT 256    /* max number assigned as degree of membership */
 
-<<<<<<< HEAD
-extern volatile struct io_type *System_Outputs;
-extern volatile struct io_type *System_Inputs;
-extern volatile struct rule_type *Rule_Base;
-=======
+
 extern struct io_type *System_Outputs;
 extern struct io_type *System_Inputs;
 extern struct rule_type *Rule_Base;
->>>>>>> origin/master
+
 
 
 //////////////////////////////////////////////////////////////////////////////////

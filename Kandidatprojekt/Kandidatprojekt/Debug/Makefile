@@ -50,12 +50,14 @@ SUBDIRS :=  \
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
+../src/fuzzyParkingAlgorithm.c \
 ../src/fuzzySteering.c \
 ../src/fuzzy_speed_controller.c \
 ../src/general_FIS.c \
 ../src/main.c \
 ../src/manualMode.c \
 ../src/OldSteering.c \
+../src/parkingAlgorithm.c \
 ../src/pid.c \
 ../src/servo.c \
 ../src/spi_buffer_slave.c \
@@ -71,12 +73,14 @@ ASM_SRCS +=
 
 
 OBJS +=  \
+src/fuzzyParkingAlgorithm.o \
 src/fuzzySteering.o \
 src/fuzzy_speed_controller.o \
 src/general_FIS.o \
 src/main.o \
 src/manualMode.o \
 src/OldSteering.o \
+src/parkingAlgorithm.o \
 src/pid.o \
 src/servo.o \
 src/spi_buffer_slave.o \
@@ -85,12 +89,14 @@ src/uart_buffer.o \
 src/ASF/common/boards/user_board/init.o
 
 OBJS_AS_ARGS +=  \
+src/fuzzyParkingAlgorithm.o \
 src/fuzzySteering.o \
 src/fuzzy_speed_controller.o \
 src/general_FIS.o \
 src/main.o \
 src/manualMode.o \
 src/OldSteering.o \
+src/parkingAlgorithm.o \
 src/pid.o \
 src/servo.o \
 src/spi_buffer_slave.o \
@@ -99,12 +105,14 @@ src/uart_buffer.o \
 src/ASF/common/boards/user_board/init.o
 
 C_DEPS +=  \
+src/fuzzyParkingAlgorithm.d \
 src/fuzzySteering.d \
 src/fuzzy_speed_controller.d \
 src/general_FIS.d \
 src/main.d \
 src/manualMode.d \
 src/OldSteering.d \
+src/parkingAlgorithm.d \
 src/pid.d \
 src/servo.d \
 src/spi_buffer_slave.d \
@@ -113,12 +121,14 @@ src/uart_buffer.d \
 src/ASF/common/boards/user_board/init.d
 
 C_DEPS_AS_ARGS +=  \
+src/fuzzyParkingAlgorithm.d \
 src/fuzzySteering.d \
 src/fuzzy_speed_controller.d \
 src/general_FIS.d \
 src/main.d \
 src/manualMode.d \
 src/OldSteering.d \
+src/parkingAlgorithm.d \
 src/pid.d \
 src/servo.d \
 src/spi_buffer_slave.d \
@@ -140,6 +150,10 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
+
+
 
 
 

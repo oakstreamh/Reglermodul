@@ -11,4 +11,9 @@
 
 #include <stdio.h>
 
+
+//int readyToPark = 0;
+//int parkingFinished = 0;
+
+
 #endif /* parkingAlgorithm_h */

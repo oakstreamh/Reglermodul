@@ -28,26 +28,41 @@
 #include "fuzzy_speed_controller.h"
 #include "general_FIS.h"
 #include "fuzzySteering.h"
-#include "spi_buffer_slave.h"
+//#include "spi_buffer_slave.h"
+#include "fuzzyParkingAlgorithm.h"
 
 
 //////////////// STRUCTS /////////////////////////////////////////////////////////
 
-
+struct Sensor_information{
+	unsigned char dist_right_line;
+	unsigned char angular_diff;
+	unsigned char dist_sonic_middle;
+	unsigned char dist_sonic_left;
+	unsigned char dist_sonic_right;
+	unsigned char dist_sonic_back;
+	unsigned char car_speed;
+	unsigned char angle;
+	unsigned char dist_to_stop_line;
+	unsigned char sign_type; //Not sure we gonna use this one. Depends if camera can detect signs
+};
 
 
 //////////////// HEADERS /////////////////////////////////////////////////////////
 
-void USART1_init(unsigned int baud_setting);
+
 void carInit(void);
+void USART1_init(unsigned int baud_setting);
 void Sens_info_read(struct Sensor_information*);
 void Init(void);
 int16_t Get_Measurement(void);
 int16_t Get_Reference(void);
-volatile unsigned char spi_rx_not_empty_flag = 0;
+
 
 
 //////////////// VARIABLES ///////////////////////////////////////////////////////
+volatile unsigned char spi_rx_not_empty_flag = 0;
+
 
 int elapsedSeconds = 0;
 
@@ -119,7 +134,7 @@ ISR(USART1_RX_vect){
 void carInit(void)
 {
 	pwmInit();
-	spi_slave_init();
+	//spi_slave_init();
 	setESC(NEUTRAL);
 	setServo(STRAIGHT);
 	
@@ -179,17 +194,17 @@ struct GLOBAL_FLAGS {
 
 	#define TIME_INTERVAL 38555 //EXAMPLE //TODO
 
-	ISR(TIMER0_OVF_vect)
-	{
-		static uint16_t i = 0;
-
-		if (i < TIME_INTERVAL) {
-			i++;
-			} else {
-			gFlags.pidTimer = TRUE;
-			i               = 0;
-		}
-	}
+	//ISR(TIMER0_OVF_vect)
+	//{
+	//static uint16_t i = 0;
+	//
+	//if (i < TIME_INTERVAL) {
+	//i++;
+	//} else {
+	//gFlags.pidTimer = TRUE;
+	//i               = 0;
+	//}
+	//}
 
 	void Init(void)
 	{
@@ -205,22 +220,23 @@ struct GLOBAL_FLAGS {
 	*/
 	int main (void)
 	{
-	
-	// FOR TESTING
-	//	FLC_obstacle(2800, 150);
-	//	FLC_steering(170, 70);
-	
-	
+		
+		// FOR TESTING
+		//	FLC_obstacle(2800, 150);
+		
 		carInit();
 		_delay_ms(5000);
-		sei();		
 		
 		
 		
-		//-----Variables and pointers for Sensor information
+		sei();
+		
+		
+		
+	//-----Variables and pointers for Sensor information
 		//Er info finns i sensor_info.dist_right_line;
 		//om counter_UART1_reciever true, finns info att hemta
-
+		
 		
 		struct Sensor_information sensor_info;
 		struct Sensor_information* sens_info_ptr;
@@ -238,47 +254,50 @@ struct GLOBAL_FLAGS {
 		int v;
 		int d;
 		
-
+		
 		//Setting for Testing
-		DDRA = 0xFF;
+		//DDRA = 0xFF;
 		//End of test setting
 		
 		while (1) {
-			
-			 if (is_package_recieved()) {
-				
-				//Reading Information
-				read_sensor_info(&control_mode, sens_info_ptr);
-				
-				c = (int) sensor_info.dist_right_line;
-				v = (int) sensor_info.angular_diff;
-				d = (int) sensor_info.dist_sonic_middle;
-				PORTA = sensor_info.dist_sonic_middle;
-				cli();
-				
-				FLC_obstacle(OCR1A, d);
-				FLC_steering(c, v);
-				sei();
-				
-				//Sending back information
-				unsigned int esc_value_to_send;
-				esc_value_to_send = (unsigned) (short) OCR1A;
-				unsigned int steering_value_to_send;
-				steering_value_to_send = (unsigned) (short) OCR1B;
-				//Big endian
-				spi_send_byte((unsigned) (char) (esc_value_to_send<<8)); 
-				spi_send_byte((unsigned) (char) (esc_value_to_send));
-				spi_send_byte((unsigned) (char) (steering_value_to_send<<8));
-				spi_send_byte((unsigned) (char) (steering_value_to_send));
-			}
-			
-			
-			
-			
+		
+		if (counter_UART1_reciever > 2) {
+		
+		//Reading Information
+		//read_sensor_info(&control_mode, sens_info_ptr);
+		Sens_info_read(sens_info_ptr);
+		
+		c = (int) sensor_info.dist_right_line;
+		v = (int) sensor_info.angular_diff;
+		//d = (int) sensor_info.dist_sonic_middle;
+		
+		cli();
+		
+		//FLC_obstacle(OCR1A, d);
+		//FLC_steering(c, v);
+		fuzzy_parking(c,v, OCR1A);
+		sei();
+		
+		//Sending back information
+		unsigned int esc_value_to_send;
+		esc_value_to_send = (unsigned) (short) OCR1A;
+		unsigned int steering_value_to_send;
+		steering_value_to_send = (unsigned) (short) OCR1B;
+		//Big endian
+		//spi_send_byte((unsigned) (char) (esc_value_to_send<<8));
+		//spi_send_byte((unsigned) (char) (esc_value_to_send));
+		//spi_send_byte((unsigned) (char) (steering_value_to_send<<8));
+		//spi_send_byte((unsigned) (char) (steering_value_to_send));
+		}
+		
+		
+		
+		
 		}
 		
 
 	}
+	
 
 
 

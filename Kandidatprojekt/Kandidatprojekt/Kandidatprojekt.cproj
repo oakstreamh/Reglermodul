@@ -213,6 +213,12 @@
     <Folder Include="src\config\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\fuzzyParkingAlgorithm.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\fuzzyParkingAlgorithm.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\fuzzySteering.c">
       <SubType>compile</SubType>
     </Compile>
@@ -246,6 +252,7 @@
     <Compile Include="src\OldSteering.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\parkingAlgorithm.c" />
     <Compile Include="src\pid.c">
       <SubType>compile</SubType>
     </Compile>
