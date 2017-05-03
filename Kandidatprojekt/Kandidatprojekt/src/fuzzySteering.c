@@ -28,23 +28,40 @@ struct io_type delta_V;
 
 
 
+/* FLC_steering is a fuzzy logic controller to perform lane following.
+ * Input values are unitless reference values derived from image processing.
+ * The image processing detects straight lines through the Hough transform.
+ * To manage sharp curvatures, the image processing application implements a state 
+ * machine.
+ * Input parameters are c and v. Three reserved pairs defines states.
+ * c = 227 & v = 45 corresponds to no lines detected
+ * c = 20 & v = 45 defines the state, sharp right curvature
+ * c = 210 & v = 45 defines the state, sharp left curvature
+ * c in [45, 205] and v in [0, 80] corresponds to the fourth state, straight rode
+ *
+ * The fuzzy logic controller is designed to manage the fourth state
+ */
+
 void FLC_steering(int c, int v)
 
 {
-	if ((c == 227) & (v == 45))
+    
+    
+    
+	if ((c == 227) & (v == 45))            // No lines detected
 	{
 		setServo(STRAIGHT);
 		
 	}
-	else if ((c == 20) & (v == 45))
+	else if ((c == 20) & (v == 45))        // right curvature, turn right
 	{
 		setServo(MAXRIGHT);
 	}
-	else if ((c == 210) & (v == 45))
+	else if ((c == 210) & (v == 45))       // left curvature, turn left
 	{
 		setServo(MAXLEFT);
 	}
-	else
+	else                                   // straight road, do fuzzy
 	{
 		
 		
@@ -113,15 +130,15 @@ void FLC_steering(int c, int v)
 		struct io_type steering; strcpy(steering.name, "steering");
 		
 		struct mf_type sharpRight;
-		MATLAB_MF(&sharpRight, "sharpRight", 2259, 2260, 2260, 2460);
+		MATLAB_MF(&sharpRight, "sharpRight", 2259, 2260, 2260, 2360);
 		struct mf_type right;
-		MATLAB_MF(&right, "right", 2260, 2460, 2460, 2660);
+		MATLAB_MF(&right, "right", 2360, 2460, 2460, 2560);
 		struct mf_type straight;
-		MATLAB_MF(&straight, "straight", 2460, 2660, 2660, 2860);
+		MATLAB_MF(&straight, "straight", 2560, 2660, 2660, 2760);
 		struct mf_type left;
-		MATLAB_MF(&left, "left", 2660, 2860, 2860, 3060);
+		MATLAB_MF(&left, "left", 2760, 2860, 2860, 2960);
 		struct mf_type sharpLeft;
-		MATLAB_MF(&sharpLeft, "sharpLeft", 2860, 3060, 3060, 3061);
+		MATLAB_MF(&sharpLeft, "sharpLeft", 2960, 3060, 3060, 3061);
 		
 		steering.membership_functions = &sharpRight;
 		sharpRight.next = &right;
