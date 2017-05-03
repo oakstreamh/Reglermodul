@@ -8,7 +8,7 @@
 #define SPI_SLAVE_INCL_GUARD_BUFFER
 
 #define SPI_BUFFER_SIZE 64
-#define RECEIVED_PACKAGE_SIZE 4
+#define RECEIVED_PACKAGE_SIZE 5
 
 struct Sensor_information{
 	unsigned char dist_right_line;

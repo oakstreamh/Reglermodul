@@ -28,24 +28,24 @@
 #include "fuzzy_speed_controller.h"
 #include "general_FIS.h"
 #include "fuzzySteering.h"
-//#include "spi_buffer_slave.h"
+#include "spi_buffer_slave.h"
 #include "fuzzyParkingAlgorithm.h"
 
 
 //////////////// STRUCTS /////////////////////////////////////////////////////////
 
-struct Sensor_information{
-	unsigned char dist_right_line;
-	unsigned char angular_diff;
-	unsigned char dist_sonic_middle;
-	unsigned char dist_sonic_left;
-	unsigned char dist_sonic_right;
-	unsigned char dist_sonic_back;
-	unsigned char car_speed;
-	unsigned char angle;
-	unsigned char dist_to_stop_line;
-	unsigned char sign_type; //Not sure we gonna use this one. Depends if camera can detect signs
-};
+//struct Sensor_information{
+	//unsigned char dist_right_line;
+	//unsigned char angular_diff;
+	//unsigned char dist_sonic_middle;
+	//unsigned char dist_sonic_left;
+	//unsigned char dist_sonic_right;
+	//unsigned char dist_sonic_back;
+	//unsigned char car_speed;
+	//unsigned char angle;
+	//unsigned char dist_to_stop_line;
+	//unsigned char sign_type; //Not sure we gonna use this one. Depends if camera can detect signs
+//};
 
 
 //////////////// HEADERS /////////////////////////////////////////////////////////
@@ -134,7 +134,7 @@ ISR(USART1_RX_vect){
 void carInit(void)
 {
 	pwmInit();
-	//spi_slave_init();
+	spi_slave_init();
 	setESC(NEUTRAL);
 	setServo(STRAIGHT);
 	
@@ -164,11 +164,11 @@ void Sens_info_read(struct Sensor_information* sens_info_ptr) //There is no chec
 	UCSR1B &= ~(1<<RXCIE1);
 	
 	//Assigning values from buffer to sens_info
-	//	sens_info_ptr->dist_right_line = (unsigned) (char) UART1_reciever_buffer[0];
-	//	sens_info_ptr->angular_diff = (unsigned) (char) UART1_reciever_buffer[1];
-	sens_info_ptr->dist_sonic_right = (unsigned) (char) UART1_reciever_buffer[0];
-	sens_info_ptr->dist_sonic_middle = (unsigned) (char) UART1_reciever_buffer[1];
-	sens_info_ptr->dist_sonic_left = (unsigned) (char) UART1_reciever_buffer[2];
+	sens_info_ptr->dist_right_line = (unsigned) (char) UART1_reciever_buffer[4];
+	sens_info_ptr->angular_diff = (unsigned) (char) UART1_reciever_buffer[5];
+	sens_info_ptr->dist_sonic_right = (unsigned) (char) UART1_reciever_buffer[2];
+	sens_info_ptr->dist_sonic_middle = (unsigned) (char) UART1_reciever_buffer[0];
+	sens_info_ptr->dist_sonic_left = (unsigned) (char) UART1_reciever_buffer[1];
 	sens_info_ptr->dist_sonic_back = (unsigned) (char) UART1_reciever_buffer[3];
 	
 	
@@ -220,33 +220,31 @@ int main (void)
 	USART1_init(baud_setting);
 	//End of init for UART
 	
-	
-	int d;
-	
-	
 	//Setting for Testing
 	//DDRA = 0xFF;
 	//End of test setting
 	
 	while (1) {
 		
-		if (counter_UART1_reciever > 3) {
+		if (counter_UART1_reciever > 5) {
 			
 			//Reading Information
-			//read_sensor_info(&control_mode, sens_info_ptr);
+			read_sensor_info(&control_mode, sens_info_ptr);
 			Sens_info_read(sens_info_ptr);
 			
 			int sR = (int) sensor_info.dist_sonic_right;
 			int sF = (int) sensor_info.dist_sonic_middle;
 			int sL = (int) sensor_info.dist_sonic_left;
 			int sB = (int) sensor_info.dist_sonic_back;
-			//d = (int) sensor_info.dist_sonic_middle;
+			
+			int c = (int) sensor_info.dist_right_line;
+			int v = (int) sensor_info.angular_diff;
 			
 			cli();
 			
-			//FLC_obstacle(OCR1A, d);
-			//FLC_steering(c, v);
-			fuzzy_parking(sL,sF, OCR1A);
+			FLC_obstacle(OCR1A, sF, v);
+			FLC_steering(c, v);
+			//fuzzyParking(sL,sF, OCR1A);
 			sei();
 			
 			//Sending back information
@@ -260,6 +258,7 @@ int main (void)
 			//spi_send_byte((unsigned) (char) (steering_value_to_send<<8));
 			//spi_send_byte((unsigned) (char) (steering_value_to_send));
 		}
+		
 		
 		
 		

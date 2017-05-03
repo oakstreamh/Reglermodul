@@ -31,8 +31,12 @@ struct io_type delta_V;
 void FLC_steering(int c, int v)
 
 {
-	
-	if ((c == 20) & (v == 45))
+	if ((c == 227) & (v == 45))
+	{
+		setServo(STRAIGHT);
+		
+	}
+	else if ((c == 20) & (v == 45))
 	{
 		setServo(MAXRIGHT);
 	}

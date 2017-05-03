@@ -10,8 +10,9 @@
 #define FUZZYPARKINGALGORITHM_H_
 
 
-void gettingReady(int sonicL, int sonicF);
-void fuzzy_parking(int sonicRight, int sonicForward, int speedCount);
+void step1(int sonicL, int sonicF);
+void step2(int sonicR, int sonicF);
+void fuzzyParking(int sonicL, int sonicF, int escCount);
 
 
 
