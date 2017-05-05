@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 ﻿//////////////////////////////////////////////////////////////////////////////////
+=======
+
+//////////////////////////////////////////////////////////////////////////////////
+>>>>>>> origin/master
 // servo.c contains methods, variables and constants for the speed and          //
 // steering servo signals                                                       //
 // AUTHORS: MATHIAS DALSHAGEN & HJALMAR EKSTRÖM                                 //
@@ -75,7 +80,6 @@ void setServo (int counterServo)
 		OCR1B = MAXLEFT;
 		
 	} else {
-		
 		OCR1B = counterServo;
 	}
 }
