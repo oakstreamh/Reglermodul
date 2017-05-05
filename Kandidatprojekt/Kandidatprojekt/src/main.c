@@ -135,8 +135,6 @@ void carInit(void)
 {
 	pwmInit();
 	spi_slave_init();
-	setESC(NEUTRAL);
-	setServo(STRAIGHT);
 	
 }
 
@@ -191,20 +189,14 @@ void Sens_info_read(struct Sensor_information* sens_info_ptr) //There is no chec
 int main (void)
 {
 	
-	
+	fuzzyParking(40,100,2850);
 	// FOR TESTING
 	//	FLC_obstacle(2800, 150);
 	
-	
-
-	
 	carInit();
 	_delay_ms(5000);
-	setServo(MAXLEFT);
 	
-	_delay_ms(5000);
-	setServo(MAXRIGHT);
-
+	
 	
 	sei();
 	
@@ -212,7 +204,7 @@ int main (void)
 	
 	//-----Variables and pointers for Sensor information
 	//Er info finns i sensor_info.dist_right_line;
-	//om counter_UART1_reciever true, finns info att hämta
+	//om counter_UART1_reciever true, finns info att hemta
 	
 	
 	struct Sensor_information sensor_info;
