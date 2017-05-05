@@ -1,4 +1,4 @@
-﻿
+
 //////////////////////////////////////////////////////////////////////////////////
 // servo.c contains methods, variables and constants for the speed and          //
 // steering servo signals                                                       //
@@ -19,6 +19,8 @@
 //////////////// CONSTANTS ///////////////////////////////////////////////////////
 
 
+double Q1 = 0.8;
+double Q2 = 0.2;
 
 //////////////// METHODS /////////////////////////////////////////////////////////
 
@@ -63,16 +65,16 @@ void setESC(int counterEsc){
 */
 void setServo (int counterServo)
 {
-	if (counterServo <= MAXRIGHT){
+	if (counterServo > MAXRIGHT){
 		
-		OCR1B = MAXRIGHT;
+		OCR1B = Q2*OCR1B+Q1*MAXRIGHT;
 		
-	}	else if (counterServo >= MAXLEFT){
+	}	else if (counterServo < MAXLEFT){
 
-		OCR1B = MAXLEFT;
+		OCR1B = Q2*OCR1B+Q1*MAXLEFT;
 		
 	} else {
 		
-		OCR1B = counterServo;	
+		OCR1B = Q2*OCR1B +Q1*counterServo;
 	}
 }
