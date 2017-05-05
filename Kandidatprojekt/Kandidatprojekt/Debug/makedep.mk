@@ -16,8 +16,6 @@ src\manualMode.c
 
 src\OldSteering.c
 
-src\parkingAlgorithm.c
-
 src\pid.c
 
 src\servo.c

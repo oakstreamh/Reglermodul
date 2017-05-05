@@ -195,10 +195,16 @@ int main (void)
 	// FOR TESTING
 	//	FLC_obstacle(2800, 150);
 	
+	
+
+	
 	carInit();
 	_delay_ms(5000);
+	setServo(MAXLEFT);
 	
-	
+	_delay_ms(5000);
+	setServo(MAXRIGHT);
+
 	
 	sei();
 	
@@ -206,7 +212,7 @@ int main (void)
 	
 	//-----Variables and pointers for Sensor information
 	//Er info finns i sensor_info.dist_right_line;
-	//om counter_UART1_reciever true, finns info att hemta
+	//om counter_UART1_reciever true, finns info att hämta
 	
 	
 	struct Sensor_information sensor_info;
@@ -242,9 +248,9 @@ int main (void)
 			
 			cli();
 			
-			FLC_obstacle(OCR1A, sF, v);
-			FLC_steering(c, v);
-			//fuzzyParking(sL,sF, OCR1A);
+			//FLC_obstacle(OCR1A, sF, v);
+			//FLC_steering(c, v);
+			fuzzyParking(sL,sF, OCR1A);
 			sei();
 			
 			//Sending back information

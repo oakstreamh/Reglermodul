@@ -15,12 +15,13 @@
 #define MIN_DIST 0
 #define MAX_FRONT 100
 
-#define MAX_RIGHT 100
+#define MAX_LEFT 100
 
 #define PARK_SPEED_FORWARD 2730
 #define PARK_SPEED_REVERSE 2790
 
-
+int timeToStop = 0;
+int readyForStep2 = 0;
 int readyToPark = 0;
 int parkingFinished = 0;
 
@@ -30,12 +31,29 @@ int parkingFinished = 0;
 
 void step1(int sonicL, int sonicF)
 {
+	struct io_type distL; strcpy(distL.name, "distL");
+	
+		// 4. Variable assigned its reference value
+	
+	if(sonicL < MIN_DIST)
+	{
+		distL.value = MIN_DIST;
+	}
+	else if (sonicL > MAX_LEFT)
+	{
+		distL.value = MAX_LEFT;
+	}
+	else
+	{
+		distL.value = sonicL;
+	}
+	
 	
 	////////////////////////////////////////////////////////////////////////////////
 	///// SETUP FOR INPUT VARIABLE DISTF ///////////////////////////////////////////
 	
 	// 1. Declaration
-	
+
 	struct io_type distF; strcpy(distF.name, "distF");
 	
 	// 2. Set MFs
@@ -76,16 +94,16 @@ void step1(int sonicL, int sonicF)
 	
 	// 1. Declaration
 	
-	struct io_type distL; strcpy(distL.name, "distL");
+
 	
 	// 2. Set MFs
 	
 	struct mf_type smallL;
-	MATLAB_MF(&smallL, "smallL", MIN_DIST-1, MIN_DIST, 55, 75);
+	MATLAB_MF(&smallL, "smallL", MIN_DIST-1, MIN_DIST, 65, 75);
 	struct mf_type mediumL;
-	MATLAB_MF(&mediumL, "mediumL", 55, 75, 75, 95);
+	MATLAB_MF(&mediumL, "mediumL", 65, 75, 75, 85);
 	struct mf_type bigL;
-	MATLAB_MF(&bigL, "bigL", 75, 95, MAX_RIGHT, MAX_RIGHT+1);
+	MATLAB_MF(&bigL, "bigL", 75, 85, MAX_LEFT, MAX_LEFT+1);
 	
 	// 3. Linked list for MFs
 	
@@ -94,21 +112,7 @@ void step1(int sonicL, int sonicF)
 	mediumL.next = &bigL;
 	bigL.next = NULL;
 	
-	// 4. Variable assigned its reference value
-	
-	if(sonicL < MIN_DIST)
-	{
-		distL.value = MIN_DIST;
-	}
-	else if (sonicL > MAX_RIGHT)
-	{
-		distL.value = MAX_RIGHT;
-	}
-	else
-	{
-		distL.value = sonicL;
-	}
-	
+
 	
 	////////////////////////////////////////////////////////////////////////////////
 	////// SETUP FOR OUTPUT VARIABLE  SERVO ////////////////////////////////////////
@@ -121,11 +125,11 @@ void step1(int sonicL, int sonicF)
 	struct mf_type sharpRight;
 	MATLAB_MF(&sharpRight, "sharpRight", MAXRIGHT-1, MAXRIGHT, MAXRIGHT, MAXRIGHT+1);
 	struct mf_type right;
-	MATLAB_MF(&right, "right", 2185, 2250, 2250, 2400);
+	MATLAB_MF(&right, "right", 2285, 2350, 2350, 2500);
 	struct mf_type straight;
 	MATLAB_MF(&straight, "straight", 2532, 2660, 2660, 2788);
 	struct mf_type left;
-	MATLAB_MF(&left, "left", 3000, 3100, 3100, MAXLEFT);
+	MATLAB_MF(&left, "left", 2900, 3000, 3000, MAXLEFT-100);
 	
 	
 	// 3. Linked list for MFs
@@ -197,7 +201,15 @@ void step1(int sonicL, int sonicF)
 	fuzzification();
 	rule_evaluation();
 	defuzzification();
-	setServo(servo.value);
+	if (servo.value != 0)
+	{
+	setServo(servo.value);	
+	}
+	
+	if (sonicF < 20)
+	{
+		timeToStop = 1;
+	}
 
 }
 
@@ -258,7 +270,7 @@ void step2(int sonicL, int sonicF)
 	struct mf_type mediumL;
 	MATLAB_MF(&mediumL, "mediumL", 5, 10, 10, 20);
 	struct mf_type bigL;
-	MATLAB_MF(&bigL, "bigL", 15, 25, MAX_RIGHT, MAX_RIGHT+1);
+	MATLAB_MF(&bigL, "bigL", 15, 25, MAX_LEFT, MAX_LEFT+1);
 	
 	// 3. Linked list for MFs
 	
@@ -273,9 +285,9 @@ void step2(int sonicL, int sonicF)
 	{
 		distL.value = MIN_DIST;
 	}
-	else if (sonicL > MAX_RIGHT)
+	else if (sonicL > MAX_LEFT)
 	{
-		distL.value = MAX_RIGHT;
+		distL.value = MAX_LEFT;
 	}
 	else
 	{
@@ -374,12 +386,6 @@ void step2(int sonicL, int sonicF)
 	defuzzification();
 	setServo(servo.value);
 	
-	if (sonicF < 20)
-	{
-		readyToPark = 1;
-	}
-	
-	
 }
 
 
@@ -400,20 +406,25 @@ void fuzzyParking(int sonicL, int sonicF, int escCount)
 		setESC(2640);
 	}
 	
-	if (!readyToPark)
+	
+	step1(sonicL, sonicF);
+	
+	if (timeToStop)
 	{
-		step1(sonicL, sonicL);
+	//	setESC(NEUTRAL);
 	}
 	
-	if (readyToPark)
+	/*if ((!readyForStep2) & (!readyToPark))
 	{
-		setESC(NEUTRAL);
-		// do parking routine
-		
-		
+		step1(sonicL, sonicF);
 	}
 	
+	if ((readyForStep2) & (!readyToPark))
+	{
+			
+	}
 	
+	*/
 	
 }
 
