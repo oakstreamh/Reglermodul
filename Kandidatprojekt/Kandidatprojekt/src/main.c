@@ -135,7 +135,8 @@ void carInit(void)
 {
 	pwmInit();
 	spi_slave_init();
-	
+	setESC(NEUTRAL);
+	setServo(STRAIGHT);
 }
 
 
@@ -188,15 +189,13 @@ void Sens_info_read(struct Sensor_information* sens_info_ptr) //There is no chec
 
 int main (void)
 {
-	
-	fuzzyParking(40,100,2850);
 	// FOR TESTING
 	//	FLC_obstacle(2800, 150);
-	
+
 	carInit();
 	_delay_ms(5000);
-	
-	
+
+
 	
 	sei();
 	
@@ -226,8 +225,10 @@ int main (void)
 		
 		if (counter_UART1_reciever > 5) {
 			
+			PORTA |= (1<<PORTA1);
+			
 			//Reading Information
-			read_sensor_info(&control_mode, sens_info_ptr);
+			//read_sensor_info(&control_mode, sens_info_ptr);
 			Sens_info_read(sens_info_ptr);
 			
 			int sR = (int) sensor_info.dist_sonic_right;
@@ -240,32 +241,21 @@ int main (void)
 			
 			cli();
 			
-			//FLC_obstacle(OCR1A, sF, v);
-			//FLC_steering(c, v);
-			fuzzyParking(sL,sF, OCR1A);
+			FLC_obstacle(OCR1A, sF);
+			FLC_steering(c,v);
+
 			sei();
 			
 			//Sending back information
-			unsigned int esc_value_to_send;
-			esc_value_to_send = (unsigned) (short) OCR1A;
-			unsigned int steering_value_to_send;
-			steering_value_to_send = (unsigned) (short) OCR1B;
+			//unsigned int esc_value_to_send;
+			//esc_value_to_send = (unsigned) (short) OCR1A;
+			//unsigned int steering_value_to_send;
+			//steering_value_to_send = (unsigned) (short) OCR1B;
 			//Big endian
 			//spi_send_byte((unsigned) (char) (esc_value_to_send<<8));
 			//spi_send_byte((unsigned) (char) (esc_value_to_send));
 			//spi_send_byte((unsigned) (char) (steering_value_to_send<<8));
 			//spi_send_byte((unsigned) (char) (steering_value_to_send));
 		}
-		
-		
-		
-		
-		
 	}
-	
-
 }
-
-
-
-

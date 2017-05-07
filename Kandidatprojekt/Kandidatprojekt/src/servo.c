@@ -1,9 +1,4 @@
-<<<<<<< HEAD
 ﻿//////////////////////////////////////////////////////////////////////////////////
-=======
-
-//////////////////////////////////////////////////////////////////////////////////
->>>>>>> origin/master
 // servo.c contains methods, variables and constants for the speed and          //
 // steering servo signals                                                       //
 // AUTHORS: MATHIAS DALSHAGEN & HJALMAR EKSTRÖM                                 //
@@ -40,8 +35,6 @@ void pwmInit(void)
 	TCCR1A = (1<<WGM11)|(1<<COM1A1)|(1<<COM1B1);
 	ICR1 = 36863;
 	TCCR1B = (1<<CS11)|(1<<WGM12)|(1<<WGM13);
-	OCR1A = NEUTRAL;
-	OCR1B =STRAIGHT;
 }
 
 /* This method sets the ESC pwm length. The extreme values are MINESC and MAXESC.
@@ -80,6 +73,7 @@ void setServo (int counterServo)
 		OCR1B = MAXLEFT;
 		
 	} else {
+		
 		OCR1B = counterServo;
 	}
 }
