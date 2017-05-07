@@ -233,7 +233,17 @@ void FLC_obstacle(int currentOCR1A, int midSonicRange)
 		fuzzification();
 		rule_evaluation();
 		defuzzification();
-		if (pwm.value != 0)
+		
+		if (pwm.value > 2835) 
+		{
+			setESC(2835);
+		}
+		
+		else if (pwm.value < NEUTRAL)
+		{
+			setESC(NEUTRAL);
+		}
+		else
 		{
 			setESC(pwm.value);
 		}

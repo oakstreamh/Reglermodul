@@ -191,7 +191,6 @@ int main (void)
 {
 	// FOR TESTING
 	//	FLC_obstacle(2800, 150);
-
 	carInit();
 	_delay_ms(5000);
 

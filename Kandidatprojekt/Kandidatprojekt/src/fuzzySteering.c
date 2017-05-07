@@ -37,7 +37,7 @@ struct io_type delta_V;
  * c = 227 & v = 45 corresponds to no lines detected
  * c = 20 & v = 45 defines the state, sharp right curvature
  * c = 210 & v = 45 defines the state, sharp left curvature
- * c in [45, 205] and v in [0, 80] corresponds to the fourth state, straight rode
+ * c in [45, 205] and v in [0, 80] corresponds to the fourth state, straight road
  *
  * The fuzzy logic controller is designed to manage the fourth state
  */
@@ -45,9 +45,7 @@ struct io_type delta_V;
 
 void theFuzzySteering(int c, int v)
 {
-	
-	
-	
+
 	///// DECLARATION OF C INPUT VARIABLE ///////////////////////////////////
 	
 	struct io_type delta_C; strcpy(delta_C.name, "delta_C");  //5-15 rakt på höger sida
@@ -336,7 +334,7 @@ void theFuzzySteering(int c, int v)
 
 
 
-void FLC_steering(int c, int v)
+int FLC_steering(int c, int v)
 {
 	if ((c == 227) & (v == 45))            // No lines detected
 	{
@@ -354,4 +352,6 @@ void FLC_steering(int c, int v)
 	{
 		theFuzzySteering(c,v);
 	}
+	
+	return 0;
 }
