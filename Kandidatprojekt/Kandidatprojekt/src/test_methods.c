@@ -12,6 +12,9 @@
 #include "test_methods.h"
 #include "servo.h"
 #include <util/delay.h>
+#include <asf.h>
+#include <avr/interrupt.h>
+#include <avr/io.h>
 
 
 
@@ -68,7 +71,14 @@ void testSteering(void)
 {
 
 //
-setServo(3135);
+int steer = STRAIGHT;
+
+while (OCR1B<MAXRIGHT)
+{
+	steer +=10;
+	setServo(steer);
+	_delay_ms(500);
+}
 
 
 

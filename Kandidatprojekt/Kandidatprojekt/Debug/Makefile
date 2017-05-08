@@ -57,7 +57,6 @@ C_SRCS +=  \
 ../src/main.c \
 ../src/manualMode.c \
 ../src/OldSteering.c \
-../src/parkingAlgorithm.c \
 ../src/pid.c \
 ../src/servo.c \
 ../src/spi_buffer_slave.c \
@@ -80,7 +79,6 @@ src/general_FIS.o \
 src/main.o \
 src/manualMode.o \
 src/OldSteering.o \
-src/parkingAlgorithm.o \
 src/pid.o \
 src/servo.o \
 src/spi_buffer_slave.o \
@@ -96,7 +94,6 @@ src/general_FIS.o \
 src/main.o \
 src/manualMode.o \
 src/OldSteering.o \
-src/parkingAlgorithm.o \
 src/pid.o \
 src/servo.o \
 src/spi_buffer_slave.o \
@@ -112,7 +109,6 @@ src/general_FIS.d \
 src/main.d \
 src/manualMode.d \
 src/OldSteering.d \
-src/parkingAlgorithm.d \
 src/pid.d \
 src/servo.d \
 src/spi_buffer_slave.d \
@@ -128,7 +124,6 @@ src/general_FIS.d \
 src/main.d \
 src/manualMode.d \
 src/OldSteering.d \
-src/parkingAlgorithm.d \
 src/pid.d \
 src/servo.d \
 src/spi_buffer_slave.d \
@@ -150,8 +145,6 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
-
-
 
 
 

@@ -20,7 +20,8 @@
 #define PARK_SPEED_FORWARD 2730
 #define PARK_SPEED_REVERSE 2790
 
-
+int timeToStop = 0;
+int readyForStep2 = 0;
 int readyToPark = 0;
 int parkingFinished = 0;
 
@@ -118,14 +119,16 @@ void step1(int sonicL, int sonicF)
 	struct io_type servo; strcpy(servo.name, "servo");
 	
 	// 2. Set MFs
-	struct mf_type sharpRight;
-	MATLAB_MF(&sharpRight, "sharpRight", MAXRIGHT-1, MAXRIGHT, MAXRIGHT, MAXRIGHT+1);
-	struct mf_type right;
-	MATLAB_MF(&right, "right", 2185, 2250, 2250, 2400);
+	struct mf_type sharpLeft;
+	MATLAB_MF(&sharpLeft, "sharpLeft", MAXLEFT-1, MAXLEFT, MAXLEFT, MAXLEFT+1);
+	struct mf_type left;
+	MATLAB_MF(&left, "left", 2185, 2250, 2250, 2400);
 	struct mf_type straight;
 	MATLAB_MF(&straight, "straight", 2532, 2660, 2660, 2788);
-	struct mf_type left;
-	MATLAB_MF(&left, "left", 3000, 3100, 3100, MAXLEFT);
+	struct mf_type right;
+	MATLAB_MF(&right, "right", 3000, 3100, 3100, MAXRIGHT);
+	struct mf_type sharpRight;
+	MATLAB_MF(&sharpRight, "sharpRight", MAXRIGHT-1, MAXRIGHT, MAXRIGHT, MAXRIGHT+1);
 	
 	
 	// 3. Linked list for MFs
@@ -133,7 +136,8 @@ void step1(int sonicL, int sonicF)
 	sharpRight.next = &right;
 	right.next = &straight;
 	straight.next = &left;
-	left.next = NULL;
+	left.next = &sharpLeft;
+	sharpLeft.next = NULL;
 	
 	
 	
@@ -198,6 +202,11 @@ void step1(int sonicL, int sonicF)
 	rule_evaluation();
 	defuzzification();
 	setServo(servo.value);
+	
+	if (sonicF < 30)
+	{
+		timeToStop = 1;
+	}
 
 }
 
@@ -374,12 +383,6 @@ void step2(int sonicL, int sonicF)
 	defuzzification();
 	setServo(servo.value);
 	
-	if (sonicF < 20)
-	{
-		readyToPark = 1;
-	}
-	
-	
 }
 
 
@@ -391,7 +394,7 @@ void step2(int sonicL, int sonicF)
 void fuzzyParking(int sonicL, int sonicF, int escCount)
 {
 	
-	if (sonicF >50)
+	if (sonicF>50)
 	{
 		setESC(2840);
 	}
@@ -400,20 +403,25 @@ void fuzzyParking(int sonicL, int sonicF, int escCount)
 		setESC(2640);
 	}
 	
-	if (!readyToPark)
-	{
-		step1(sonicL, sonicL);
-	}
 	
-	if (readyToPark)
+	step1(sonicL, sonicF);
+	
+	if (timeToStop)
 	{
 		setESC(NEUTRAL);
-		// do parking routine
-		
-		
 	}
 	
+	/*if ((!readyForStep2) & (!readyToPark))
+	{
+		step1(sonicL, sonicF);
+	}
 	
+	if ((readyForStep2) & (!readyToPark))
+	{
+			
+	}
+	
+	*/
 	
 }
 
