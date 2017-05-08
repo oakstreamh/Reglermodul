@@ -197,6 +197,8 @@ int main (void)
 	
 	carInit();
 	_delay_ms(5000);
+	setServo(2200);
+	setESC(2870);
 	
 	
 	
@@ -220,12 +222,9 @@ int main (void)
 	USART1_init(baud_setting);
 	//End of init for UART
 	
-	//Setting for Testing
-	//DDRA = 0xFF;
-	//End of test setting
-	
+	setESC(2840);
 	while (1) {
-		
+		setESC(NEUTRAL);
 		if (counter_UART1_reciever > 5) {
 			
 			//Reading Information
@@ -242,9 +241,11 @@ int main (void)
 			
 			cli();
 			
-			FLC_obstacle(OCR1A, sF, v);
+			//FLC_obstacle(OCR1A, sF, v);
+	
 			FLC_steering(c, v);
 			//fuzzyParking(sL,sF, OCR1A);
+			
 			sei();
 			
 			//Sending back information

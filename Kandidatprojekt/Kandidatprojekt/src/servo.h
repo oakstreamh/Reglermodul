@@ -5,8 +5,8 @@
 #define MAXESC 2875		// MAX/MIN limit for driving on the floor
 #define MINESC 2655
 
-#define MAXLEFT 3135	// Limits before servo is exhausted
-#define MAXRIGHT 2022
+#define MAXLEFT 2022	// Limits before servo is exhausted
+#define MAXRIGHT 3135
 
 #define NEUTRAL 2765
 #define STRAIGHT 2660

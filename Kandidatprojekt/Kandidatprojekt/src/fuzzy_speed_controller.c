@@ -1,3 +1,4 @@
+
 //////////////////////////////////////////////////////////////////////////////////
 // FUZZY SPEED CONTROLLER                                                       //
 //////////////////////////////////////////////////////////////////////////////////
@@ -28,6 +29,9 @@
 void FLC_obstacle(int currentOCR1A, int midSonicRange, int specialAngle)
 {
 	
+	
+	
+	
 	if ((midSonicRange == 227) & (specialAngle == 45))
 	{
 		setESC(NEUTRAL);
@@ -38,6 +42,35 @@ void FLC_obstacle(int currentOCR1A, int midSonicRange, int specialAngle)
 		//////////////////////////////////////////////////////////////////////////////
 		
 		struct io_type distance; strcpy(distance.name, "distance");
+		struct io_type speed; strcpy(speed.name, "speed");
+		
+		// Variable assigned its reference value
+		if (currentOCR1A<MIN_SPEED) {
+			speed.value = MIN_SPEED;
+		}
+		else if (currentOCR1A>MAX_SPEED)
+		{
+			speed.value = MAX_SPEED;
+		}
+		else
+		{
+			speed.value = currentOCR1A;
+		}
+		
+		// Variable assigned its reference value
+		if(midSonicRange < MIN_DISTANCE)
+		{
+			distance.value = MIN_DISTANCE;
+		}
+		else if (midSonicRange > MAX_DISTANCE)
+		{
+			distance.value = MAX_DISTANCE;
+		}
+		else
+		{
+			distance.value = midSonicRange;
+		}
+		
 		
 		// Set MFs
 		struct mf_type stopDist;
@@ -56,26 +89,12 @@ void FLC_obstacle(int currentOCR1A, int midSonicRange, int specialAngle)
 		twoM.next = &threeM;
 		threeM.next = NULL;
 		
-		// Variable assigned its reference value
-		if(midSonicRange < MIN_DISTANCE)
-		{
-			distance.value = MIN_DISTANCE;
-		}
-		else if (midSonicRange > MAX_DISTANCE)
-		{
-			distance.value = MAX_DISTANCE;
-		}
-		else
-		{
-			distance.value = midSonicRange;
-		}
-		
+
 		
 		// DECLARATION OF SPEED INPUT VARIABLE
 		//////////////////////////////////////////////////////////////////////////////
 		
-		struct io_type speed; strcpy(speed.name, "speed");
-		
+
 		// Set MFs
 		struct mf_type still;
 		MATLAB_MF(&still, "still", MIN_SPEED-1, 2740, 2740, 2815);
@@ -96,19 +115,7 @@ void FLC_obstacle(int currentOCR1A, int midSonicRange, int specialAngle)
 		medium.next = &high;
 		high.next = NULL;
 		
-		// Variable assigned its reference value
-		if (currentOCR1A<MIN_SPEED) {
-			speed.value = MIN_SPEED;
-		}
-		else if (currentOCR1A>MAX_SPEED)
-		{
-			speed.value = MAX_SPEED;
-		}
-		else
-		{
-			speed.value = currentOCR1A;
-		}
-		
+
 		
 		// DECLARATION OF PWM OUTPUT VARIABLE
 		//////////////////////////////////////////////////////////////////////////////
@@ -236,9 +243,9 @@ void FLC_obstacle(int currentOCR1A, int midSonicRange, int specialAngle)
 		fuzzification();
 		rule_evaluation();
 		defuzzification();
-		if (pwm.value > 2825)
+		if (pwm.value > 2835)
 		{
-			setESC(2825);
+			setESC(2835);
 		}
 		else if (pwm.value < 2750)
 		{
@@ -252,5 +259,3 @@ void FLC_obstacle(int currentOCR1A, int midSonicRange, int specialAngle)
 	
 	
 }
-
-

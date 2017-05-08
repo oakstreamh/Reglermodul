@@ -1,4 +1,5 @@
-﻿//////////////////////////////////////////////////////////////////////////////////
+﻿
+//////////////////////////////////////////////////////////////////////////////////
 // FUZZY SPEED CONTROLLER                                                       //
 //////////////////////////////////////////////////////////////////////////////////
 
@@ -67,10 +68,10 @@ void FLC_steering(int c, int v)
 		
 		///// DECLARATION OF C INPUT VARIABLE ///////////////////////////////////
 		
-		struct io_type delta_C; strcpy(delta_C.name, "delta_C");
+		struct io_type delta_C; strcpy(delta_C.name, "delta_C");  //5-15 rakt på höger sida
 		
 		struct mf_type inNegative;
-		MATLAB_MF(&inNegative, "inNegative", 44, 45, 60, 110);
+		MATLAB_MF(&inNegative, "inNegative", 34, 35, 60, 110);
 		struct mf_type inZero;
 		MATLAB_MF(&inZero, "inZero", 75, 125, 125, 175);
 		struct mf_type inPositive;
@@ -129,16 +130,16 @@ void FLC_steering(int c, int v)
 
 		struct io_type steering; strcpy(steering.name, "steering");
 		
-		struct mf_type sharpRight;
-		MATLAB_MF(&sharpRight, "sharpRight", 2259, 2260, 2260, 2360);
-		struct mf_type right;
-		MATLAB_MF(&right, "right", 2360, 2460, 2460, 2560);
+		struct mf_type sharpLeft;
+		MATLAB_MF(&sharpLeft, "sharpLeft", 2259, 2260, 2260, 2360);
+		struct mf_type left;
+		MATLAB_MF(&left, "left", 2360, 2460, 2460, 2560);
 		struct mf_type straight;
 		MATLAB_MF(&straight, "straight", 2560, 2660, 2660, 2760);
-		struct mf_type left;
-		MATLAB_MF(&left, "left", 2760, 2860, 2860, 2960);
-		struct mf_type sharpLeft;
-		MATLAB_MF(&sharpLeft, "sharpLeft", 2960, 3060, 3060, 3061);
+		struct mf_type right;
+		MATLAB_MF(&right, "right", 2760, 2860, 2860, 2960);
+		struct mf_type sharpRight;
+		MATLAB_MF(&sharpRight, "sharpRight", 2960, 3060, 3060, 3061);
 		
 		steering.membership_functions = &sharpRight;
 		sharpRight.next = &right;
@@ -334,13 +335,13 @@ void FLC_steering(int c, int v)
 		fuzzification();
 		rule_evaluation();
 		defuzzification();
-		if (steering.value < 2260)
+		if (steering.value < MAXLEFT)
 		{
-			setServo(2260);
+			setServo(MAXLEFT);
 		}
-		else if (steering.value >3060)
+		else if (steering.value >MAXRIGHT)
 		{
-			setServo(3060);
+			setServo(MAXRIGHT);
 		}
 		else
 		{
@@ -349,4 +350,3 @@ void FLC_steering(int c, int v)
 		
 	}
 }
-
