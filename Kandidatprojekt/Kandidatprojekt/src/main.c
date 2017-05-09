@@ -137,6 +137,7 @@ void carInit(void)
 	//spi_slave_init();
 	setESC(NEUTRAL);
 	setServo(STRAIGHT);
+	
 }
 
 
@@ -191,13 +192,16 @@ void Sens_info_read(struct Sensor_information* sens_info_ptr) //There is no chec
 
 int main (void)
 {
+	
+	
 	// FOR TESTING
 	//	FLC_obstacle(2800, 150);
- 
+
 	carInit();
 	_delay_ms(5000);
 
-
+	
+	
 	
 	
 	
@@ -219,19 +223,19 @@ int main (void)
 	USART1_init(baud_setting);
 	//End of init for UART
 	
+
 	//Setting for Testing
 	DDRA = 0xFF;
 	//End of test setting
 	sei();
 	
+
 	while (1) {
-		
 		if (counter_UART1_reciever > 5) {
 			
-			
-			
+
 			//Reading Information
-			//read_sensor_info(&control_mode, sens_info_ptr);
+			read_sensor_info(&control_mode, sens_info_ptr);
 			Sens_info_read(sens_info_ptr);
 			
 			int sR = (int) sensor_info.dist_sonic_right;
@@ -244,8 +248,10 @@ int main (void)
 			
 			cli();
 			
+
 			FLC_obstacle(OCR1A, sF);
 			FLC_steering(c,v);
+
 			
 			sei();
 			
@@ -261,5 +267,16 @@ int main (void)
 			//spi_send_byte((unsigned) (char) (steering_value_to_send));
 			 PORTA = 0x0;
 		}
+		
+		
+		
+		
+		
 	}
+	
+
 }
+
+
+
+

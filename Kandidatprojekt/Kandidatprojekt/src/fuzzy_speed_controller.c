@@ -1,3 +1,4 @@
+
 //////////////////////////////////////////////////////////////////////////////////
 // FUZZY SPEED CONTROLLER                                                       //
 //////////////////////////////////////////////////////////////////////////////////
@@ -19,15 +20,24 @@
 #define MIN_DISTANCE 0          // lower limit of distance variable
 #define MAX_DISTANCE 250        // upper limit of distance variable
 #define MIN_SPEED 2740          // lower limit of speed input variable
-#define MAX_SPEED 2870          // upper limit of speed input variable
+#define MAX_SPEED 2900          // upper limit of speed input variable
 
 
 // FLC OBSTACLE AVOIDER
 //////////////////////////////////////////////////////////////////////////////////
 
-void FLC_obstacle(int currentOCR1A, int midSonicRange)
+void FLC_obstacle(int currentOCR1A, int midSonicRange, int specialAngle)
 {
 	
+	
+	
+	
+	if ((midSonicRange == 227) & (specialAngle == 45))
+	{
+		setESC(NEUTRAL);
+	}
+	else
+	{
 		// DECLARATION OF DISTANCE INPUT VARIABLE
 		//////////////////////////////////////////////////////////////////////////////
 		
@@ -87,15 +97,15 @@ void FLC_obstacle(int currentOCR1A, int midSonicRange)
 
 		// Set MFs
 		struct mf_type still;
-		MATLAB_MF(&still, "still", 2739, 2740, 2740, 2815);
+		MATLAB_MF(&still, "still", MIN_SPEED-1, 2740, 2740, 2815);
 		struct mf_type low;
-		MATLAB_MF(&low, "low", 2804, 2830, 2830, 2840);
+		MATLAB_MF(&low, "low", 2804, 2820, 2820, 2836);
 		struct mf_type cruising;
-		MATLAB_MF(&cruising, "cruising", 2830, 2840, 2840, 2850);
+		MATLAB_MF(&cruising, "cruising", 2827, 2843, 2843, 2859);
 		struct mf_type medium;
-		MATLAB_MF(&medium, "medium", 2840, 2850, 2850, 2860);
+		MATLAB_MF(&medium, "medium", 2849, 2865, 2865, 2881);
 		struct mf_type high;
-		MATLAB_MF(&high, "high", 2850, 2860, 2860, 2870);
+		MATLAB_MF(&high, "high", 2870, 2900, 2900, MAX_SPEED+1);
 		
 		// Linked list for MFs
 		speed.membership_functions = &still;
@@ -116,13 +126,13 @@ void FLC_obstacle(int currentOCR1A, int midSonicRange)
 		struct mf_type noSpeed;
 		MATLAB_MF(&noSpeed, "noSpeed", 2739, 2740, 2740, 2815);
 		struct mf_type slow;
-		MATLAB_MF(&slow, "slow", 2804, 2830, 2830, 2840);
+		MATLAB_MF(&slow, "slow", 2804, 2820, 2820, 2836);
 		struct mf_type cruise;
-		MATLAB_MF(&cruise, "cruise", 2830, 2840, 2840, 2850);
+		MATLAB_MF(&cruise, "cruise", 2827, 2843, 2843, 2859);
 		struct mf_type medHigh;
-		MATLAB_MF(&medHigh, "medHigh", 2840, 2850, 2850, 2860);
+		MATLAB_MF(&medHigh, "medHigh", 2849, 2865, 2865, 2881);
 		struct mf_type max;
-		MATLAB_MF(&max, "max", 2850, 2860, 2860, 2870);
+		MATLAB_MF(&max, "max", 2870, 2900, 2900, 2901);
 		
 		// Linked list for MFs
 		pwm.membership_functions = &noSpeed;
@@ -233,22 +243,21 @@ void FLC_obstacle(int currentOCR1A, int midSonicRange)
 		fuzzification();
 		rule_evaluation();
 		defuzzification();
-		
-		if (pwm.value > 2830) 
+
+		if (pwm.value > 2835)
+
 		{
 			setESC(2830);
 		}
-		
-		else if (pwm.value < NEUTRAL)
+		else if (pwm.value < 2750)
 		{
-			setESC(NEUTRAL);
+			setESC(2750);
 		}
 		else
 		{
 			setESC(pwm.value);
 		}
+	}
 	
 	
 }
-
-
