@@ -77,7 +77,7 @@ double circleArch = 0.053;
 
 //--------UART Variables (temp)------------
 volatile unsigned char UART1_reciever_buffer[32];
-volatile int counter_UART1_reciever;
+volatile unsigned int counter_UART1_reciever = 0;
 //----------Ending of UART Variables (temp)-----------
 
 
@@ -134,7 +134,7 @@ ISR(USART1_RX_vect){
 void carInit(void)
 {
 	pwmInit();
-	spi_slave_init();
+	//spi_slave_init();
 	setESC(NEUTRAL);
 	setServo(STRAIGHT);
 }
@@ -153,22 +153,24 @@ void USART1_init(unsigned int baud_setting)
 	UCSR1C = (1<<USBS1) | (3<<UCSZ10);
 	//Setting baud rateS
 	UBRR1 = baud_setting;
+	counter_UART1_reciever = 0;
 }
 
 
 void Sens_info_read(struct Sensor_information* sens_info_ptr) //There is no check if the buffer is empty or not
 {
-	
+
 	//Disable UART1 interrupts to prevent values from changing while reading
 	UCSR1B &= ~(1<<RXCIE1);
 	
+	
 	//Assigning values from buffer to sens_info
-	sens_info_ptr->dist_right_line = (unsigned) (char) UART1_reciever_buffer[4];
-	sens_info_ptr->angular_diff = (unsigned) (char) UART1_reciever_buffer[5];
-	sens_info_ptr->dist_sonic_right = (unsigned) (char) UART1_reciever_buffer[2];
-	sens_info_ptr->dist_sonic_middle = (unsigned) (char) UART1_reciever_buffer[0];
-	sens_info_ptr->dist_sonic_left = (unsigned) (char) UART1_reciever_buffer[1];
-	sens_info_ptr->dist_sonic_back = (unsigned) (char) UART1_reciever_buffer[3];
+	sens_info_ptr->dist_right_line = (unsigned) (char) UART1_reciever_buffer[0];
+	sens_info_ptr->angular_diff = (unsigned) (char) UART1_reciever_buffer[1];
+	sens_info_ptr->dist_sonic_middle = (unsigned) (char) UART1_reciever_buffer[2];
+	sens_info_ptr->dist_sonic_left = (unsigned) (char) UART1_reciever_buffer[3];
+	sens_info_ptr->dist_sonic_right = (unsigned) (char) UART1_reciever_buffer[4];
+	sens_info_ptr->dist_sonic_back = (unsigned) (char) UART1_reciever_buffer[5];
 	
 	
 	//sens_info_ptr->dist_sonic_right = ((unsigned) (short) UART1_reciever_buffer[7] << 8) | (unsigned) (short) UART1_reciever_buffer[6];
@@ -191,12 +193,13 @@ int main (void)
 {
 	// FOR TESTING
 	//	FLC_obstacle(2800, 150);
+ 
 	carInit();
 	_delay_ms(5000);
 
 
 	
-	sei();
+	
 	
 	
 	
@@ -217,14 +220,15 @@ int main (void)
 	//End of init for UART
 	
 	//Setting for Testing
-	//DDRA = 0xFF;
+	DDRA = 0xFF;
 	//End of test setting
+	sei();
 	
 	while (1) {
 		
 		if (counter_UART1_reciever > 5) {
 			
-			PORTA |= (1<<PORTA1);
+			
 			
 			//Reading Information
 			//read_sensor_info(&control_mode, sens_info_ptr);
@@ -242,19 +246,20 @@ int main (void)
 			
 			FLC_obstacle(OCR1A, sF);
 			FLC_steering(c,v);
-
+			
 			sei();
 			
 			//Sending back information
-			//unsigned int esc_value_to_send;
-			//esc_value_to_send = (unsigned) (short) OCR1A;
-			//unsigned int steering_value_to_send;
-			//steering_value_to_send = (unsigned) (short) OCR1B;
+			unsigned int esc_value_to_send;
+			esc_value_to_send = (unsigned) (short) OCR1A;
+			unsigned int steering_value_to_send;
+			steering_value_to_send = (unsigned) (short) OCR1B;
 			//Big endian
 			//spi_send_byte((unsigned) (char) (esc_value_to_send<<8));
 			//spi_send_byte((unsigned) (char) (esc_value_to_send));
 			//spi_send_byte((unsigned) (char) (steering_value_to_send<<8));
 			//spi_send_byte((unsigned) (char) (steering_value_to_send));
+			 PORTA = 0x0;
 		}
 	}
 }

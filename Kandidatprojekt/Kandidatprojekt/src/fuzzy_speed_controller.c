@@ -234,9 +234,9 @@ void FLC_obstacle(int currentOCR1A, int midSonicRange)
 		rule_evaluation();
 		defuzzification();
 		
-		if (pwm.value > 2835) 
+		if (pwm.value > 2830) 
 		{
-			setESC(2835);
+			setESC(2830);
 		}
 		
 		else if (pwm.value < NEUTRAL)
