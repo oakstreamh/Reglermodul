@@ -42,9 +42,7 @@ struct io_type delta_V;
  *
  * The fuzzy logic controller is designed to manage the fourth state
  */
-
 void FLC_steering(int c, int v)
-
 {
     
     
