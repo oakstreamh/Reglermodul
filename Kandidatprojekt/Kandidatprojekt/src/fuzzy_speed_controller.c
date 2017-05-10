@@ -69,9 +69,9 @@ void FLC_obstacle(int currentOCR1A, int midSonicRange)
 	
 	// Set MFs
 	struct mf_type stopDist;
-	MATLAB_MF(&stopDist, "stopDist", MIN_DISTANCE-1, 0, 12, 52);
+	MATLAB_MF(&stopDist, "stopDist", MIN_DISTANCE-1, 0, 12, 20);
 	struct mf_type oneM;
-	MATLAB_MF(&oneM, "oneM", 30, 60, 60, 95);
+	MATLAB_MF(&oneM, "oneM", 18, 60, 60, 95);
 	struct mf_type twoM;
 	MATLAB_MF(&twoM, "twoM", 75, 125, 125, 175);
 	struct mf_type threeM;
@@ -237,12 +237,12 @@ void FLC_obstacle(int currentOCR1A, int midSonicRange)
 	
 	fuzzification();
 	rule_evaluation();
-	defuzzification();
+	defuzzification(); 
 
-	if (pwm.value > 2835)
+	if (pwm.value > 2840)
 
 	{
-		setESC(2830);
+		setESC(2840);
 	}
 	else if (pwm.value < 2750)
 	{

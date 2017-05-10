@@ -38,7 +38,7 @@ void doFuzzy(int c, int v)
 	struct mf_type rightSide;
 	MATLAB_MF(&rightSide, "rightSide", 49, 50, 110, 120); // Min_value = 50
 	struct mf_type centre;
-	MATLAB_MF(&centre, "centre", 110, 135, 165, 185);
+	MATLAB_MF(&centre, "centre", 115, 135, 165, 180);
 	struct mf_type leftSide;
 	MATLAB_MF(&leftSide, "leftSide", 175, 200, 230, 231);  // Max_value = 230
 	
@@ -48,13 +48,13 @@ void doFuzzy(int c, int v)
 	leftSide.next = NULL;
 	
 	// set iErr's input value to measErr value
-	if(c<0)				// if sensor value is smaller than delta_C's input set's lower limit
+	if(c<50)				// if sensor value is smaller than delta_C's input set's lower limit
 	{
-		delta_C.value = 0;  // force input value to lowest point in delta_C's input set
+		delta_C.value = 50;  // force input value to lowest point in delta_C's input set
 	}
-	else if(c>205)			// if sensor value is bigger than delta_C's input set's upper limit
+	else if(c>230)			// if sensor value is bigger than delta_C's input set's upper limit
 	{
-		delta_C.value = 205;  // force input value to lowest point in delta_C's input set
+		delta_C.value = 230;  // force input value to lowest point in delta_C's input set
 	}
 	else
 	{
@@ -66,11 +66,11 @@ void doFuzzy(int c, int v)
 	struct io_type delta_V; strcpy(delta_V.name, "delta_V");
 	
 	struct mf_type inMinus;
-	MATLAB_MF(&inMinus, "inMinus", 0, 1, 15, 30); // min V is 1
+	MATLAB_MF(&inMinus, "inMinus", 0, 1, 15, 25); // min V is 1
 	struct mf_type inNyll;
-	MATLAB_MF(&inNyll, "inNyll", 15 , 30, 30, 60);
+	MATLAB_MF(&inNyll, "inNyll", 20 , 30, 30, 40);
 	struct mf_type inPlus;
-	MATLAB_MF(&inPlus, "inPlus", 30, 60, 74, 75); // max V is 74
+	MATLAB_MF(&inPlus, "inPlus", 35, 60, 74, 75); // max V is 74
 	
 	delta_V.membership_functions = &inMinus;
 	inMinus.next = &inNyll;
@@ -96,15 +96,15 @@ void doFuzzy(int c, int v)
 	struct io_type steering; strcpy(steering.name, "steering");
 	
 	struct mf_type sharpLeft;
-	MATLAB_MF(&sharpLeft, "sharpLeft", 2259, 2260, 2260, 2360);
+	MATLAB_MF(&sharpLeft, "sharpLeft", 2359, 2360, 2360, 2460);
 	struct mf_type left;
-	MATLAB_MF(&left, "left", 2360, 2460, 2460, 2560);
+	MATLAB_MF(&left, "left", 2500, 2560, 2560, 2660);
 	struct mf_type straight;
 	MATLAB_MF(&straight, "straight", 2560, 2660, 2660, 2760);
 	struct mf_type right;
-	MATLAB_MF(&right, "right", 2760, 2860, 2860, 2960);
+	MATLAB_MF(&right, "right", 2700, 2800, 2800, 2900);
 	struct mf_type sharpRight;
-	MATLAB_MF(&sharpRight, "sharpRight", 2960, 3060, 3060, 3061);
+	MATLAB_MF(&sharpRight, "sharpRight", 2860, 2960, 2960, 2961);
 	
 	steering.membership_functions = &sharpRight;
 	sharpRight.next = &right;
