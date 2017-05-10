@@ -2,6 +2,8 @@
 # Automatically-generated file. Do not edit or delete the file
 ################################################################################
 
+src\CFile1.c
+
 src\fuzzyParkingAlgorithm.c
 
 src\fuzzySteering.c

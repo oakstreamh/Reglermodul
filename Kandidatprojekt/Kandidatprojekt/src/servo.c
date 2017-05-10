@@ -64,6 +64,8 @@ void setESC(int counterEsc){
 */
 void setServo (int counterServo)
 {
+	
+	
 	if (counterServo > MAXRIGHT){
 		
 		OCR1B = MAXRIGHT;
@@ -73,7 +75,6 @@ void setServo (int counterServo)
 		OCR1B = MAXLEFT;
 		
 	} else {
-		
 		OCR1B = counterServo;
 	}
 }

@@ -6,7 +6,7 @@
 #define MINESC 2655
 
 #define MAXLEFT 2022	// Limits before servo is exhausted
-#define MAXRIGHT 3135
+#define MAXRIGHT 3300
 
 #define NEUTRAL 2765
 #define STRAIGHT 2660
