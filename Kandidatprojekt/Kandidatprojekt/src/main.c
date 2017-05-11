@@ -1,7 +1,7 @@
 
 //////////////////////////////////////////////////////////////////////////////////
 // main.c contains the ISR, important signals and the control loop.             //
-// AUTHORS: MATHIAS DALSHAGEN & HJALMAR EKSTRÖM                                 //
+// AUTHORS: MATHIAS DALSHAGEN & HJALMAR EKSTRÃ–M                                 //
 //                                                                              //
 //                                                                              //
 //////////////////////////////////////////////////////////////////////////////////
@@ -134,7 +134,7 @@ ISR(USART1_RX_vect){
 void carInit(void)
 {
 	pwmInit();
-	//spi_slave_init();
+	spi_slave_init();
 	setESC(NEUTRAL);
 	setServo(STRAIGHT);
 	
@@ -231,12 +231,12 @@ int main (void)
 	
 
 	while (1) {
-		if (counter_UART1_reciever > 5) {
+		if (is_package_recieved()) {
 			
 
 			//Reading Information
 			read_sensor_info(&control_mode, sens_info_ptr);
-			Sens_info_read(sens_info_ptr);
+			//Sens_info_read(sens_info_ptr);
 			
 			int sR = (int) sensor_info.dist_sonic_right;
 			int sF = (int) sensor_info.dist_sonic_middle;
@@ -257,15 +257,19 @@ int main (void)
 			
 			//Sending back information
 			unsigned int esc_value_to_send;
-			esc_value_to_send = (unsigned) (short) OCR1A;
+			esc_value_to_send = OCR1A;
 			unsigned int steering_value_to_send;
-			steering_value_to_send = (unsigned) (short) OCR1B;
+			steering_value_to_send = OCR1B;
 			//Big endian
-			//spi_send_byte((unsigned) (char) (esc_value_to_send<<8));
-			//spi_send_byte((unsigned) (char) (esc_value_to_send));
-			//spi_send_byte((unsigned) (char) (steering_value_to_send<<8));
-			//spi_send_byte((unsigned) (char) (steering_value_to_send));
-			 PORTA = 0x0;
+			unsigned int temp_ESC;
+			temp_ESC = esc_value_to_send<<8;
+			unsigned int temp_steering;
+			temp_steering = (steering_value_to_send<<8);
+			spi_send_byte((unsigned) (char) temp_ESC);
+			spi_send_byte((unsigned) (char) (esc_value_to_send));
+			spi_send_byte((unsigned) (char) temp_steering);
+			spi_send_byte((unsigned) (char) (steering_value_to_send));
+			
 		}
 		
 		
@@ -276,6 +280,8 @@ int main (void)
 	
 
 }
+
+
 
 
 
