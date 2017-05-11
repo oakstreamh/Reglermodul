@@ -36,11 +36,11 @@ void doFuzzy(int c, int v)
 	struct io_type delta_C; strcpy(delta_C.name, "delta_C");
 	
 	struct mf_type rightSide;
-	MATLAB_MF(&rightSide, "rightSide", 49, 50, 110, 120); // Min_value = 50
+	MATLAB_MF(&rightSide, "rightSide", 99, 100, 120, 135); // Min_value = 100
 	struct mf_type centre;
-	MATLAB_MF(&centre, "centre", 115, 135, 165, 180);
+	MATLAB_MF(&centre, "centre", 125, 145, 155, 175);
 	struct mf_type leftSide;
-	MATLAB_MF(&leftSide, "leftSide", 175, 200, 230, 231);  // Max_value = 230
+	MATLAB_MF(&leftSide, "leftSide", 175, 186, 199, 200);  // Max_value = 199
 	
 	delta_C.membership_functions = &rightSide;
 	rightSide.next = &centre;
@@ -48,13 +48,13 @@ void doFuzzy(int c, int v)
 	leftSide.next = NULL;
 	
 	// set iErr's input value to measErr value
-	if(c<50)				// if sensor value is smaller than delta_C's input set's lower limit
+	if(c<100)				// if sensor value is smaller than delta_C's input set's lower limit
 	{
-		delta_C.value = 50;  // force input value to lowest point in delta_C's input set
+		delta_C.value = 100;  // force input value to lowest point in delta_C's input set
 	}
-	else if(c>230)			// if sensor value is bigger than delta_C's input set's upper limit
+	else if(c>199)			// if sensor value is bigger than delta_C's input set's upper limit
 	{
-		delta_C.value = 230;  // force input value to lowest point in delta_C's input set
+		delta_C.value = 199;  // force input value to lowest point in delta_C's input set
 	}
 	else
 	{
@@ -66,11 +66,11 @@ void doFuzzy(int c, int v)
 	struct io_type delta_V; strcpy(delta_V.name, "delta_V");
 	
 	struct mf_type inMinus;
-	MATLAB_MF(&inMinus, "inMinus", 0, 1, 15, 25); // min V is 1
+	MATLAB_MF(&inMinus, "inMinus", 0, 1, 20, 35); // min V is 1
 	struct mf_type inNyll;
-	MATLAB_MF(&inNyll, "inNyll", 20 , 30, 30, 40);
+	MATLAB_MF(&inNyll, "inNyll", 15, 35, 40, 55);
 	struct mf_type inPlus;
-	MATLAB_MF(&inPlus, "inPlus", 35, 60, 74, 75); // max V is 74
+	MATLAB_MF(&inPlus, "inPlus", 35, 50, 74 , 75); // max V is 74
 	
 	delta_V.membership_functions = &inMinus;
 	inMinus.next = &inNyll;
@@ -98,9 +98,9 @@ void doFuzzy(int c, int v)
 	struct mf_type sharpLeft;
 	MATLAB_MF(&sharpLeft, "sharpLeft", 2359, 2360, 2360, 2460);
 	struct mf_type left;
-	MATLAB_MF(&left, "left", 2500, 2560, 2560, 2660);
+	MATLAB_MF(&left, "left", 2400, 2460, 2460, 2560);
 	struct mf_type straight;
-	MATLAB_MF(&straight, "straight", 2560, 2660, 2660, 2760);
+	MATLAB_MF(&straight, "straight", 2520, 2660, 2660, 2720);
 	struct mf_type right;
 	MATLAB_MF(&right, "right", 2700, 2800, 2800, 2900);
 	struct mf_type sharpRight;

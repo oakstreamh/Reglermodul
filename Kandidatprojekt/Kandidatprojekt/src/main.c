@@ -191,21 +191,13 @@ void Sens_info_read(struct Sensor_information* sens_info_ptr) //There is no chec
 
 
 int main (void)
-{
-	
-	
+{	
 	// FOR TESTING
 	//	FLC_obstacle(2800, 150);
 
 	carInit();
 	_delay_ms(5000);
 
-	
-	
-	
-
-	
-	
 	
 	//-----Variables and pointers for Sensor information
 	//Er info finns i sensor_info.dist_right_line;
