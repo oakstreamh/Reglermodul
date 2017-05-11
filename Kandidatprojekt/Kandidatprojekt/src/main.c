@@ -254,9 +254,9 @@ int main (void)
 			steering_value_to_send = OCR1B;
 			//Big endian
 			unsigned int temp_ESC;
-			temp_ESC = esc_value_to_send<<8;
+			temp_ESC = (esc_value_to_send<<8) & 0xFF;
 			unsigned int temp_steering;
-			temp_steering = (steering_value_to_send<<8);
+			temp_steering = (steering_value_to_send<<8) & 0xFF;
 			spi_send_byte((unsigned) (char) temp_ESC);
 			spi_send_byte((unsigned) (char) (esc_value_to_send));
 			spi_send_byte((unsigned) (char) temp_steering);

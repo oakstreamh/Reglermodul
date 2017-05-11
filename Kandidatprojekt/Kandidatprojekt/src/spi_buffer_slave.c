@@ -206,16 +206,16 @@ unsigned char read_sensor_info(unsigned char* control_mode_ptr, struct Sensor_in
 		
 		//Read all info and write it to sensor struct
 
-		//*control_mode_ptr = spi_get_byte();
+		*control_mode_ptr = spi_get_byte();
 		sens_info_ptr->dist_right_line = spi_get_byte();
 		sens_info_ptr->angular_diff = spi_get_byte();
 		sens_info_ptr->dist_sonic_middle = spi_get_byte();
-		//sens_info_ptr->dist_sonic_left = spi_get_byte();
-		//sens_info_ptr->dist_sonic_right = spi_get_byte();
-		//sens_info_ptr->dist_sonic_back = spi_get_byte();
-		//sens_info_ptr->angle = spi_get_byte;
-		//sens_info_ptr->car_speed = spi_get_byte();
-		//sens_info_ptr->dist_to_stop_line = spi_get_byte();
+		sens_info_ptr->dist_sonic_left = spi_get_byte();
+		sens_info_ptr->dist_sonic_right = spi_get_byte();
+		sens_info_ptr->dist_sonic_back = spi_get_byte();
+		sens_info_ptr->angle = spi_get_byte;
+		sens_info_ptr->car_speed = spi_get_byte();
+		sens_info_ptr->dist_to_stop_line = spi_get_byte();
 		//sens_info_ptr->sign_type = spi_get_byte();
 		
 		
