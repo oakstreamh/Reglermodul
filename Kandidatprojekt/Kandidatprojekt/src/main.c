@@ -36,16 +36,16 @@
 //////////////// STRUCTS /////////////////////////////////////////////////////////
 
 //struct Sensor_information{
-	//unsigned char dist_right_line;
-	//unsigned char angular_diff;
-	//unsigned char dist_sonic_middle;
-	//unsigned char dist_sonic_left;
-	//unsigned char dist_sonic_right;
-	//unsigned char dist_sonic_back;
-	//unsigned char car_speed;
-	//unsigned char angle;
-	//unsigned char dist_to_stop_line;
-	//unsigned char sign_type; //Not sure we gonna use this one. Depends if camera can detect signs
+//unsigned char dist_right_line;
+//unsigned char angular_diff;
+//unsigned char dist_sonic_middle;
+//unsigned char dist_sonic_left;
+//unsigned char dist_sonic_right;
+//unsigned char dist_sonic_back;
+//unsigned char car_speed;
+//unsigned char angle;
+//unsigned char dist_to_stop_line;
+//unsigned char sign_type; //Not sure we gonna use this one. Depends if camera can detect signs
 //};
 
 
@@ -143,17 +143,8 @@ void carInit(void)
 
 void count(void)
 {
-	if (onGoingStop == 0)
-	{
-	TCCR3A = 0x00;
+	TCNT3 = 0;
 	TCCR3B = (1<<CS32)|(1<<CS30);
-	onGoingStop = 1;
-	}
-	if (TCNT3 > 4319)
-	{
-		TCNT3=0;
-		TCCR3B = 0x00;
-	}
 }
 
 
@@ -205,9 +196,15 @@ void Sens_info_read(struct Sensor_information* sens_info_ptr) //There is no chec
 
 
 int main (void)
-{	
+{
 	// FOR TESTING
 	//	FLC_obstacle(2800, 150);
+
+
+
+
+
+
 
 	carInit();
 	_delay_ms(5000);
@@ -223,7 +220,7 @@ int main (void)
 	sens_info_ptr = &sensor_info;
 	unsigned char control_mode;
 	unsigned char prev_control_mode;
-	unsigned char k_value_stop_line;
+	int k_value_stop_line;
 	//--end of sensor information
 	
 	//Init for UART
@@ -250,8 +247,8 @@ int main (void)
 			//Save k-value from stop line when control mode changes from 0 to 4
 			if(control_mode == 0x04 && prev_control_mode == 0x00){
 				onGoingStop = 0;
-				k_value_stop_line = sensor_info.dist_to_stop_line;
-			}
+				count();
+				k_value_stop_line = (int) sensor_info.dist_to_stop_line - 40;			}
 			
 			int sR = (int) sensor_info.dist_sonic_right;
 			int sF = (int) sensor_info.dist_sonic_middle;
@@ -270,14 +267,14 @@ int main (void)
 			}
 			else if (control_mode == 4)
 			{
-				count();
-				if (TCNT3 < 4319) // 0.3 seconds
+				if (TCNT3 < 300) // 0.3 seconds
 				{
 					setESC(2835);
 					stop(k_value_stop_line);
 				}
 				else
 				{
+					TCCR3B = (0<<CS32)|(0<<CS30);
 					setESC(NEUTRAL);
 					setServo(STRAIGHT);
 				}
