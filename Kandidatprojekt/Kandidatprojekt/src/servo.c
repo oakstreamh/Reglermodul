@@ -18,8 +18,8 @@
 //////////////// CONSTANTS ///////////////////////////////////////////////////////
 
 
-double Q1 = 0.8;
-double Q2 = 0.2;
+int Q1 = 8;
+int Q2 = 2;
 
 //////////////// METHODS /////////////////////////////////////////////////////////
 
@@ -66,15 +66,15 @@ void setServo (int counterServo)
 {
 	
 	
-	if (counterServo > MAXRIGHT){
+	if (counterServo >= MAXRIGHT){
 		
 		OCR1B = MAXRIGHT;
 		
-	}	else if (counterServo < MAXLEFT){
+	}	else if (counterServo <= MAXLEFT){
 
 		OCR1B = MAXLEFT;
 		
 	} else {
-		OCR1B = counterServo;
+		OCR1B = (int) (Q1*OCR1B + Q2*counterServo) / 10;
 	}
 }
