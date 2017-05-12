@@ -30,6 +30,7 @@
 #include "fuzzySteering.h"
 #include "spi_buffer_slave.h"
 #include "fuzzyParkingAlgorithm.h"
+#include "stopLine.h"
 
 
 //////////////// STRUCTS /////////////////////////////////////////////////////////
@@ -73,7 +74,7 @@ int drivingMode[6] = {0,0,0,0,0,0}; // if index i is set to 1 => driving mode i 
 int speedCounter = 0;
 int speedInterrupt = 0;
 double circleArch = 0.053;
-
+int onGoingStop = 0;
 
 //--------UART Variables (temp)------------
 volatile unsigned char UART1_reciever_buffer[32];
@@ -140,7 +141,20 @@ void carInit(void)
 	
 }
 
-
+void count(void)
+{
+	if (onGoingStop == 0)
+	{
+	TCCR3A = 0x00;
+	TCCR3B = (1<<CS32)|(1<<CS30);
+	onGoingStop = 1;
+	}
+	if (TCNT3 > 4319)
+	{
+		TCNT3=0;
+		TCCR3B = 0x00;
+	}
+}
 
 
 
@@ -208,6 +222,8 @@ int main (void)
 	struct Sensor_information* sens_info_ptr;
 	sens_info_ptr = &sensor_info;
 	unsigned char control_mode;
+	unsigned char prev_control_mode;
+	unsigned char k_value_stop_line;
 	//--end of sensor information
 	
 	//Init for UART
@@ -227,8 +243,15 @@ int main (void)
 			
 
 			//Reading Information
+			prev_control_mode = control_mode;
 			read_sensor_info(&control_mode, sens_info_ptr);
 			//Sens_info_read(sens_info_ptr);
+			
+			//Save k-value from stop line when control mode changes from 0 to 4
+			if(control_mode == 0x04 && prev_control_mode == 0x00){
+				onGoingStop = 0;
+				k_value_stop_line = sensor_info.dist_to_stop_line;
+			}
 			
 			int sR = (int) sensor_info.dist_sonic_right;
 			int sF = (int) sensor_info.dist_sonic_middle;
@@ -240,9 +263,26 @@ int main (void)
 			
 			cli();
 			
-
-			FLC_obstacle(OCR1A, sF);
-			FLC_steering(c,v);
+			if (control_mode == 0)
+			{
+				FLC_obstacle(OCR1A, sF);
+				FLC_steering(c,v);
+			}
+			else if (control_mode == 4)
+			{
+				count();
+				if (TCNT3 < 4319) // 0.3 seconds
+				{
+					setESC(2835);
+					stop(k_value_stop_line);
+				}
+				else
+				{
+					setESC(NEUTRAL);
+					setServo(STRAIGHT);
+				}
+			}
+			
 
 			
 			sei();

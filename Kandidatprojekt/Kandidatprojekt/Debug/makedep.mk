@@ -12,6 +12,8 @@ src\fuzzy_speed_controller.c
 
 src\general_FIS.c
 
+src\intersection.c
+
 src\main.c
 
 src\manualMode.c
@@ -23,6 +25,8 @@ src\pid.c
 src\servo.c
 
 src\spi_buffer_slave.c
+
+src\stopLine.c
 
 src\test_methods.c
 

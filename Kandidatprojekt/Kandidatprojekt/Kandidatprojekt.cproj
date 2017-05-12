@@ -206,13 +206,16 @@
     <Folder Include="src\ASF\common\utils\" />
     <Folder Include="src\ASF\common\utils\interrupt\" />
     <Folder Include="src\ASF\common\utils\make\" />
+    <Folder Include="src\ASF\config\" />
     <Folder Include="src\ASF\mega\" />
     <Folder Include="src\ASF\mega\utils\" />
     <Folder Include="src\ASF\mega\utils\assembler\" />
     <Folder Include="src\ASF\mega\utils\preprocessor\" />
-    <Folder Include="src\config\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\ASF\config\conf_board.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\CFile1.c">
       <SubType>compile</SubType>
     </Compile>
@@ -238,6 +241,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\general_FIS.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\intersection.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\intersection.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\main.c">
@@ -274,6 +283,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\spi_buffer_slave.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\stopLine.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\stopLine.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\test_methods.c">
@@ -331,9 +346,6 @@
       <SubType>compile</SubType>
     </None>
     <None Include="src\ASF\mega\utils\preprocessor\preprocessor.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\config\conf_board.h">
       <SubType>compile</SubType>
     </None>
     <None Include="src\ASF\mega\utils\progmem.h">
