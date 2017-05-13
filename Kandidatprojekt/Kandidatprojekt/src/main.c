@@ -136,8 +136,8 @@ void carInit(void)
 {
 	pwmInit();
 	spi_slave_init();
-	setESC(NEUTRAL);
-	setServo(STRAIGHT);
+	OCR1A = NEUTRAL;  
+	OCR1B = STRAIGHT;
 	
 }
 
@@ -202,7 +202,7 @@ int main (void)
 
 
 
-
+	FLC_obstacle(2840,250,81);
 
 
 
@@ -262,7 +262,7 @@ int main (void)
 			
 			if (control_mode == 0)
 			{
-				FLC_obstacle(OCR1A, sF);
+				FLC_obstacle(OCR1A, sF, v);
 				FLC_steering(c,v);
 			}
 			else if (control_mode == 4)

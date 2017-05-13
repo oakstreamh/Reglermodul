@@ -22,11 +22,13 @@
 #define MIN_SPEED 2740          // lower limit of speed input variable
 #define MAX_SPEED 2900          // upper limit of speed input variable
 
+int adjustment = 0;
 
 // FLC OBSTACLE AVOIDER
 //////////////////////////////////////////////////////////////////////////////////
 
-void FLC_obstacle(int currentOCR1A, int midSonicRange)
+
+void doFuzzy2(int currentOCR1A, int midSonicRange)
 {
 	// DECLARATION OF DISTANCE INPUT VARIABLE
 	//////////////////////////////////////////////////////////////////////////////
@@ -87,15 +89,15 @@ void FLC_obstacle(int currentOCR1A, int midSonicRange)
 
 	// Set MFs
 	struct mf_type still;
-	MATLAB_MF(&still, "still", MIN_SPEED-1, 2740, 2740, 2815);
+	MATLAB_MF(&still, "still", 2739, 2740, 2740, 2815);
 	struct mf_type low;
-	MATLAB_MF(&low, "low", 2804, 2820, 2820, 2836);
+	MATLAB_MF(&low, "low", 2825, 2830, 2830, 2835);
 	struct mf_type cruising;
-	MATLAB_MF(&cruising, "cruising", 2827, 2843, 2843, 2859);
+	MATLAB_MF(&cruising, "cruising", 2830, 2835, 2835, 2840);
 	struct mf_type medium;
-	MATLAB_MF(&medium, "medium", 2849, 2865, 2865, 2881);
+	MATLAB_MF(&medium, "medium", 2830, 2840, 2840, 2850);
 	struct mf_type high;
-	MATLAB_MF(&high, "high", 2870, 2900, 2900, MAX_SPEED+1);
+	MATLAB_MF(&high, "high", 2835, 2845, 28545, 2855);
 	
 	// Linked list for MFs
 	speed.membership_functions = &still;
@@ -116,13 +118,13 @@ void FLC_obstacle(int currentOCR1A, int midSonicRange)
 	struct mf_type noSpeed;
 	MATLAB_MF(&noSpeed, "noSpeed", 2739, 2740, 2740, 2815);
 	struct mf_type slow;
-	MATLAB_MF(&slow, "slow", 2804, 2820, 2820, 2836);
+	MATLAB_MF(&slow, "slow", 2825, 2830, 2830, 2835);
 	struct mf_type cruise;
-	MATLAB_MF(&cruise, "cruise", 2827, 2843, 2843, 2859);
+	MATLAB_MF(&cruise, "cruise", 2830, 2835, 2835, 2840);
 	struct mf_type medHigh;
-	MATLAB_MF(&medHigh, "medHigh", 2849, 2865, 2865, 2881);
+	MATLAB_MF(&medHigh, "medHigh", 2830, 2840, 2840, 2850);
 	struct mf_type max;
-	MATLAB_MF(&max, "max", 2870, 2900, 2900, 2901);
+	MATLAB_MF(&max, "max", 2835, 2845, 28545, 2855);
 	
 	// Linked list for MFs
 	pwm.membership_functions = &noSpeed;
@@ -232,12 +234,11 @@ void FLC_obstacle(int currentOCR1A, int midSonicRange)
 	
 	fuzzification();
 	rule_evaluation();
-	defuzzification(); 
+	defuzzification();
 
-	if (pwm.value > 2840)
-
+	if (pwm.value > 2845)
 	{
-		setESC(2840);
+		setESC(2845+adjustment);
 	}
 	else if (pwm.value < 2750)
 	{
@@ -245,9 +246,24 @@ void FLC_obstacle(int currentOCR1A, int midSonicRange)
 	}
 	else
 	{
-		setESC(pwm.value);
+		setESC(pwm.value+adjustment);
 	}
 	
 	
+	
+}
+
+void FLC_obstacle(int currentOCR1A, int midSonicRange, int v)
+{
+	if(v == 81)
+	{
+		adjustment = -20;
+	}
+	else
+	{
+		adjustment = 0;
+	}
+
+	doFuzzy2(currentOCR1A,midSonicRange);
 	
 }
