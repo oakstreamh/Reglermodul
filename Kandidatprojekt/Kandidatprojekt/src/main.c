@@ -73,8 +73,8 @@ int carInitialized = 0;
 int drivingMode[6] = {0,0,0,0,0,0}; // if index i is set to 1 => driving mode i as specified by {courtyard,road,intersection,parkingLot,garage,manual}
 int speedCounter = 0;
 int speedInterrupt = 0;
-double circleArch = 0.053;
-int onGoingStop = 0;
+
+
 
 //--------UART Variables (temp)------------
 volatile unsigned char UART1_reciever_buffer[32];
@@ -202,14 +202,13 @@ int main (void)
 
 	
 
-	FLC_obstacle(2840,250,81);
 
 
 
 	carInit();
 	_delay_ms(5000);
-	setESC(2870);
-	_delay_ms(5000);
+
+    
 
 	
 	//-----Variables and pointers for Sensor information
@@ -264,7 +263,7 @@ int main (void)
 			
 			if (control_mode == 0)
 			{
-				FLC_obstacle(OCR1A, sF, v);
+				FLC_obstacle(OCR1B, sF);
 				FLC_steering(c,v);
 			}
 			else if (control_mode == 4)
