@@ -200,13 +200,15 @@ int main (void)
 	// FOR TESTING
 	//	FLC_obstacle(2800, 150);
 
-
+	
 
 	FLC_obstacle(2840,250,81);
 
 
 
 	carInit();
+	_delay_ms(5000);
+	setESC(2870);
 	_delay_ms(5000);
 
 	

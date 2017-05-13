@@ -257,7 +257,7 @@ void FLC_obstacle(int currentOCR1A, int midSonicRange, int v)
 {
 	if(v == 81)
 	{
-		adjustment = -20;
+		adjustment = -5;
 	}
 	else
 	{
