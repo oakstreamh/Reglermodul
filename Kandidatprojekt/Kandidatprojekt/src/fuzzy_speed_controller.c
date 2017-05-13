@@ -20,7 +20,8 @@
 #define MIN_DISTANCE 0          // lower limit of distance variable
 #define MAX_DISTANCE 250        // upper limit of distance variable
 #define MIN_SPEED 2740          // lower limit of speed input variable
-#define MAX_SPEED 2900          // upper limit of speed input variable
+
+
 
 int adjustment = 0;
 
@@ -28,25 +29,39 @@ int adjustment = 0;
 //////////////////////////////////////////////////////////////////////////////////
 
 
-void doFuzzy2(int currentOCR1A, int midSonicRange)
+void doFuzzy2(int currentOCR1A, int midSonicRange, int currentOCR1B)
 {
 	// DECLARATION OF DISTANCE INPUT VARIABLE
 	//////////////////////////////////////////////////////////////////////////////
 	
 	struct io_type distance; strcpy(distance.name, "distance");
 	struct io_type speed; strcpy(speed.name, "speed");
+	struct io_type steering; strcpy(steering.name, "steering");
 	
 	// Variable assigned its reference value
 	if (currentOCR1A<MIN_SPEED) {
 		speed.value = MIN_SPEED;
 	}
-	else if (currentOCR1A>MAX_SPEED)
+	else if (currentOCR1A>MAXESC)
 	{
-		speed.value = MAX_SPEED;
+		speed.value = MAXESC;
 	}
 	else
 	{
 		speed.value = currentOCR1A;
+	}
+	
+	// Variable assigned its reference value
+	if (currentOCR1AB<MAXLEFT) {
+		steering.value = (int) MAXLEFT / 10;
+	}
+	else if (currentOCR1B>MAXRIGHT)
+	{
+		steering.value = (int) MAXRIGHT / 10;
+	}
+	else
+	{
+		steering.value = (int) currentOCR1B / 10;
 	}
 	
 	// Variable assigned its reference value
@@ -64,46 +79,47 @@ void doFuzzy2(int currentOCR1A, int midSonicRange)
 	}
 	
 	
+	struct mf_type right;
+	MATLAB_MF(&right, "right", 276, 330, 330, 331);
+	struct mf_type straight;
+	MATLAB_MF(&straight, "straight", 246, 266, 266, 286);
+	struct mf_type left;
+	MATLAB_MF(&left, "left", 201, 202, 256, 256);	
+	
 	// Set MFs
 	struct mf_type stopDist;
-	MATLAB_MF(&stopDist, "stopDist", MIN_DISTANCE-1, 0, 12, 20);
-	struct mf_type oneM;
-	MATLAB_MF(&oneM, "oneM", 18, 60, 60, 95);
-	struct mf_type twoM;
-	MATLAB_MF(&twoM, "twoM", 75, 125, 125, 175);
-	struct mf_type threeM;
-	MATLAB_MF(&threeM, "threeM", 150, 250, 250, MAX_DISTANCE+1);
+	MATLAB_MF(&stopDist, "stopDist", MIN_DISTANCE-1, MIN_DISTANCE, 15, 30);
+	struct mf_type close;
+	MATLAB_MF(&close, "close", 5, 35, 35, 70);
+	struct mf_type faar;
+	MATLAB_MF(&faar, "faar", 50, 125, MAX_DISTANCE, MAX_DISTANCE+1);
+
 	
 	// Linked list for MFs
 	distance.membership_functions = &stopDist;
-	stopDist.next = &oneM;
-	oneM.next = &twoM;
-	twoM.next = &threeM;
-	threeM.next = NULL;
+	stopDist.next = &close;
+	close.next = &faar;
+	faar.next = NULL;
 	
-
+	
+	
 	
 	// DECLARATION OF SPEED INPUT VARIABLE
 	//////////////////////////////////////////////////////////////////////////////
 	
 
 	// Set MFs
-	struct mf_type still;
-	MATLAB_MF(&still, "still", 2739, 2740, 2740, 2815);
+	struct mf_type neutral;
+	MATLAB_MF(&neutral, "neutral", 2764, 2765, 2765, 2766);
 	struct mf_type low;
-	MATLAB_MF(&low, "low", 2825, 2830, 2830, 2835);
-	struct mf_type cruising;
-	MATLAB_MF(&cruising, "cruising", 2830, 2835, 2835, 2840);
-	struct mf_type medium;
-	MATLAB_MF(&medium, "medium", 2830, 2840, 2840, 2850);
+	MATLAB_MF(&low, "low", 2820, 2835, 2835, 2840);
 	struct mf_type high;
-	MATLAB_MF(&high, "high", 2835, 2845, 28545, 2855);
+	MATLAB_MF(&high, "high", MAXESC-20, MAXESC, MAXESC, MAXESC+20);
 	
 	// Linked list for MFs
-	speed.membership_functions = &still;
-	still.next = &low;
-	low.next = &cruising;
-	cruising.next = &medium;
+	speed.membership_functions = &neutral;
+	neutral.next = &low;
+	low.next = &medium;
 	medium.next = &high;
 	high.next = NULL;
 	
@@ -116,13 +132,9 @@ void doFuzzy2(int currentOCR1A, int midSonicRange)
 	
 	// Set MFs
 	struct mf_type noSpeed;
-	MATLAB_MF(&noSpeed, "noSpeed", 2739, 2740, 2740, 2815);
+	MATLAB_MF(&noSpeed, "noSpeed", 2764, 2765, 2765, 2766);
 	struct mf_type slow;
 	MATLAB_MF(&slow, "slow", 2825, 2830, 2830, 2835);
-	struct mf_type cruise;
-	MATLAB_MF(&cruise, "cruise", 2830, 2835, 2835, 2840);
-	struct mf_type medHigh;
-	MATLAB_MF(&medHigh, "medHigh", 2830, 2840, 2840, 2850);
 	struct mf_type max;
 	MATLAB_MF(&max, "max", 2835, 2845, 28545, 2855);
 	
@@ -236,9 +248,9 @@ void doFuzzy2(int currentOCR1A, int midSonicRange)
 	rule_evaluation();
 	defuzzification();
 
-	if (pwm.value > 2845)
+	if (pwm.value > MAXESC)
 	{
-		setESC(2845+adjustment);
+		setESC(MAXESC+adjustment);
 	}
 	else if (pwm.value < 2750)
 	{
