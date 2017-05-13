@@ -11,6 +11,6 @@
 
 #include <stdio.h>
 
-void FLC_obstacle(int currentOCR1A, int d, int v);
+void FLC_obstacle(int currentOCR1A, int d);
 
 #endif /* fuzzy_speed_controller_h */
