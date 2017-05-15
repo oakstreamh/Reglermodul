@@ -263,7 +263,7 @@ int main (void)
 			
 			if (control_mode == 0)
 			{
-				FLC_obstacle(OCR1B, sF);
+				FLC_obstacle(OCR1A, sF, v);
 				FLC_steering(c,v);
 			}
 			else if (control_mode == 4)
@@ -282,7 +282,7 @@ int main (void)
 			}
 			else if (control_mode == 1)
 			{
-				FLC_obstacle(OCR1B, sF);
+				FLC_obstacle(OCR1A, sF, v);
 				intersection(gyro_angle, intersection_type, c, v);
 			}
 			

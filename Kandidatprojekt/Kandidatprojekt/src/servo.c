@@ -49,9 +49,9 @@ void setESC(int counterEsc){
 	}
 	else if  (counterEsc >= MAXESC)
 	{
-		OCR1A = (int) (Q1 * OCR1A + Q2* MAXESC) / 10;
+		OCR1A = MAXESC;
 	} else {
-		OCR1A = (int) (Q1 * OCR1A + Q2* counterEsc) / 10;
+		OCR1A = counterEsc;
 	}
 	
 }
