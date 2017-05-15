@@ -111,7 +111,7 @@ void FLC_obstacle(int currentServo, int midSonicRange)
     struct mf_type neutral;
     MATLAB_MF(&neutral, "neutral", 2764, 2765, 2765, 2826);
     struct mf_type low;
-    MATLAB_MF(&low, "low", 2825, 2835, 2835, 2845);
+    MATLAB_MF(&low, "low", 2830, 2840, 2840, 28450);
     struct mf_type high;
     MATLAB_MF(&high, "high", MAXESC-20, MAXESC, MAXESC, MAXESC+20);
     
