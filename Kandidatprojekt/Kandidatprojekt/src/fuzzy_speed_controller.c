@@ -41,7 +41,7 @@ void FLC_obstacle(int currentServo, int midSonicRange)
     if (currentServo<MAXLEFT) {
         steering.value = (int) MAXLEFT / 10;
     }
-    else if (currentOCR1B>MAXRIGHT)
+    else if (currentServo>MAXRIGHT)
     {
         steering.value = (int) MAXRIGHT / 10;
     }
@@ -140,7 +140,7 @@ void FLC_obstacle(int currentServo, int midSonicRange)
     struct rule_type rule2; rule1.next = &rule2;
     struct rule_type rule3; rule2.next = &rule3;
     struct rule_type rule4; rule3.next = &rule4;
-    struct rule_type rule5; rule4.next = &rule5; rule5.next  NULL;
+    struct rule_type rule5; rule4.next = &rule5; rule5.next = NULL;
     
     
     // RULE SETUP
@@ -149,7 +149,7 @@ void FLC_obstacle(int currentServo, int midSonicRange)
     // if distance is stopDist then speed is neutral
     struct rule_element_type if11, then1;
     rule1.if_side = &if11; if11.next = NULL; rule1.then_side = &then1; then1.next = NULL;
-    if11.value = &stopDist.value; then1.value = &noSpeed.value;
+    if11.value = &stopDist.value; then1.value = &neutral.value;
     
     // if dist is close then speed is slow
     struct rule_element_type if21, then2;

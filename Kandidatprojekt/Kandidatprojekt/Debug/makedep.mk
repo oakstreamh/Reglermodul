@@ -4,6 +4,8 @@
 
 src\CFile1.c
 
+src\counter16b.c
+
 src\fuzzyParkingAlgorithm.c
 
 src\fuzzySteering.c

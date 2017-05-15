@@ -31,7 +31,8 @@
 #include "spi_buffer_slave.h"
 #include "fuzzyParkingAlgorithm.h"
 #include "stopLine.h"
-
+#include "intersection.h"
+#include "counter16b.h"
 
 //////////////// STRUCTS /////////////////////////////////////////////////////////
 
@@ -116,13 +117,6 @@ ISR(USART1_RX_vect){
 
 
 
-/*
-* SPI port definitions
-* PB7 SCK (Master clock)
-* PB6 Slave output (MISO)
-* PB5 Slave input (MOSI)
-* PB4 Slave select (SS)
-*/
 
 
 
@@ -136,16 +130,12 @@ void carInit(void)
 {
 	pwmInit();
 	spi_slave_init();
-	OCR1A = NEUTRAL;  
+	OCR1A = NEUTRAL;
 	OCR1B = STRAIGHT;
 	
 }
 
-void count(void)
-{
-	TCNT3 = 0;
-	TCCR3B = (1<<CS32)|(1<<CS30);
-}
+
 
 
 
@@ -177,7 +167,8 @@ void Sens_info_read(struct Sensor_information* sens_info_ptr) //There is no chec
 	sens_info_ptr->dist_sonic_left = (unsigned) (char) UART1_reciever_buffer[3];
 	sens_info_ptr->dist_sonic_right = (unsigned) (char) UART1_reciever_buffer[4];
 	sens_info_ptr->dist_sonic_back = (unsigned) (char) UART1_reciever_buffer[5];
-	
+	sens_info_ptr->angle = (unsigned) (char) UART1_reciever_buffer[6];
+
 	
 	//sens_info_ptr->dist_sonic_right = ((unsigned) (short) UART1_reciever_buffer[7] << 8) | (unsigned) (short) UART1_reciever_buffer[6];
 	
@@ -208,7 +199,7 @@ int main (void)
 	carInit();
 	_delay_ms(5000);
 
-    
+	
 
 	
 	//-----Variables and pointers for Sensor information
@@ -225,8 +216,8 @@ int main (void)
 	//--end of sensor information
 	
 	//Init for UART
-	unsigned int baud_setting = 7;
-	USART1_init(baud_setting);
+	//unsigned int baud_setting = 7;
+	//USART1_init(baud_setting);
 	//End of init for UART
 	
 
@@ -245,12 +236,6 @@ int main (void)
 			read_sensor_info(&control_mode, sens_info_ptr);
 			//Sens_info_read(sens_info_ptr);
 			
-			//Save k-value from stop line when control mode changes from 0 to 4
-			if(control_mode == 0x04 && prev_control_mode == 0x00){
-				onGoingStop = 0;
-				count();
-				k_value_stop_line = (int) sensor_info.dist_to_stop_line - 40;			}
-			
 			int sR = (int) sensor_info.dist_sonic_right;
 			int sF = (int) sensor_info.dist_sonic_middle;
 			int sL = (int) sensor_info.dist_sonic_left;
@@ -258,6 +243,21 @@ int main (void)
 			
 			int c = (int) sensor_info.dist_right_line;
 			int v = (int) sensor_info.angular_diff;
+			int gyro_angle = (int) sensor_info.angle - 125;
+			int intersection_type = (int) sensor_info.next_turn_decision;
+			
+			//Save k-value from stop line when control mode changes from 0 to 4
+			if(control_mode == 0x04 && prev_control_mode == 0x00){
+				count(1);
+			k_value_stop_line = (int) sensor_info.dist_to_stop_line - 40;			
+			}
+			if (control_mode == 1 && control_mode != prev_control_mode && intersection_type == 'l') // if left turn is initiated
+			{
+				count(1);
+			}
+			
+			
+			
 			
 			cli();
 			
@@ -275,10 +275,15 @@ int main (void)
 				}
 				else
 				{
-					TCCR3B = (0<<CS32)|(0<<CS30);
+					count(0);
 					setESC(NEUTRAL);
 					setServo(STRAIGHT);
 				}
+			}
+			else if (control_mode == 1)
+			{
+				FLC_obstacle(OCR1B, sF);
+				intersection(gyro_angle, intersection_type, c, v);
 			}
 			
 
@@ -300,15 +305,9 @@ int main (void)
 			spi_send_byte((unsigned) (char) temp_steering);
 			spi_send_byte((unsigned) (char) (steering_value_to_send));
 			
+			
 		}
-		
-		
-		
-		
-		
 	}
-	
-
 }
 
 
