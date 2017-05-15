@@ -33,6 +33,7 @@
 #include "stopLine.h"
 #include "intersection.h"
 #include "counter16b.h"
+#include "FLC_speed.h"
 
 //////////////// STRUCTS /////////////////////////////////////////////////////////
 
@@ -191,12 +192,15 @@ int main (void)
 	// FOR TESTING
 	//	FLC_obstacle(2800, 150);
 
-	
+	FLC_speed(210, 10);
 
 
 
 
 	carInit();
+	
+
+	
 	_delay_ms(5000);
 
 	
@@ -249,7 +253,7 @@ int main (void)
 			//Save k-value from stop line when control mode changes from 0 to 4
 			if(control_mode == 0x04 && prev_control_mode == 0x00){
 				count(1);
-			k_value_stop_line = (int) sensor_info.dist_to_stop_line - 40;			
+				k_value_stop_line = (int) sensor_info.dist_to_stop_line - 40;			
 			}
 			if (control_mode == 1 && control_mode != prev_control_mode && intersection_type == 'l') // if left turn is initiated
 			{
@@ -263,30 +267,28 @@ int main (void)
 			
 			if (control_mode == 0)
 			{
-				FLC_obstacle(OCR1A, sF, v);
 				FLC_steering(c,v);
+				FLC_speed(OCR1B, sF);
 			}
 			else if (control_mode == 4)
 			{
-				if (TCNT3 < 300) // 0.3 seconds
-				{
-					setESC(2835);
-					stop(k_value_stop_line);
-				}
-				else
-				{
+				//if (TCNT3 < 300) // 0.3 seconds
+				//{
+					//setESC(2835);
+					//stop(k_value_stop_line);
+				//}
+				//else
+				//{
 					count(0);
 					setESC(NEUTRAL);
 					setServo(STRAIGHT);
-				}
+				//}
 			}
 			else if (control_mode == 1)
 			{
-				FLC_obstacle(OCR1A, sF, v);
+				FLC_speed(OCR1A, sF);
 				intersection(gyro_angle, intersection_type, c, v);
 			}
-			
-
 			
 			sei();
 			

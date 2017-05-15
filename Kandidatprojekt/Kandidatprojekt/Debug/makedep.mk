@@ -6,6 +6,8 @@ src\CFile1.c
 
 src\counter16b.c
 
+src\FLC_speed.c
+
 src\fuzzyParkingAlgorithm.c
 
 src\fuzzySteering.c

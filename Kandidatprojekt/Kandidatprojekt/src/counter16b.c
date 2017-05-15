@@ -23,7 +23,6 @@ void count(int mode)
 	}
 	else if (mode == 0)
 	{
-		TCNT3 = 0;
 		TCCR3B = (0<<CS32)|(0<<CS30);
 	}
 	

@@ -225,6 +225,12 @@
     <Compile Include="src\counter16b.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\FLC_speed.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\FLC_speed.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\fuzzyParkingAlgorithm.c">
       <SubType>compile</SubType>
     </Compile>

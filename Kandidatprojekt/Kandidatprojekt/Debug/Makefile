@@ -52,6 +52,7 @@ SUBDIRS :=  \
 C_SRCS +=  \
 ../src/CFile1.c \
 ../src/counter16b.c \
+../src/FLC_speed.c \
 ../src/fuzzyParkingAlgorithm.c \
 ../src/fuzzySteering.c \
 ../src/fuzzy_speed_controller.c \
@@ -78,6 +79,7 @@ ASM_SRCS +=
 OBJS +=  \
 src/CFile1.o \
 src/counter16b.o \
+src/FLC_speed.o \
 src/fuzzyParkingAlgorithm.o \
 src/fuzzySteering.o \
 src/fuzzy_speed_controller.o \
@@ -97,6 +99,7 @@ src/ASF/common/boards/user_board/init.o
 OBJS_AS_ARGS +=  \
 src/CFile1.o \
 src/counter16b.o \
+src/FLC_speed.o \
 src/fuzzyParkingAlgorithm.o \
 src/fuzzySteering.o \
 src/fuzzy_speed_controller.o \
@@ -116,6 +119,7 @@ src/ASF/common/boards/user_board/init.o
 C_DEPS +=  \
 src/CFile1.d \
 src/counter16b.d \
+src/FLC_speed.d \
 src/fuzzyParkingAlgorithm.d \
 src/fuzzySteering.d \
 src/fuzzy_speed_controller.d \
@@ -135,6 +139,7 @@ src/ASF/common/boards/user_board/init.d
 C_DEPS_AS_ARGS +=  \
 src/CFile1.d \
 src/counter16b.d \
+src/FLC_speed.d \
 src/fuzzyParkingAlgorithm.d \
 src/fuzzySteering.d \
 src/fuzzy_speed_controller.d \
@@ -165,6 +170,8 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
 
 
 
