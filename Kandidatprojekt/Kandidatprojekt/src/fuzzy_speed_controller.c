@@ -73,7 +73,7 @@ void FLC_obstacle(int currentServo, int midSonicRange)
     struct mf_type right;
     MATLAB_MF(&right, "right", 276, 330, 330, 331);
     struct mf_type straight;
-    MATLAB_MF(&straight, "straight", 246, 266, 266, 286);
+    MATLAB_MF(&straight, "straight", 202, 266, 266, 330);
     struct mf_type left;
     MATLAB_MF(&left, "left", 201, 202, 256, 256);
     

@@ -87,7 +87,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x11 src/CFile1.o
  .debug_macro   0x00000000      0xa48 src/CFile1.o
  .debug_line    0x00000000       0x2d src/CFile1.o
- .debug_str     0x00000000     0x2abf src/CFile1.o
+ .debug_str     0x00000000     0x2ac4 src/CFile1.o
  .comment       0x00000000       0x31 src/CFile1.o
  .group         0x00000000        0x8 src/counter16b.o
  .group         0x00000000        0x8 src/counter16b.o
@@ -1539,27 +1539,27 @@ END GROUP
  .debug_frame   0x00000584       0x7c src/stopLine.o
  .debug_frame   0x00000600       0xac src/uart_buffer.o
 
-.debug_str      0x00000000    0x10c55
+.debug_str      0x00000000    0x10ca6
  *(.debug_str)
- .debug_str     0x00000000     0xf832 src/counter16b.o
-                               0xf9ff (size before relaxing)
- .debug_str     0x0000f832      0xc91 src/fuzzySteering.o
+ .debug_str     0x00000000     0xf837 src/counter16b.o
+                               0xfa04 (size before relaxing)
+ .debug_str     0x0000f837      0xcdd src/fuzzySteering.o
                                0x45bb (size before relaxing)
- .debug_str     0x000104c3       0xc2 src/fuzzy_speed_controller.o
-                               0x41ba (size before relaxing)
- .debug_str     0x00010585       0xe8 src/general_FIS.o
+ .debug_str     0x00010514       0xc2 src/fuzzy_speed_controller.o
+                               0x41bf (size before relaxing)
+ .debug_str     0x000105d6       0xe8 src/general_FIS.o
                                0x4101 (size before relaxing)
- .debug_str     0x0001066d       0x72 src/intersection.o
-                               0x4193 (size before relaxing)
- .debug_str     0x000106df      0x371 src/main.o
+ .debug_str     0x000106be       0x72 src/intersection.o
+                               0x4198 (size before relaxing)
+ .debug_str     0x00010730      0x371 src/main.o
                               0x10865 (size before relaxing)
- .debug_str     0x00010a50       0x27 src/servo.o
+ .debug_str     0x00010aa1       0x27 src/servo.o
                                0xfa3a (size before relaxing)
- .debug_str     0x00010a77       0xaf src/spi_buffer_slave.o
+ .debug_str     0x00010ac8       0xaf src/spi_buffer_slave.o
                                0x7463 (size before relaxing)
- .debug_str     0x00010b26       0x39 src/stopLine.o
-                               0x411e (size before relaxing)
- .debug_str     0x00010b5f       0xf6 src/uart_buffer.o
+ .debug_str     0x00010b77       0x39 src/stopLine.o
+                               0x4123 (size before relaxing)
+ .debug_str     0x00010bb0       0xf6 src/uart_buffer.o
                                0x7381 (size before relaxing)
 
 .debug_loc      0x00000000     0x1982

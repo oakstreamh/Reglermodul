@@ -21,13 +21,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
   8 .debug_frame  000006ac  00000000  00000000  0000936c  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    00010c55  00000000  00000000  00009a18  2**0
+  9 .debug_str    00010ca6  00000000  00000000  00009a18  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    00001982  00000000  00000000  0001a66d  2**0
+ 10 .debug_loc    00001982  00000000  00000000  0001a6be  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 000001b0  00000000  00000000  0001bfef  2**0
+ 11 .debug_ranges 000001b0  00000000  00000000  0001c040  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_macro  00003b05  00000000  00000000  0001c19f  2**0
+ 12 .debug_macro  00003b05  00000000  00000000  0001c1f0  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -235,12 +235,6 @@ int checkCount(int req_delay)
      14a:	08 95       	ret
 
 0000014c <doFuzzy>:
-//////////////////////////////////////////////////////////////////////////////////
-// METHODS                                                                      //
-//////////////////////////////////////////////////////////////////////////////////
-
-void doFuzzy(int c, int v)
-{
      14c:	2f 92       	push	r2
      14e:	3f 92       	push	r3
      150:	4f 92       	push	r4
@@ -270,9 +264,6 @@ void doFuzzy(int c, int v)
      180:	cd bf       	out	0x3d, r28	; 61
      182:	2c 01       	movw	r4, r24
      184:	6b 01       	movw	r12, r22
-	///// DECLARATION OF C INPUT VARIABLE ///////////////////////////////////
-	
-	struct io_type delta_C; strcpy(delta_C.name, "delta_C");
      186:	88 e0       	ldi	r24, 0x08	; 8
      188:	e4 e0       	ldi	r30, 0x04	; 4
      18a:	f1 e0       	ldi	r31, 0x01	; 1
@@ -282,9 +273,6 @@ void doFuzzy(int c, int v)
      192:	0d 92       	st	X+, r0
      194:	8a 95       	dec	r24
      196:	e1 f7       	brne	.-8      	; 0x190 <doFuzzy+0x44>
-	
-	struct mf_type rightSide;
-	MATLAB_MF(&rightSide, "rightSide", 99, 100, 120, 135); // Min_value = 100
      198:	3e 01       	movw	r6, r28
      19a:	21 e1       	ldi	r18, 0x11	; 17
      19c:	62 0e       	add	r6, r18
@@ -304,8 +292,6 @@ void doFuzzy(int c, int v)
      1b8:	71 e0       	ldi	r23, 0x01	; 1
      1ba:	c3 01       	movw	r24, r6
      1bc:	eb d6       	rcall	.+3542   	; 0xf94 <MATLAB_MF>
-	struct mf_type centre;
-	MATLAB_MF(&centre, "centre", 125, 145, 155, 175);
      1be:	4e 01       	movw	r8, r28
      1c0:	47 e2       	ldi	r20, 0x27	; 39
      1c2:	84 0e       	add	r8, r20
@@ -325,8 +311,6 @@ void doFuzzy(int c, int v)
      1de:	71 e0       	ldi	r23, 0x01	; 1
      1e0:	c4 01       	movw	r24, r8
      1e2:	d8 d6       	rcall	.+3504   	; 0xf94 <MATLAB_MF>
-	struct mf_type leftSide;
-	MATLAB_MF(&leftSide, "leftSide", 175, 186, 199, 200);  // Max_value = 199
      1e4:	5e 01       	movw	r10, r28
      1e6:	5d e3       	ldi	r21, 0x3D	; 61
      1e8:	a5 0e       	add	r10, r21
@@ -346,59 +330,36 @@ void doFuzzy(int c, int v)
      204:	71 e0       	ldi	r23, 0x01	; 1
      206:	c5 01       	movw	r24, r10
      208:	c5 d6       	rcall	.+3466   	; 0xf94 <MATLAB_MF>
-	
-	delta_C.membership_functions = &rightSide;
      20a:	7e 86       	std	Y+14, r7	; 0x0e
      20c:	6d 86       	std	Y+13, r6	; 0x0d
-	rightSide.next = &centre;
      20e:	9e a2       	std	Y+38, r9	; 0x26
      210:	8d a2       	std	Y+37, r8	; 0x25
-	centre.next = &leftSide;
      212:	bc ae       	std	Y+60, r11	; 0x3c
      214:	ab ae       	std	Y+59, r10	; 0x3b
-	leftSide.next = NULL;
      216:	63 96       	adiw	r28, 0x13	; 19
      218:	1f ae       	std	Y+63, r1	; 0x3f
      21a:	1e ae       	std	Y+62, r1	; 0x3e
      21c:	63 97       	sbiw	r28, 0x13	; 19
-	
-	// set iErr's input value to measErr value
-	if(c<100)				// if sensor value is smaller than delta_C's input set's lower limit
      21e:	84 e6       	ldi	r24, 0x64	; 100
      220:	48 16       	cp	r4, r24
      222:	51 04       	cpc	r5, r1
      224:	2c f4       	brge	.+10     	; 0x230 <doFuzzy+0xe4>
-	{
-		delta_C.value = 100;  // force input value to lowest point in delta_C's input set
      226:	84 e6       	ldi	r24, 0x64	; 100
      228:	90 e0       	ldi	r25, 0x00	; 0
      22a:	9c 87       	std	Y+12, r25	; 0x0c
      22c:	8b 87       	std	Y+11, r24	; 0x0b
      22e:	0b c0       	rjmp	.+22     	; 0x246 <doFuzzy+0xfa>
-	}
-	else if(c>199)			// if sensor value is bigger than delta_C's input set's upper limit
      230:	a8 ec       	ldi	r26, 0xC8	; 200
      232:	4a 16       	cp	r4, r26
      234:	51 04       	cpc	r5, r1
      236:	2c f0       	brlt	.+10     	; 0x242 <doFuzzy+0xf6>
-	{
-		delta_C.value = 199;  // force input value to lowest point in delta_C's input set
      238:	87 ec       	ldi	r24, 0xC7	; 199
      23a:	90 e0       	ldi	r25, 0x00	; 0
      23c:	9c 87       	std	Y+12, r25	; 0x0c
      23e:	8b 87       	std	Y+11, r24	; 0x0b
      240:	02 c0       	rjmp	.+4      	; 0x246 <doFuzzy+0xfa>
-	}
-	else
-	{
-		delta_C.value = c;
      242:	5c 86       	std	Y+12, r5	; 0x0c
      244:	4b 86       	std	Y+11, r4	; 0x0b
-	}
-	
-	///// DECLARATION OF V INPUT VARIABLE ///////////////////////////////////
-	
-	struct io_type delta_V; strcpy(delta_V.name, "delta_V");
      246:	88 e0       	ldi	r24, 0x08	; 8
      248:	e6 e2       	ldi	r30, 0x26	; 38
      24a:	f1 e0       	ldi	r31, 0x01	; 1
@@ -409,9 +370,6 @@ void doFuzzy(int c, int v)
      254:	0d 92       	st	X+, r0
      256:	8a 95       	dec	r24
      258:	e1 f7       	brne	.-8      	; 0x252 <doFuzzy+0x106>
-	
-	struct mf_type inMinus;
-	MATLAB_MF(&inMinus, "inMinus", 0, 1, 20, 35); // min V is 1
      25a:	3e 01       	movw	r6, r28
      25c:	b3 e6       	ldi	r27, 0x63	; 99
      25e:	6b 0e       	add	r6, r27
@@ -431,8 +389,6 @@ void doFuzzy(int c, int v)
      27a:	71 e0       	ldi	r23, 0x01	; 1
      27c:	c3 01       	movw	r24, r6
      27e:	8a d6       	rcall	.+3348   	; 0xf94 <MATLAB_MF>
-	struct mf_type inNyll;
-	MATLAB_MF(&inNyll, "inNyll", 15, 35, 40, 55);
      280:	4e 01       	movw	r8, r28
      282:	e9 e7       	ldi	r30, 0x79	; 121
      284:	8e 0e       	add	r8, r30
@@ -452,8 +408,6 @@ void doFuzzy(int c, int v)
      2a0:	71 e0       	ldi	r23, 0x01	; 1
      2a2:	c4 01       	movw	r24, r8
      2a4:	77 d6       	rcall	.+3310   	; 0xf94 <MATLAB_MF>
-	struct mf_type inPlus;
-	MATLAB_MF(&inPlus, "inPlus", 35, 50, 74 , 75); // max V is 74
      2a6:	5e 01       	movw	r10, r28
      2a8:	ff e8       	ldi	r31, 0x8F	; 143
      2aa:	af 0e       	add	r10, r31
@@ -473,36 +427,26 @@ void doFuzzy(int c, int v)
      2c6:	71 e0       	ldi	r23, 0x01	; 1
      2c8:	c5 01       	movw	r24, r10
      2ca:	64 d6       	rcall	.+3272   	; 0xf94 <MATLAB_MF>
-	
-	delta_V.membership_functions = &inMinus;
      2cc:	a1 96       	adiw	r28, 0x21	; 33
      2ce:	7f ae       	std	Y+63, r7	; 0x3f
      2d0:	6e ae       	std	Y+62, r6	; 0x3e
      2d2:	a1 97       	sbiw	r28, 0x21	; 33
-	inMinus.next = &inNyll;
      2d4:	d3 01       	movw	r26, r6
      2d6:	55 96       	adiw	r26, 0x15	; 21
      2d8:	9c 92       	st	X, r9
      2da:	8e 92       	st	-X, r8
      2dc:	54 97       	sbiw	r26, 0x14	; 20
-	inNyll.next = &inPlus;
      2de:	f4 01       	movw	r30, r8
      2e0:	b5 8a       	std	Z+21, r11	; 0x15
      2e2:	a4 8a       	std	Z+20, r10	; 0x14
-	inPlus.next = NULL;
      2e4:	d5 01       	movw	r26, r10
      2e6:	55 96       	adiw	r26, 0x15	; 21
      2e8:	1c 92       	st	X, r1
      2ea:	1e 92       	st	-X, r1
      2ec:	54 97       	sbiw	r26, 0x14	; 20
-	
-	// set V's input value to V´s value
-	if(v<1)				// if sensor value is smaller than error's input set lower limit
      2ee:	1c 14       	cp	r1, r12
      2f0:	1d 04       	cpc	r1, r13
      2f2:	3c f0       	brlt	.+14     	; 0x302 <doFuzzy+0x1b6>
-	{
-		delta_V.value = 1;  // force input value to lowest point in delta_V's input set
      2f4:	81 e0       	ldi	r24, 0x01	; 1
      2f6:	90 e0       	ldi	r25, 0x00	; 0
      2f8:	6f 96       	adiw	r28, 0x1f	; 31
@@ -510,14 +454,10 @@ void doFuzzy(int c, int v)
      2fc:	8e af       	std	Y+62, r24	; 0x3e
      2fe:	6f 97       	sbiw	r28, 0x1f	; 31
      300:	0f c0       	rjmp	.+30     	; 0x320 <doFuzzy+0x1d4>
-	}
-	else if(v>74)			// if sensor value is bigger than error's input set's upper limit
      302:	bb e4       	ldi	r27, 0x4B	; 75
      304:	cb 16       	cp	r12, r27
      306:	d1 04       	cpc	r13, r1
      308:	3c f0       	brlt	.+14     	; 0x318 <doFuzzy+0x1cc>
-	{
-		delta_V.value = 74;  // force input value to lowest point in error's input set
      30a:	8a e4       	ldi	r24, 0x4A	; 74
      30c:	90 e0       	ldi	r25, 0x00	; 0
      30e:	6f 96       	adiw	r28, 0x1f	; 31
@@ -525,19 +465,10 @@ void doFuzzy(int c, int v)
      312:	8e af       	std	Y+62, r24	; 0x3e
      314:	6f 97       	sbiw	r28, 0x1f	; 31
      316:	04 c0       	rjmp	.+8      	; 0x320 <doFuzzy+0x1d4>
-	}
-	else
-	{
-		delta_V.value = v;
      318:	6f 96       	adiw	r28, 0x1f	; 31
      31a:	df ae       	std	Y+63, r13	; 0x3f
      31c:	ce ae       	std	Y+62, r12	; 0x3e
      31e:	6f 97       	sbiw	r28, 0x1f	; 31
-	}
-	
-	///// DECLARATION OF STEERING OUTPUT VARIABLE ///////////////////////////////////
-
-	struct io_type steering; strcpy(steering.name, "steering");
      320:	1e 01       	movw	r2, r28
      322:	e5 ea       	ldi	r30, 0xA5	; 165
      324:	2e 0e       	add	r2, r30
@@ -550,9 +481,6 @@ void doFuzzy(int c, int v)
      332:	0d 92       	st	X+, r0
      334:	8a 95       	dec	r24
      336:	e1 f7       	brne	.-8      	; 0x330 <doFuzzy+0x1e4>
-	
-	struct mf_type sharpLeft;
-	MATLAB_MF(&sharpLeft, "sharpLeft", 2359, 2360, 2360, 2460);
      338:	2e 01       	movw	r4, r28
      33a:	f5 eb       	ldi	r31, 0xB5	; 181
      33c:	4f 0e       	add	r4, r31
@@ -573,8 +501,6 @@ void doFuzzy(int c, int v)
      35a:	71 e0       	ldi	r23, 0x01	; 1
      35c:	c2 01       	movw	r24, r4
      35e:	1a d6       	rcall	.+3124   	; 0xf94 <MATLAB_MF>
-	struct mf_type left;
-	MATLAB_MF(&left, "left", 2400, 2460, 2460, 2560);
      360:	3e 01       	movw	r6, r28
      362:	2b ec       	ldi	r18, 0xCB	; 203
      364:	62 0e       	add	r6, r18
@@ -594,8 +520,6 @@ void doFuzzy(int c, int v)
      380:	71 e0       	ldi	r23, 0x01	; 1
      382:	c3 01       	movw	r24, r6
      384:	07 d6       	rcall	.+3086   	; 0xf94 <MATLAB_MF>
-	struct mf_type straight;
-	MATLAB_MF(&straight, "straight", 2520, 2660, 2660, 2720);
      386:	6e 01       	movw	r12, r28
      388:	41 ee       	ldi	r20, 0xE1	; 225
      38a:	c4 0e       	add	r12, r20
@@ -616,8 +540,6 @@ void doFuzzy(int c, int v)
      3a8:	71 e0       	ldi	r23, 0x01	; 1
      3aa:	c6 01       	movw	r24, r12
      3ac:	f3 d5       	rcall	.+3046   	; 0xf94 <MATLAB_MF>
-	struct mf_type right;
-	MATLAB_MF(&right, "right", 2700, 2800, 2800, 2900);
      3ae:	4e 01       	movw	r8, r28
      3b0:	57 ef       	ldi	r21, 0xF7	; 247
      3b2:	85 0e       	add	r8, r21
@@ -638,8 +560,6 @@ void doFuzzy(int c, int v)
      3d0:	71 e0       	ldi	r23, 0x01	; 1
      3d2:	c4 01       	movw	r24, r8
      3d4:	df d5       	rcall	.+3006   	; 0xf94 <MATLAB_MF>
-	struct mf_type sharpRight;
-	MATLAB_MF(&sharpRight, "sharpRight", 2860, 2960, 2960, 2961);
      3d6:	5e 01       	movw	r10, r28
      3d8:	83 ef       	ldi	r24, 0xF3	; 243
      3da:	a8 1a       	sub	r10, r24
@@ -661,70 +581,47 @@ void doFuzzy(int c, int v)
      3fa:	71 e0       	ldi	r23, 0x01	; 1
      3fc:	c5 01       	movw	r24, r10
      3fe:	ca d5       	rcall	.+2964   	; 0xf94 <MATLAB_MF>
-	
-	steering.membership_functions = &sharpRight;
      400:	d1 01       	movw	r26, r2
      402:	1d 96       	adiw	r26, 0x0d	; 13
      404:	bc 92       	st	X, r11
      406:	ae 92       	st	-X, r10
      408:	1c 97       	sbiw	r26, 0x0c	; 12
-	sharpRight.next = &right;
      40a:	f5 01       	movw	r30, r10
      40c:	95 8a       	std	Z+21, r9	; 0x15
      40e:	84 8a       	std	Z+20, r8	; 0x14
-	right.next = &straight;
      410:	d4 01       	movw	r26, r8
      412:	55 96       	adiw	r26, 0x15	; 21
      414:	dc 92       	st	X, r13
      416:	ce 92       	st	-X, r12
      418:	54 97       	sbiw	r26, 0x14	; 20
-	straight.next = &left;
      41a:	f6 01       	movw	r30, r12
      41c:	75 8a       	std	Z+21, r7	; 0x15
      41e:	64 8a       	std	Z+20, r6	; 0x14
-	left.next = &sharpLeft;
      420:	d3 01       	movw	r26, r6
      422:	55 96       	adiw	r26, 0x15	; 21
      424:	5c 92       	st	X, r5
      426:	4e 92       	st	-X, r4
      428:	54 97       	sbiw	r26, 0x14	; 20
-	sharpLeft.next = NULL;
      42a:	f2 01       	movw	r30, r4
      42c:	15 8a       	std	Z+21, r1	; 0x15
      42e:	14 8a       	std	Z+20, r1	; 0x14
-	
-	
-	
-	// pointers to top of lists
-
-	System_Inputs = &delta_C;
      430:	ce 01       	movw	r24, r28
      432:	01 96       	adiw	r24, 0x01	; 1
      434:	90 93 f9 02 	sts	0x02F9, r25
      438:	80 93 f8 02 	sts	0x02F8, r24
-	delta_C.next = &delta_V;
      43c:	e2 56       	subi	r30, 0x62	; 98
      43e:	f1 09       	sbc	r31, r1
      440:	f8 8b       	std	Y+16, r31	; 0x10
      442:	ef 87       	std	Y+15, r30	; 0x0f
-	delta_V.next = NULL;
      444:	17 86       	std	Z+15, r1	; 0x0f
      446:	16 86       	std	Z+14, r1	; 0x0e
-	System_Outputs = &steering;
      448:	30 92 f7 02 	sts	0x02F7, r3
      44c:	20 92 f6 02 	sts	0x02F6, r2
-	steering.next = NULL;
      450:	d1 01       	movw	r26, r2
      452:	1f 96       	adiw	r26, 0x0f	; 15
      454:	1c 92       	st	X, r1
      456:	1e 92       	st	-X, r1
      458:	1e 97       	sbiw	r26, 0x0e	; 14
-	
-	
-	
-	//RULE 9 "if C is centre AND V is high then servo is left"
-	struct rule_element_type then9;
-	then9.value = &left.value;
      45a:	a2 58       	subi	r26, 0x82	; 130
      45c:	bf 4f       	sbci	r27, 0xFF	; 255
      45e:	73 01       	movw	r14, r6
@@ -734,14 +631,10 @@ void doFuzzy(int c, int v)
      466:	11 96       	adiw	r26, 0x01	; 1
      468:	fc 92       	st	X, r15
      46a:	ee 92       	st	-X, r14
-	then9.next = NULL;
      46c:	13 96       	adiw	r26, 0x03	; 3
      46e:	1c 92       	st	X, r1
      470:	1e 92       	st	-X, r1
      472:	12 97       	sbiw	r26, 0x02	; 2
-
-	struct rule_element_type if92;
-	if92.value = &inPlus.value;
      474:	9e 01       	movw	r18, r28
      476:	29 5d       	subi	r18, 0xD9	; 217
      478:	3e 4f       	sbci	r19, 0xFE	; 254
@@ -752,12 +645,8 @@ void doFuzzy(int c, int v)
      482:	f9 01       	movw	r30, r18
      484:	71 82       	std	Z+1, r7	; 0x01
      486:	60 82       	st	Z, r6
-	if92.next = NULL;
      488:	13 82       	std	Z+3, r1	; 0x03
      48a:	12 82       	std	Z+2, r1	; 0x02
-
-	struct rule_element_type if91;
-	if91.value = &centre.value;
      48c:	86 5d       	subi	r24, 0xD6	; 214
      48e:	9e 4f       	sbci	r25, 0xFE	; 254
      490:	8e 01       	movw	r16, r28
@@ -766,26 +655,15 @@ void doFuzzy(int c, int v)
      496:	fc 01       	movw	r30, r24
      498:	11 83       	std	Z+1, r17	; 0x01
      49a:	00 83       	st	Z, r16
-	if91.next = &if92;
      49c:	33 83       	std	Z+3, r19	; 0x03
      49e:	22 83       	std	Z+2, r18	; 0x02
-
-	struct rule_type rule9;
-	rule9.if_side = &if91;
      4a0:	34 96       	adiw	r30, 0x04	; 4
      4a2:	91 83       	std	Z+1, r25	; 0x01
      4a4:	80 83       	st	Z, r24
-	rule9.then_side = &then9;
      4a6:	b3 83       	std	Z+3, r27	; 0x03
      4a8:	a2 83       	std	Z+2, r26	; 0x02
-	rule9.next = NULL;
      4aa:	15 82       	std	Z+5, r1	; 0x05
      4ac:	14 82       	std	Z+4, r1	; 0x04
-
-	
-	//RULE 8 "if C is positive AND V is inPlus then servo is right"
-	struct rule_element_type then8;
-	then8.value = &right.value;
      4ae:	22 5f       	subi	r18, 0xF2	; 242
      4b0:	3f 4f       	sbci	r19, 0xFF	; 255
      4b2:	4a e0       	ldi	r20, 0x0A	; 10
@@ -795,14 +673,10 @@ void doFuzzy(int c, int v)
      4ba:	11 96       	adiw	r26, 0x01	; 1
      4bc:	9c 92       	st	X, r9
      4be:	8e 92       	st	-X, r8
-	then8.next = NULL;
      4c0:	13 96       	adiw	r26, 0x03	; 3
      4c2:	1c 92       	st	X, r1
      4c4:	1e 92       	st	-X, r1
      4c6:	12 97       	sbiw	r26, 0x02	; 2
-
-	struct rule_element_type if82;
-	if82.value = &inPlus.value;
      4c8:	be 01       	movw	r22, r28
      4ca:	67 5c       	subi	r22, 0xC7	; 199
      4cc:	7e 4f       	sbci	r23, 0xFE	; 254
@@ -810,14 +684,10 @@ void doFuzzy(int c, int v)
      4d0:	11 96       	adiw	r26, 0x01	; 1
      4d2:	7c 92       	st	X, r7
      4d4:	6e 92       	st	-X, r6
-	if82.next = NULL;
      4d6:	13 96       	adiw	r26, 0x03	; 3
      4d8:	1c 92       	st	X, r1
      4da:	1e 92       	st	-X, r1
      4dc:	12 97       	sbiw	r26, 0x02	; 2
-
-	struct rule_element_type if81;
-	if81.value = &leftSide.value;
      4de:	ae 01       	movw	r20, r28
      4e0:	43 5c       	subi	r20, 0xC3	; 195
      4e2:	5e 4f       	sbci	r21, 0xFE	; 254
@@ -827,32 +697,22 @@ void doFuzzy(int c, int v)
      4ea:	11 96       	adiw	r26, 0x01	; 1
      4ec:	9c 93       	st	X, r25
      4ee:	8e 93       	st	-X, r24
-	if81.next = &if82;
      4f0:	13 96       	adiw	r26, 0x03	; 3
      4f2:	7c 93       	st	X, r23
      4f4:	6e 93       	st	-X, r22
      4f6:	12 97       	sbiw	r26, 0x02	; 2
-
-	struct rule_type rule8;
-	rule8.if_side = &if81;
      4f8:	14 96       	adiw	r26, 0x04	; 4
      4fa:	11 96       	adiw	r26, 0x01	; 1
      4fc:	5c 93       	st	X, r21
      4fe:	4e 93       	st	-X, r20
-	rule8.then_side = &then8;
      500:	13 96       	adiw	r26, 0x03	; 3
      502:	3c 93       	st	X, r19
      504:	2e 93       	st	-X, r18
      506:	12 97       	sbiw	r26, 0x02	; 2
-	rule8.next = &rule9;
      508:	15 96       	adiw	r26, 0x05	; 5
      50a:	fc 93       	st	X, r31
      50c:	ee 93       	st	-X, r30
      50e:	14 97       	sbiw	r26, 0x04	; 4
-	
-	//RULE 7 "if C is positive AND V is inNyll then servo is sharpRight"
-	struct rule_element_type then7;
-	then7.value = &sharpRight.value;
      510:	46 5f       	subi	r20, 0xF6	; 246
      512:	5f 4f       	sbci	r21, 0xFF	; 255
      514:	ea e0       	ldi	r30, 0x0A	; 10
@@ -861,12 +721,8 @@ void doFuzzy(int c, int v)
      51a:	fa 01       	movw	r30, r20
      51c:	b1 82       	std	Z+1, r11	; 0x01
      51e:	a0 82       	st	Z, r10
-	then7.next = NULL;
      520:	13 82       	std	Z+3, r1	; 0x03
      522:	12 82       	std	Z+2, r1	; 0x02
-
-	struct rule_element_type if72;
-	if72.value = &inNyll.value;
      524:	5e 01       	movw	r10, r28
      526:	f5 eb       	ldi	r31, 0xB5	; 181
      528:	af 1a       	sub	r10, r31
@@ -877,37 +733,22 @@ void doFuzzy(int c, int v)
      532:	f5 01       	movw	r30, r10
      534:	31 83       	std	Z+1, r19	; 0x01
      536:	20 83       	st	Z, r18
-	if72.next = NULL;
      538:	13 82       	std	Z+3, r1	; 0x03
      53a:	12 82       	std	Z+2, r1	; 0x02
-
-	struct rule_element_type if71;
-	if71.value = &leftSide.value;
      53c:	6a 5e       	subi	r22, 0xEA	; 234
      53e:	7f 4f       	sbci	r23, 0xFF	; 255
      540:	fb 01       	movw	r30, r22
      542:	91 83       	std	Z+1, r25	; 0x01
      544:	80 83       	st	Z, r24
-	if71.next = &if72;
      546:	b3 82       	std	Z+3, r11	; 0x03
      548:	a2 82       	std	Z+2, r10	; 0x02
-
-	struct rule_type rule7;
-	rule7.if_side = &if71;
      54a:	34 96       	adiw	r30, 0x04	; 4
      54c:	71 83       	std	Z+1, r23	; 0x01
      54e:	60 83       	st	Z, r22
-	rule7.then_side = &then7;
      550:	53 83       	std	Z+3, r21	; 0x03
      552:	42 83       	std	Z+2, r20	; 0x02
-	rule7.next = &rule8;
      554:	b5 83       	std	Z+5, r27	; 0x05
      556:	a4 83       	std	Z+4, r26	; 0x04
-	
-	
-	//RULE 6 "if C is positive AND V is minus then servo is straight"
-	struct rule_element_type then6;
-	then6.value = &straight.value;
      558:	4a e0       	ldi	r20, 0x0A	; 10
      55a:	c4 0e       	add	r12, r20
      55c:	d1 1c       	adc	r13, r1
@@ -917,16 +758,12 @@ void doFuzzy(int c, int v)
      564:	c8 82       	st	Y, r12
      566:	c9 55       	subi	r28, 0x59	; 89
      568:	d1 40       	sbci	r29, 0x01	; 1
-	then6.next = NULL;
      56a:	c5 5a       	subi	r28, 0xA5	; 165
      56c:	de 4f       	sbci	r29, 0xFE	; 254
      56e:	19 82       	std	Y+1, r1	; 0x01
      570:	18 82       	st	Y, r1
      572:	cb 55       	subi	r28, 0x5B	; 91
      574:	d1 40       	sbci	r29, 0x01	; 1
-
-	struct rule_element_type if62;
-	if62.value = &inMinus.value;
      576:	62 5f       	subi	r22, 0xF2	; 242
      578:	7f 4f       	sbci	r23, 0xFF	; 255
      57a:	5e 01       	movw	r10, r28
@@ -937,14 +774,10 @@ void doFuzzy(int c, int v)
      584:	11 96       	adiw	r26, 0x01	; 1
      586:	bc 92       	st	X, r11
      588:	ae 92       	st	-X, r10
-	if62.next = NULL;
      58a:	13 96       	adiw	r26, 0x03	; 3
      58c:	1c 92       	st	X, r1
      58e:	1e 92       	st	-X, r1
      590:	12 97       	sbiw	r26, 0x02	; 2
-
-	struct rule_element_type if61;
-	if61.value = &leftSide.value;
      592:	ae 01       	movw	r20, r28
      594:	4f 59       	subi	r20, 0x9F	; 159
      596:	5e 4f       	sbci	r21, 0xFE	; 254
@@ -952,21 +785,16 @@ void doFuzzy(int c, int v)
      59a:	11 96       	adiw	r26, 0x01	; 1
      59c:	9c 93       	st	X, r25
      59e:	8e 93       	st	-X, r24
-	if61.next = &if62;
      5a0:	13 96       	adiw	r26, 0x03	; 3
      5a2:	7c 93       	st	X, r23
      5a4:	6e 93       	st	-X, r22
      5a6:	12 97       	sbiw	r26, 0x02	; 2
-
-	struct rule_type rule6;
-	rule6.if_side = &if61;
      5a8:	82 5e       	subi	r24, 0xE2	; 226
      5aa:	9e 4f       	sbci	r25, 0xFE	; 254
      5ac:	dc 01       	movw	r26, r24
      5ae:	11 96       	adiw	r26, 0x01	; 1
      5b0:	5c 93       	st	X, r21
      5b2:	4e 93       	st	-X, r20
-	rule6.then_side = &then6;
      5b4:	49 e5       	ldi	r20, 0x59	; 89
      5b6:	51 e0       	ldi	r21, 0x01	; 1
      5b8:	4c 0f       	add	r20, r28
@@ -975,17 +803,10 @@ void doFuzzy(int c, int v)
      5be:	5c 93       	st	X, r21
      5c0:	4e 93       	st	-X, r20
      5c2:	12 97       	sbiw	r26, 0x02	; 2
-	rule6.next = &rule7;
      5c4:	15 96       	adiw	r26, 0x05	; 5
      5c6:	fc 93       	st	X, r31
      5c8:	ee 93       	st	-X, r30
      5ca:	14 97       	sbiw	r26, 0x04	; 4
-
-	
-
-	//RULE 5 "if C is negative  AND V is nyll then servo is sharpLeft"
-	struct rule_element_type then5;
-	then5.value = &sharpLeft.value;
      5cc:	16 96       	adiw	r26, 0x06	; 6
      5ce:	5a e0       	ldi	r21, 0x0A	; 10
      5d0:	45 0e       	add	r4, r21
@@ -993,14 +814,10 @@ void doFuzzy(int c, int v)
      5d4:	11 96       	adiw	r26, 0x01	; 1
      5d6:	5c 92       	st	X, r5
      5d8:	4e 92       	st	-X, r4
-	then5.next = NULL;
      5da:	13 96       	adiw	r26, 0x03	; 3
      5dc:	1c 92       	st	X, r1
      5de:	1e 92       	st	-X, r1
      5e0:	12 97       	sbiw	r26, 0x02	; 2
-
-	struct rule_element_type if52;
-	if52.value = &inNyll.value;
      5e2:	2e 01       	movw	r4, r28
      5e4:	e1 e9       	ldi	r30, 0x91	; 145
      5e6:	4e 1a       	sub	r4, r30
@@ -1009,12 +826,8 @@ void doFuzzy(int c, int v)
      5ec:	f2 01       	movw	r30, r4
      5ee:	31 83       	std	Z+1, r19	; 0x01
      5f0:	20 83       	st	Z, r18
-	if52.next = NULL;
      5f2:	13 82       	std	Z+3, r1	; 0x03
      5f4:	12 82       	std	Z+2, r1	; 0x02
-
-	struct rule_element_type if51;
-	if51.value = &rightSide.value;
      5f6:	6a 5e       	subi	r22, 0xEA	; 234
      5f8:	7f 4f       	sbci	r23, 0xFF	; 255
      5fa:	ae 01       	movw	r20, r28
@@ -1023,242 +836,153 @@ void doFuzzy(int c, int v)
      600:	fb 01       	movw	r30, r22
      602:	51 83       	std	Z+1, r21	; 0x01
      604:	40 83       	st	Z, r20
-	if51.next = &if52;
      606:	53 82       	std	Z+3, r5	; 0x03
      608:	42 82       	std	Z+2, r4	; 0x02
-
-	struct rule_type rule5;
-	rule5.if_side = &if51;
      60a:	34 96       	adiw	r30, 0x04	; 4
      60c:	71 83       	std	Z+1, r23	; 0x01
      60e:	60 83       	st	Z, r22
-	rule5.then_side = &then5;
      610:	b3 83       	std	Z+3, r27	; 0x03
      612:	a2 83       	std	Z+2, r26	; 0x02
-	rule5.next = &rule6;
      614:	95 83       	std	Z+5, r25	; 0x05
      616:	84 83       	std	Z+4, r24	; 0x04
-
-	
-
-	//RULE 4 "if C is zero t AND V is nyll then servo is Straight"
-	struct rule_element_type then4;
-	then4.value = &straight.value;
      618:	66 5f       	subi	r22, 0xF6	; 246
      61a:	7f 4f       	sbci	r23, 0xFF	; 255
      61c:	db 01       	movw	r26, r22
      61e:	11 96       	adiw	r26, 0x01	; 1
      620:	dc 92       	st	X, r13
      622:	ce 92       	st	-X, r12
-	then4.next = NULL;
      624:	13 96       	adiw	r26, 0x03	; 3
      626:	1c 92       	st	X, r1
      628:	1e 92       	st	-X, r1
      62a:	12 97       	sbiw	r26, 0x02	; 2
-	
-	struct rule_element_type if42;
-	if42.value = &inNyll.value;
      62c:	4c 96       	adiw	r24, 0x1c	; 28
      62e:	dc 01       	movw	r26, r24
      630:	11 96       	adiw	r26, 0x01	; 1
      632:	3c 93       	st	X, r19
      634:	2e 93       	st	-X, r18
-	if42.next = NULL;
      636:	13 96       	adiw	r26, 0x03	; 3
      638:	1c 92       	st	X, r1
      63a:	1e 92       	st	-X, r1
      63c:	12 97       	sbiw	r26, 0x02	; 2
-	
-	struct rule_element_type if41;
-	if41.value = &centre.value;
      63e:	2e 5f       	subi	r18, 0xFE	; 254
      640:	3e 4f       	sbci	r19, 0xFE	; 254
      642:	d9 01       	movw	r26, r18
      644:	11 96       	adiw	r26, 0x01	; 1
      646:	1c 93       	st	X, r17
      648:	0e 93       	st	-X, r16
-	if41.next = &if42;
      64a:	13 96       	adiw	r26, 0x03	; 3
      64c:	9c 93       	st	X, r25
      64e:	8e 93       	st	-X, r24
      650:	12 97       	sbiw	r26, 0x02	; 2
-
-	struct rule_type rule4;
-	rule4.if_side = &if41;
      652:	08 96       	adiw	r24, 0x08	; 8
      654:	dc 01       	movw	r26, r24
      656:	11 96       	adiw	r26, 0x01	; 1
      658:	3c 93       	st	X, r19
      65a:	2e 93       	st	-X, r18
-	rule4.then_side = &then4;
      65c:	13 96       	adiw	r26, 0x03	; 3
      65e:	7c 93       	st	X, r23
      660:	6e 93       	st	-X, r22
      662:	12 97       	sbiw	r26, 0x02	; 2
-	rule4.next = &rule5;
      664:	15 96       	adiw	r26, 0x05	; 5
      666:	fc 93       	st	X, r31
      668:	ee 93       	st	-X, r30
      66a:	14 97       	sbiw	r26, 0x04	; 4
-	
-	//RULE 3 "if C is negative AND V is nyll then servo is SharpLeft"
-	struct rule_element_type then3;
-	then3.value = &straight.value;
      66c:	6e 5e       	subi	r22, 0xEE	; 238
      66e:	7f 4f       	sbci	r23, 0xFF	; 255
      670:	fb 01       	movw	r30, r22
      672:	d1 82       	std	Z+1, r13	; 0x01
      674:	c0 82       	st	Z, r12
-	then3.next = NULL;
      676:	13 82       	std	Z+3, r1	; 0x03
      678:	12 82       	std	Z+2, r1	; 0x02
-	
-	struct rule_element_type if32;
-	if32.value = &inPlus.value;
      67a:	1a 96       	adiw	r26, 0x0a	; 10
      67c:	11 96       	adiw	r26, 0x01	; 1
      67e:	7c 92       	st	X, r7
      680:	6e 92       	st	-X, r6
-	if32.next = NULL;
      682:	13 96       	adiw	r26, 0x03	; 3
      684:	1c 92       	st	X, r1
      686:	1e 92       	st	-X, r1
      688:	12 97       	sbiw	r26, 0x02	; 2
-	
-	struct rule_element_type if31;
-	if31.value = &rightSide.value;
      68a:	2e 5e       	subi	r18, 0xEE	; 238
      68c:	3f 4f       	sbci	r19, 0xFF	; 255
      68e:	f9 01       	movw	r30, r18
      690:	51 83       	std	Z+1, r21	; 0x01
      692:	40 83       	st	Z, r20
-	if31.next = &if32;
      694:	b3 83       	std	Z+3, r27	; 0x03
      696:	a2 83       	std	Z+2, r26	; 0x02
-
-	struct rule_type rule3;
-	rule3.if_side = &if31;
      698:	18 96       	adiw	r26, 0x08	; 8
      69a:	11 96       	adiw	r26, 0x01	; 1
      69c:	3c 93       	st	X, r19
      69e:	2e 93       	st	-X, r18
-	rule3.then_side = &then3;
      6a0:	13 96       	adiw	r26, 0x03	; 3
      6a2:	7c 93       	st	X, r23
      6a4:	6e 93       	st	-X, r22
      6a6:	12 97       	sbiw	r26, 0x02	; 2
-	rule3.next = &rule4;
      6a8:	15 96       	adiw	r26, 0x05	; 5
      6aa:	9c 93       	st	X, r25
      6ac:	8e 93       	st	-X, r24
      6ae:	14 97       	sbiw	r26, 0x04	; 4
-	
-	
-	//RULE 2 "if C is negative AND V is minus then servo is Left"
-	struct rule_element_type then2;
-	then2.value = &left.value;
      6b0:	6e 5e       	subi	r22, 0xEE	; 238
      6b2:	7f 4f       	sbci	r23, 0xFF	; 255
      6b4:	fb 01       	movw	r30, r22
      6b6:	f1 82       	std	Z+1, r15	; 0x01
      6b8:	e0 82       	st	Z, r14
-	then2.next = NULL;
      6ba:	13 82       	std	Z+3, r1	; 0x03
      6bc:	12 82       	std	Z+2, r1	; 0x02
-
-	struct rule_element_type if22;
-	if22.value = &inMinus.value;
      6be:	4c 96       	adiw	r24, 0x1c	; 28
      6c0:	fc 01       	movw	r30, r24
      6c2:	b1 82       	std	Z+1, r11	; 0x01
      6c4:	a0 82       	st	Z, r10
-	if22.next = NULL;
      6c6:	13 82       	std	Z+3, r1	; 0x03
      6c8:	12 82       	std	Z+2, r1	; 0x02
-	
-	struct rule_element_type if21;
-	if21.value = &rightSide.value;
      6ca:	2e 5e       	subi	r18, 0xEE	; 238
      6cc:	3f 4f       	sbci	r19, 0xFF	; 255
      6ce:	f9 01       	movw	r30, r18
      6d0:	51 83       	std	Z+1, r21	; 0x01
      6d2:	40 83       	st	Z, r20
-	if21.next = &if22;
      6d4:	93 83       	std	Z+3, r25	; 0x03
      6d6:	82 83       	std	Z+2, r24	; 0x02
-
-	struct rule_type rule2;
-	rule2.if_side = &if21;
      6d8:	08 96       	adiw	r24, 0x08	; 8
      6da:	fc 01       	movw	r30, r24
      6dc:	31 83       	std	Z+1, r19	; 0x01
      6de:	20 83       	st	Z, r18
-	rule2.then_side = &then2;
      6e0:	73 83       	std	Z+3, r23	; 0x03
      6e2:	62 83       	std	Z+2, r22	; 0x02
-	rule2.next = &rule3;
      6e4:	b5 83       	std	Z+5, r27	; 0x05
      6e6:	a4 83       	std	Z+4, r26	; 0x04
-
-	//RULE 1 "if C is zero AND V is minus then steering is right"
-	struct rule_element_type then1;
-	then1.value = &right.value;
      6e8:	58 96       	adiw	r26, 0x18	; 24
      6ea:	11 96       	adiw	r26, 0x01	; 1
      6ec:	9c 92       	st	X, r9
      6ee:	8e 92       	st	-X, r8
-	then1.next = NULL;
      6f0:	13 96       	adiw	r26, 0x03	; 3
      6f2:	1c 92       	st	X, r1
      6f4:	1e 92       	st	-X, r1
      6f6:	12 97       	sbiw	r26, 0x02	; 2
-
-	struct rule_element_type if12;
-	if12.value = &inMinus.value;
      6f8:	44 56       	subi	r20, 0x64	; 100
      6fa:	5e 4f       	sbci	r21, 0xFE	; 254
      6fc:	fa 01       	movw	r30, r20
      6fe:	b1 82       	std	Z+1, r11	; 0x01
      700:	a0 82       	st	Z, r10
-	if12.next = NULL;
      702:	13 82       	std	Z+3, r1	; 0x03
      704:	12 82       	std	Z+2, r1	; 0x02
-
-	struct rule_element_type if11;
-	if11.value = &centre.value;
      706:	2e 5e       	subi	r18, 0xEE	; 238
      708:	3f 4f       	sbci	r19, 0xFF	; 255
      70a:	f9 01       	movw	r30, r18
      70c:	11 83       	std	Z+1, r17	; 0x01
      70e:	00 83       	st	Z, r16
-	if11.next = &if12;
      710:	53 83       	std	Z+3, r21	; 0x03
      712:	42 83       	std	Z+2, r20	; 0x02
-
-	struct rule_type rule1;
-	rule1.if_side = &if11;
      714:	34 96       	adiw	r30, 0x04	; 4
      716:	31 83       	std	Z+1, r19	; 0x01
      718:	20 83       	st	Z, r18
-	rule1.then_side = &then1;
      71a:	b3 83       	std	Z+3, r27	; 0x03
      71c:	a2 83       	std	Z+2, r26	; 0x02
-	rule1.next = &rule2;
      71e:	95 83       	std	Z+5, r25	; 0x05
      720:	84 83       	std	Z+4, r24	; 0x04
-	Rule_Base = &rule1;
      722:	f0 93 fb 02 	sts	0x02FB, r31
      726:	e0 93 fa 02 	sts	0x02FA, r30
-	
-	
-	// the methods performing the FLC
-	fuzzification();
      72a:	01 d3       	rcall	.+1538   	; 0xd2e <fuzzification>
-	rule_evaluation();
      72c:	27 d3       	rcall	.+1614   	; 0xd7c <rule_evaluation>
-	defuzzification();
      72e:	6c d3       	rcall	.+1752   	; 0xe08 <defuzzification>
-	if (steering.value < MAXLEFT)
      730:	d1 01       	movw	r26, r2
      732:	1a 96       	adiw	r26, 0x0a	; 10
      734:	8d 91       	ld	r24, X+
@@ -1268,31 +992,19 @@ void doFuzzy(int c, int v)
      73c:	b7 e0       	ldi	r27, 0x07	; 7
      73e:	9b 07       	cpc	r25, r27
      740:	2c f4       	brge	.+10     	; 0x74c <doFuzzy+0x600>
-	{
-		setServo(MAXLEFT);
      742:	86 ee       	ldi	r24, 0xE6	; 230
      744:	97 e0       	ldi	r25, 0x07	; 7
      746:	0e 94 35 0c 	call	0x186a	; 0x186a <setServo>
      74a:	0b c0       	rjmp	.+22     	; 0x762 <doFuzzy+0x616>
-	}
-	else if (steering.value >MAXRIGHT)
      74c:	85 3e       	cpi	r24, 0xE5	; 229
      74e:	ec e0       	ldi	r30, 0x0C	; 12
      750:	9e 07       	cpc	r25, r30
      752:	2c f0       	brlt	.+10     	; 0x75e <doFuzzy+0x612>
-	{
-		setServo(MAXRIGHT);
      754:	84 ee       	ldi	r24, 0xE4	; 228
      756:	9c e0       	ldi	r25, 0x0C	; 12
      758:	0e 94 35 0c 	call	0x186a	; 0x186a <setServo>
      75c:	02 c0       	rjmp	.+4      	; 0x762 <doFuzzy+0x616>
-	}
-	else
-	{
-		setServo(steering.value);
      75e:	0e 94 35 0c 	call	0x186a	; 0x186a <setServo>
-	}
-}
      762:	cc 53       	subi	r28, 0x3C	; 60
      764:	de 4f       	sbci	r29, 0xFE	; 254
      766:	0f b6       	in	r0, 0x3f	; 63
@@ -1321,12 +1033,6 @@ void doFuzzy(int c, int v)
      794:	08 95       	ret
 
 00000796 <FLC_steering>:
-int FLC_steering(int c, int v)
-{
-    
-    
-    
-	if ((c == 1) & (v == 81))        // right curvature, turn right
      796:	31 e0       	ldi	r19, 0x01	; 1
      798:	61 35       	cpi	r22, 0x51	; 81
      79a:	71 05       	cpc	r23, r1
@@ -1341,14 +1047,10 @@ int FLC_steering(int c, int v)
      7ac:	39 f0       	breq	.+14     	; 0x7bc <FLC_steering+0x26>
      7ae:	33 23       	and	r19, r19
      7b0:	29 f0       	breq	.+10     	; 0x7bc <FLC_steering+0x26>
-	{
-		setServo(MAXRIGHT);
      7b2:	84 ee       	ldi	r24, 0xE4	; 228
      7b4:	9c e0       	ldi	r25, 0x0C	; 12
      7b6:	0e 94 35 0c 	call	0x186a	; 0x186a <setServo>
      7ba:	0f c0       	rjmp	.+30     	; 0x7da <FLC_steering+0x44>
-	}
-	else if ((c == 2) & (v == 81))       // left curvature, turn left
      7bc:	21 e0       	ldi	r18, 0x01	; 1
      7be:	82 30       	cpi	r24, 0x02	; 2
      7c0:	91 05       	cpc	r25, r1
@@ -1358,21 +1060,11 @@ int FLC_steering(int c, int v)
      7c8:	39 f0       	breq	.+14     	; 0x7d8 <FLC_steering+0x42>
      7ca:	33 23       	and	r19, r19
      7cc:	29 f0       	breq	.+10     	; 0x7d8 <FLC_steering+0x42>
-	{
-		setServo(MAXLEFT);
      7ce:	86 ee       	ldi	r24, 0xE6	; 230
      7d0:	97 e0       	ldi	r25, 0x07	; 7
      7d2:	0e 94 35 0c 	call	0x186a	; 0x186a <setServo>
      7d6:	01 c0       	rjmp	.+2      	; 0x7da <FLC_steering+0x44>
-	}
-	else                                   // straight road, do fuzzy
-	{
-		doFuzzy(c,v);
      7d8:	b9 dc       	rcall	.-1678   	; 0x14c <doFuzzy>
-	}
-	
-	
-	return 1;
      7da:	81 e0       	ldi	r24, 0x01	; 1
      7dc:	90 e0       	ldi	r25, 0x00	; 0
      7de:	08 95       	ret
@@ -1537,9 +1229,9 @@ void FLC_obstacle(int currentServo, int midSonicRange)
      8c0:	c6 01       	movw	r24, r12
      8c2:	68 d3       	rcall	.+1744   	; 0xf94 <MATLAB_MF>
     struct mf_type straight;
-    MATLAB_MF(&straight, "straight", 246, 266, 266, 286);
+    MATLAB_MF(&straight, "straight", 202, 266, 266, 330);
      8c4:	0f 2e       	mov	r0, r31
-     8c6:	fe e1       	ldi	r31, 0x1E	; 30
+     8c6:	fa e4       	ldi	r31, 0x4A	; 74
      8c8:	ef 2e       	mov	r14, r31
      8ca:	ff 24       	eor	r15, r15
      8cc:	f3 94       	inc	r15
@@ -1548,7 +1240,7 @@ void FLC_obstacle(int currentServo, int midSonicRange)
      8d2:	11 e0       	ldi	r17, 0x01	; 1
      8d4:	2a e0       	ldi	r18, 0x0A	; 10
      8d6:	31 e0       	ldi	r19, 0x01	; 1
-     8d8:	46 ef       	ldi	r20, 0xF6	; 246
+     8d8:	4a ec       	ldi	r20, 0xCA	; 202
      8da:	50 e0       	ldi	r21, 0x00	; 0
      8dc:	67 e5       	ldi	r22, 0x57	; 87
      8de:	71 e0       	ldi	r23, 0x01	; 1
@@ -1710,22 +1402,22 @@ void FLC_obstacle(int currentServo, int midSonicRange)
      9d8:	c4 01       	movw	r24, r8
      9da:	dc d2       	rcall	.+1464   	; 0xf94 <MATLAB_MF>
     struct mf_type low;
-    MATLAB_MF(&low, "low", 2825, 2835, 2835, 2845);
+    MATLAB_MF(&low, "low", 2830, 2840, 2840, 28450);
      9dc:	6e 01       	movw	r12, r28
      9de:	2b ec       	ldi	r18, 0xCB	; 203
      9e0:	c2 0e       	add	r12, r18
      9e2:	d1 1c       	adc	r13, r1
      9e4:	0f 2e       	mov	r0, r31
-     9e6:	fd e1       	ldi	r31, 0x1D	; 29
+     9e6:	f2 e2       	ldi	r31, 0x22	; 34
      9e8:	ef 2e       	mov	r14, r31
-     9ea:	fb e0       	ldi	r31, 0x0B	; 11
+     9ea:	ff e6       	ldi	r31, 0x6F	; 111
      9ec:	ff 2e       	mov	r15, r31
      9ee:	f0 2d       	mov	r31, r0
-     9f0:	03 e1       	ldi	r16, 0x13	; 19
+     9f0:	08 e1       	ldi	r16, 0x18	; 24
      9f2:	1b e0       	ldi	r17, 0x0B	; 11
-     9f4:	23 e1       	ldi	r18, 0x13	; 19
+     9f4:	28 e1       	ldi	r18, 0x18	; 24
      9f6:	3b e0       	ldi	r19, 0x0B	; 11
-     9f8:	49 e0       	ldi	r20, 0x09	; 9
+     9f8:	4e e0       	ldi	r20, 0x0E	; 14
      9fa:	5b e0       	ldi	r21, 0x0B	; 11
      9fc:	66 e9       	ldi	r22, 0x96	; 150
      9fe:	71 e0       	ldi	r23, 0x01	; 1
@@ -2111,36 +1803,22 @@ void FLC_obstacle(int currentServo, int midSonicRange)
      c62:	08 95       	ret
 
 00000c64 <compute_degree_of_membership>:
- *
- */
-void compute_degree_of_membership(mf,input)
-struct mf_type *mf;
-int input;
-{
      c64:	fc 01       	movw	r30, r24
-    int delta_1;
-    int delta_2;
-    delta_1 = input - mf->point1;
      c66:	84 85       	ldd	r24, Z+12	; 0x0c
      c68:	95 85       	ldd	r25, Z+13	; 0x0d
      c6a:	9b 01       	movw	r18, r22
      c6c:	28 1b       	sub	r18, r24
      c6e:	39 0b       	sbc	r19, r25
-    delta_2 = mf->point2 - input;
      c70:	86 85       	ldd	r24, Z+14	; 0x0e
      c72:	97 85       	ldd	r25, Z+15	; 0x0f
      c74:	86 1b       	sub	r24, r22
      c76:	97 0b       	sbc	r25, r23
-    if ((delta_1 <= 0) || (delta_2 <= 0))   /* input outside mem. function ?  */
      c78:	12 16       	cp	r1, r18
      c7a:	13 06       	cpc	r1, r19
      c7c:	f4 f4       	brge	.+60     	; 0xcba <compute_degree_of_membership+0x56>
      c7e:	18 16       	cp	r1, r24
      c80:	19 06       	cpc	r1, r25
      c82:	f4 f4       	brge	.+60     	; 0xcc0 <compute_degree_of_membership+0x5c>
-        mf->value = 0;                           /* then degree of membership is 0 */
-        else
-            mf->value = min( (mf->slope1*delta_1),(mf->slope2*delta_2) );
      c84:	60 89       	ldd	r22, Z+16	; 0x10
      c86:	71 89       	ldd	r23, Z+17	; 0x11
      c88:	a2 89       	ldd	r26, Z+18	; 0x12
@@ -2163,97 +1841,50 @@ int input;
      caa:	59 07       	cpc	r21, r25
      cac:	0c f4       	brge	.+2      	; 0xcb0 <compute_degree_of_membership+0x4c>
      cae:	ca 01       	movw	r24, r20
- */
-int min(arg1,arg2)
-int arg1;
-int arg2;
-{
-    if (arg1<arg2)
      cb0:	8f 3f       	cpi	r24, 0xFF	; 255
      cb2:	91 05       	cpc	r25, r1
      cb4:	09 f0       	breq	.+2      	; 0xcb8 <compute_degree_of_membership+0x54>
      cb6:	3c f4       	brge	.+14     	; 0xcc6 <compute_degree_of_membership+0x62>
      cb8:	08 c0       	rjmp	.+16     	; 0xcca <compute_degree_of_membership+0x66>
-    delta_2 = mf->point2 - input;
-    if ((delta_1 <= 0) || (delta_2 <= 0))   /* input outside mem. function ?  */
-        mf->value = 0;                           /* then degree of membership is 0 */
-        else
-            mf->value = min( (mf->slope1*delta_1),(mf->slope2*delta_2) );
-            mf->value = min(mf->value,UPPER_LIMIT);  /* enforce upper limit */
      cba:	80 e0       	ldi	r24, 0x00	; 0
      cbc:	90 e0       	ldi	r25, 0x00	; 0
      cbe:	05 c0       	rjmp	.+10     	; 0xcca <compute_degree_of_membership+0x66>
      cc0:	80 e0       	ldi	r24, 0x00	; 0
      cc2:	90 e0       	ldi	r25, 0x00	; 0
      cc4:	02 c0       	rjmp	.+4      	; 0xcca <compute_degree_of_membership+0x66>
-    {
-        return(arg1);
-    }
-    else
-    {
-        return(arg2);
      cc6:	80 e0       	ldi	r24, 0x00	; 0
      cc8:	91 e0       	ldi	r25, 0x01	; 1
-    delta_2 = mf->point2 - input;
-    if ((delta_1 <= 0) || (delta_2 <= 0))   /* input outside mem. function ?  */
-        mf->value = 0;                           /* then degree of membership is 0 */
-        else
-            mf->value = min( (mf->slope1*delta_1),(mf->slope2*delta_2) );
-            mf->value = min(mf->value,UPPER_LIMIT);  /* enforce upper limit */
      cca:	93 87       	std	Z+11, r25	; 0x0b
      ccc:	82 87       	std	Z+10, r24	; 0x0a
      cce:	08 95       	ret
 
 00000cd0 <compute_area_of_trapezoid>:
- *    b=base=mf->point2-mf->point1
- *    a=f(h,b, mf->slopes1, mf->slope2)
- */
-int compute_area_of_trapezoid(mf)
-struct mf_type *mf;
-{
      cd0:	0f 93       	push	r16
      cd2:	1f 93       	push	r17
      cd4:	cf 93       	push	r28
      cd6:	df 93       	push	r29
      cd8:	fc 01       	movw	r30, r24
-    int run_1;
-    int run_2;
-    int base;
-    int top;
-    int area;
-    base = mf->point2 - mf->point1;
      cda:	c6 85       	ldd	r28, Z+14	; 0x0e
      cdc:	d7 85       	ldd	r29, Z+15	; 0x0f
      cde:	84 85       	ldd	r24, Z+12	; 0x0c
      ce0:	95 85       	ldd	r25, Z+13	; 0x0d
      ce2:	c8 1b       	sub	r28, r24
      ce4:	d9 0b       	sbc	r29, r25
-    run_1 = mf->value/mf->slope1;
      ce6:	22 85       	ldd	r18, Z+10	; 0x0a
      ce8:	33 85       	ldd	r19, Z+11	; 0x0b
      cea:	60 89       	ldd	r22, Z+16	; 0x10
      cec:	71 89       	ldd	r23, Z+17	; 0x11
      cee:	c9 01       	movw	r24, r18
      cf0:	0e 94 bf 11 	call	0x237e	; 0x237e <__divmodhi4>
-    run_2 = mf->value/mf->slope2;
-    top = base - run_1 - run_2;
      cf4:	8e 01       	movw	r16, r28
      cf6:	06 1b       	sub	r16, r22
      cf8:	17 0b       	sbc	r17, r23
-    int base;
-    int top;
-    int area;
-    base = mf->point2 - mf->point1;
-    run_1 = mf->value/mf->slope1;
-    run_2 = mf->value/mf->slope2;
      cfa:	62 89       	ldd	r22, Z+18	; 0x12
      cfc:	73 89       	ldd	r23, Z+19	; 0x13
      cfe:	c9 01       	movw	r24, r18
      d00:	0e 94 bf 11 	call	0x237e	; 0x237e <__divmodhi4>
-    top = base - run_1 - run_2;
      d04:	06 1b       	sub	r16, r22
      d06:	17 0b       	sbc	r17, r23
-    area = mf->value * ( base + top)/2;
      d08:	c0 0f       	add	r28, r16
      d0a:	d1 1f       	adc	r29, r17
      d0c:	2c 9f       	mul	r18, r28
@@ -2266,8 +1897,6 @@ struct mf_type *mf;
      d1a:	99 23       	and	r25, r25
      d1c:	0c f4       	brge	.+2      	; 0xd20 <compute_area_of_trapezoid+0x50>
      d1e:	01 96       	adiw	r24, 0x01	; 1
-    return(area);
-}
      d20:	95 95       	asr	r25
      d22:	87 95       	ror	r24
      d24:	df 91       	pop	r29
@@ -2277,67 +1906,38 @@ struct mf_type *mf;
      d2c:	08 95       	ret
 
 00000d2e <fuzzification>:
-
-/* Degree of membership value is calculated for each membership function of 
- * each system input. Values correspond to antecedents in rules. 
- */
-void fuzzification()
-{
      d2e:	0f 93       	push	r16
      d30:	1f 93       	push	r17
      d32:	cf 93       	push	r28
      d34:	df 93       	push	r29
-    struct io_type *si;    /* system input pointer        */
-    struct mf_type *mf;    /* membership function pointer */
-    for(si=System_Inputs; si != NULL; si=si->next)
      d36:	00 91 f8 02 	lds	r16, 0x02F8
      d3a:	10 91 f9 02 	lds	r17, 0x02F9
      d3e:	01 15       	cp	r16, r1
      d40:	11 05       	cpc	r17, r1
      d42:	b9 f0       	breq	.+46     	; 0xd72 <fuzzification+0x44>
-        for(mf=si->membership_functions; mf != NULL; mf=mf->next)
      d44:	f8 01       	movw	r30, r16
      d46:	c4 85       	ldd	r28, Z+12	; 0x0c
      d48:	d5 85       	ldd	r29, Z+13	; 0x0d
      d4a:	20 97       	sbiw	r28, 0x00	; 0
      d4c:	61 f0       	breq	.+24     	; 0xd66 <fuzzification+0x38>
-            if (mf!=NULL) {
      d4e:	20 97       	sbiw	r28, 0x00	; 0
      d50:	29 f0       	breq	.+10     	; 0xd5c <fuzzification+0x2e>
-                compute_degree_of_membership(mf,si->value);
      d52:	f8 01       	movw	r30, r16
      d54:	62 85       	ldd	r22, Z+10	; 0x0a
      d56:	73 85       	ldd	r23, Z+11	; 0x0b
      d58:	ce 01       	movw	r24, r28
      d5a:	84 df       	rcall	.-248    	; 0xc64 <compute_degree_of_membership>
-void fuzzification()
-{
-    struct io_type *si;    /* system input pointer        */
-    struct mf_type *mf;    /* membership function pointer */
-    for(si=System_Inputs; si != NULL; si=si->next)
-        for(mf=si->membership_functions; mf != NULL; mf=mf->next)
      d5c:	0c 88       	ldd	r0, Y+20	; 0x14
      d5e:	dd 89       	ldd	r29, Y+21	; 0x15
      d60:	c0 2d       	mov	r28, r0
      d62:	20 97       	sbiw	r28, 0x00	; 0
      d64:	a1 f7       	brne	.-24     	; 0xd4e <fuzzification+0x20>
- */
-void fuzzification()
-{
-    struct io_type *si;    /* system input pointer        */
-    struct mf_type *mf;    /* membership function pointer */
-    for(si=System_Inputs; si != NULL; si=si->next)
      d66:	f8 01       	movw	r30, r16
      d68:	06 85       	ldd	r16, Z+14	; 0x0e
      d6a:	17 85       	ldd	r17, Z+15	; 0x0f
      d6c:	01 15       	cp	r16, r1
      d6e:	11 05       	cpc	r17, r1
      d70:	49 f7       	brne	.-46     	; 0xd44 <fuzzification+0x16>
-        for(mf=si->membership_functions; mf != NULL; mf=mf->next)
-            if (mf!=NULL) {
-                compute_degree_of_membership(mf,si->value);
-            }
-}
      d72:	df 91       	pop	r29
      d74:	cf 91       	pop	r28
      d76:	1f 91       	pop	r17
@@ -2345,45 +1945,22 @@ void fuzzification()
      d7a:	08 95       	ret
 
 00000d7c <rule_evaluation>:
- * to each of listed rule outputs. If an output has already been assigned a rule
- * strength, during current inference pass, a maximum function is used to
- * determine which strength should apply. 
- */
-void rule_evaluation()
-{
      d7c:	0f 93       	push	r16
      d7e:	1f 93       	push	r17
      d80:	cf 93       	push	r28
      d82:	df 93       	push	r29
-    struct rule_type *rule;
-    struct rule_element_type *ip;       /* pointer of antecedents  (if-parts)   */
-    struct rule_element_type *tp;       /* pointer to consequences (then-parts) */
-    int strength;                /* strength of  rule currently being evaluated */
-    for(rule=Rule_Base; rule != NULL; rule=rule->next){
      d84:	c0 91 fa 02 	lds	r28, 0x02FA
      d88:	d0 91 fb 02 	lds	r29, 0x02FB
      d8c:	20 97       	sbiw	r28, 0x00	; 0
      d8e:	b9 f1       	breq	.+110    	; 0xdfe <rule_evaluation+0x82>
-        strength = UPPER_LIMIT;                       /* max rule strength allowed */
      d90:	00 e0       	ldi	r16, 0x00	; 0
      d92:	11 e0       	ldi	r17, 0x01	; 1
-        /* process if-side of rule to determine strength */
-        for(ip=rule->if_side; ip != NULL; ip=ip->next)
      d94:	e8 81       	ld	r30, Y
      d96:	f9 81       	ldd	r31, Y+1	; 0x01
      d98:	30 97       	sbiw	r30, 0x00	; 0
      d9a:	81 f0       	breq	.+32     	; 0xdbc <rule_evaluation+0x40>
-    struct rule_type *rule;
-    struct rule_element_type *ip;       /* pointer of antecedents  (if-parts)   */
-    struct rule_element_type *tp;       /* pointer to consequences (then-parts) */
-    int strength;                /* strength of  rule currently being evaluated */
-    for(rule=Rule_Base; rule != NULL; rule=rule->next){
-        strength = UPPER_LIMIT;                       /* max rule strength allowed */
      d9c:	20 2f       	mov	r18, r16
      d9e:	31 2f       	mov	r19, r17
-        /* process if-side of rule to determine strength */
-        for(ip=rule->if_side; ip != NULL; ip=ip->next)
-            strength = min(strength,*(ip->value));
      da0:	a0 81       	ld	r26, Z
      da2:	b1 81       	ldd	r27, Z+1	; 0x01
      da4:	8d 91       	ld	r24, X+
@@ -2392,38 +1969,20 @@ void rule_evaluation()
      daa:	93 07       	cpc	r25, r19
      dac:	0c f4       	brge	.+2      	; 0xdb0 <rule_evaluation+0x34>
      dae:	9c 01       	movw	r18, r24
-    struct rule_element_type *tp;       /* pointer to consequences (then-parts) */
-    int strength;                /* strength of  rule currently being evaluated */
-    for(rule=Rule_Base; rule != NULL; rule=rule->next){
-        strength = UPPER_LIMIT;                       /* max rule strength allowed */
-        /* process if-side of rule to determine strength */
-        for(ip=rule->if_side; ip != NULL; ip=ip->next)
      db0:	02 80       	ldd	r0, Z+2	; 0x02
      db2:	f3 81       	ldd	r31, Z+3	; 0x03
      db4:	e0 2d       	mov	r30, r0
      db6:	30 97       	sbiw	r30, 0x00	; 0
      db8:	99 f7       	brne	.-26     	; 0xda0 <rule_evaluation+0x24>
      dba:	02 c0       	rjmp	.+4      	; 0xdc0 <rule_evaluation+0x44>
-    struct rule_type *rule;
-    struct rule_element_type *ip;       /* pointer of antecedents  (if-parts)   */
-    struct rule_element_type *tp;       /* pointer to consequences (then-parts) */
-    int strength;                /* strength of  rule currently being evaluated */
-    for(rule=Rule_Base; rule != NULL; rule=rule->next){
-        strength = UPPER_LIMIT;                       /* max rule strength allowed */
      dbc:	20 2f       	mov	r18, r16
      dbe:	31 2f       	mov	r19, r17
-        /* process if-side of rule to determine strength */
-        for(ip=rule->if_side; ip != NULL; ip=ip->next)
-            strength = min(strength,*(ip->value));
-        /* process then-side of rule to apply strength */
-        for(tp=rule->then_side; tp != NULL; tp=tp->next)
      dc0:	ea 81       	ldd	r30, Y+2	; 0x02
      dc2:	fb 81       	ldd	r31, Y+3	; 0x03
      dc4:	30 97       	sbiw	r30, 0x00	; 0
      dc6:	b1 f0       	breq	.+44     	; 0xdf4 <rule_evaluation+0x78>
      dc8:	72 2f       	mov	r23, r18
      dca:	63 2f       	mov	r22, r19
-            *(tp->value) = max(strength,*(tp->value));
      dcc:	a0 81       	ld	r26, Z
      dce:	b1 81       	ldd	r27, Z+1	; 0x01
      dd0:	8d 91       	ld	r24, X+
@@ -2439,34 +1998,16 @@ void rule_evaluation()
      de4:	5c 93       	st	X, r21
      de6:	11 96       	adiw	r26, 0x01	; 1
      de8:	4c 93       	st	X, r20
-        strength = UPPER_LIMIT;                       /* max rule strength allowed */
-        /* process if-side of rule to determine strength */
-        for(ip=rule->if_side; ip != NULL; ip=ip->next)
-            strength = min(strength,*(ip->value));
-        /* process then-side of rule to apply strength */
-        for(tp=rule->then_side; tp != NULL; tp=tp->next)
      dea:	02 80       	ldd	r0, Z+2	; 0x02
      dec:	f3 81       	ldd	r31, Z+3	; 0x03
      dee:	e0 2d       	mov	r30, r0
      df0:	30 97       	sbiw	r30, 0x00	; 0
      df2:	61 f7       	brne	.-40     	; 0xdcc <rule_evaluation+0x50>
-{
-    struct rule_type *rule;
-    struct rule_element_type *ip;       /* pointer of antecedents  (if-parts)   */
-    struct rule_element_type *tp;       /* pointer to consequences (then-parts) */
-    int strength;                /* strength of  rule currently being evaluated */
-    for(rule=Rule_Base; rule != NULL; rule=rule->next){
      df4:	0c 80       	ldd	r0, Y+4	; 0x04
      df6:	dd 81       	ldd	r29, Y+5	; 0x05
      df8:	c0 2d       	mov	r28, r0
      dfa:	20 97       	sbiw	r28, 0x00	; 0
      dfc:	59 f6       	brne	.-106    	; 0xd94 <rule_evaluation+0x18>
-            strength = min(strength,*(ip->value));
-        /* process then-side of rule to apply strength */
-        for(tp=rule->then_side; tp != NULL; tp=tp->next)
-            *(tp->value) = max(strength,*(tp->value));
-    }
-}
      dfe:	df 91       	pop	r29
      e00:	cf 91       	pop	r28
      e02:	1f 91       	pop	r17
@@ -2474,12 +2015,6 @@ void rule_evaluation()
      e06:	08 95       	ret
 
 00000e08 <defuzzification>:
- * gravity). For each system output the corresponding output membership function
- * strength are used to calculate the sum of areas that constitutes the basis
- * of centroid calculations
- */
-void defuzzification()
-{
      e08:	2f 92       	push	r2
      e0a:	3f 92       	push	r3
      e0c:	4f 92       	push	r4
@@ -2503,12 +2038,6 @@ void defuzzification()
      e30:	00 d0       	rcall	.+0      	; 0xe32 <defuzzification+0x2a>
      e32:	cd b7       	in	r28, 0x3d	; 61
      e34:	de b7       	in	r29, 0x3e	; 62
-    double sum_of_areas;  /* sum of shortend trapezoid area */
-    double area;
-    double centroid;
-	double result;
-    /* compute a defuzzified value for each system output */
-    for(so=System_Outputs; so != NULL; so=so->next){
      e36:	80 91 f6 02 	lds	r24, 0x02F6
      e3a:	90 91 f7 02 	lds	r25, 0x02F7
      e3e:	9c 83       	std	Y+4, r25	; 0x04
@@ -2516,11 +2045,6 @@ void defuzzification()
      e42:	89 2b       	or	r24, r25
      e44:	09 f4       	brne	.+2      	; 0xe48 <defuzzification+0x40>
      e46:	8d c0       	rjmp	.+282    	; 0xf62 <defuzzification+0x15a>
-        sum_of_products = 0;
-        sum_of_areas = 0;
-		centroid = 0;
-		result = 0;
-        for(mf=so->membership_functions; mf != NULL; mf=mf->next){
      e48:	eb 81       	ldd	r30, Y+3	; 0x03
      e4a:	fc 81       	ldd	r31, Y+4	; 0x04
      e4c:	04 84       	ldd	r0, Z+12	; 0x0c
@@ -2531,31 +2055,14 @@ void defuzzification()
      e56:	ef 2b       	or	r30, r31
      e58:	09 f4       	brne	.+2      	; 0xe5c <defuzzification+0x54>
      e5a:	6e c0       	rjmp	.+220    	; 0xf38 <defuzzification+0x130>
-    double centroid;
-	double result;
-    /* compute a defuzzified value for each system output */
-    for(so=System_Outputs; so != NULL; so=so->next){
-        sum_of_products = 0;
-        sum_of_areas = 0;
      e5c:	51 2c       	mov	r5, r1
      e5e:	61 2c       	mov	r6, r1
      e60:	71 2c       	mov	r7, r1
      e62:	41 2c       	mov	r4, r1
-    double area;
-    double centroid;
-	double result;
-    /* compute a defuzzified value for each system output */
-    for(so=System_Outputs; so != NULL; so=so->next){
-        sum_of_products = 0;
      e64:	31 2c       	mov	r3, r1
      e66:	21 2c       	mov	r2, r1
      e68:	19 82       	std	Y+1, r1	; 0x01
      e6a:	1a 82       	std	Y+2, r1	; 0x02
-        sum_of_areas = 0;
-		centroid = 0;
-		result = 0;
-        for(mf=so->membership_functions; mf != NULL; mf=mf->next){
-            area = compute_area_of_trapezoid(mf);
      e6c:	8d 81       	ldd	r24, Y+5	; 0x05
      e6e:	9e 81       	ldd	r25, Y+6	; 0x06
      e70:	2f df       	rcall	.-418    	; 0xcd0 <compute_area_of_trapezoid>
@@ -2567,7 +2074,6 @@ void defuzzification()
      e7c:	0e 94 d0 10 	call	0x21a0	; 0x21a0 <__floatsisf>
      e80:	6b 01       	movw	r12, r22
      e82:	7c 01       	movw	r14, r24
-			centroid = mf->point1;
      e84:	ed 81       	ldd	r30, Y+5	; 0x05
      e86:	fe 81       	ldd	r31, Y+6	; 0x06
      e88:	04 85       	ldd	r16, Z+12	; 0x0c
@@ -2580,7 +2086,6 @@ void defuzzification()
      e96:	0e 94 d0 10 	call	0x21a0	; 0x21a0 <__floatsisf>
      e9a:	4b 01       	movw	r8, r22
      e9c:	5c 01       	movw	r10, r24
-			int intermed = (int) ((mf->point2 - mf->point1)/2);
      e9e:	ed 81       	ldd	r30, Y+5	; 0x05
      ea0:	fe 81       	ldd	r31, Y+6	; 0x06
      ea2:	86 85       	ldd	r24, Z+14	; 0x0e
@@ -2593,7 +2098,6 @@ void defuzzification()
      eb0:	7f 4f       	sbci	r23, 0xFF	; 255
      eb2:	75 95       	asr	r23
      eb4:	67 95       	ror	r22
-            centroid = centroid + intermed;
      eb6:	88 27       	eor	r24, r24
      eb8:	77 fd       	sbrc	r23, 7
      eba:	80 95       	com	r24
@@ -2604,7 +2108,6 @@ void defuzzification()
      ec6:	0e 94 d1 0f 	call	0x1fa2	; 0x1fa2 <__addsf3>
      eca:	9b 01       	movw	r18, r22
      ecc:	ac 01       	movw	r20, r24
-            sum_of_products += area * centroid;
      ece:	c7 01       	movw	r24, r14
      ed0:	b6 01       	movw	r22, r12
      ed2:	0e 94 5c 11 	call	0x22b8	; 0x22b8 <__mulsf3>
@@ -2619,7 +2122,6 @@ void defuzzification()
      ee8:	27 2e       	mov	r2, r23
      eea:	89 83       	std	Y+1, r24	; 0x01
      eec:	9a 83       	std	Y+2, r25	; 0x02
-            sum_of_areas += area;
      eee:	a7 01       	movw	r20, r14
      ef0:	96 01       	movw	r18, r12
      ef2:	65 2d       	mov	r22, r5
@@ -2631,12 +2133,6 @@ void defuzzification()
      f00:	67 2e       	mov	r6, r23
      f02:	78 2e       	mov	r7, r24
      f04:	49 2e       	mov	r4, r25
-    for(so=System_Outputs; so != NULL; so=so->next){
-        sum_of_products = 0;
-        sum_of_areas = 0;
-		centroid = 0;
-		result = 0;
-        for(mf=so->membership_functions; mf != NULL; mf=mf->next){
      f06:	ed 81       	ldd	r30, Y+5	; 0x05
      f08:	fe 81       	ldd	r31, Y+6	; 0x06
      f0a:	04 88       	ldd	r0, Z+20	; 0x14
@@ -2647,12 +2143,6 @@ void defuzzification()
      f14:	ef 2b       	or	r30, r31
      f16:	09 f0       	breq	.+2      	; 0xf1a <defuzzification+0x112>
      f18:	a9 cf       	rjmp	.-174    	; 0xe6c <defuzzification+0x64>
-			centroid = mf->point1;
-			int intermed = (int) ((mf->point2 - mf->point1)/2);
-            centroid = centroid + intermed;
-            sum_of_products += area * centroid;
-            sum_of_areas += area;
-			result = (sum_of_products/sum_of_areas); /* weighted average */
      f1a:	26 2f       	mov	r18, r22
      f1c:	37 2f       	mov	r19, r23
      f1e:	48 2f       	mov	r20, r24
@@ -2667,22 +2157,10 @@ void defuzzification()
      f32:	48 2f       	mov	r20, r24
      f34:	59 2f       	mov	r21, r25
      f36:	04 c0       	rjmp	.+8      	; 0xf40 <defuzzification+0x138>
-    /* compute a defuzzified value for each system output */
-    for(so=System_Outputs; so != NULL; so=so->next){
-        sum_of_products = 0;
-        sum_of_areas = 0;
-		centroid = 0;
-		result = 0;
      f38:	20 e0       	ldi	r18, 0x00	; 0
      f3a:	30 e0       	ldi	r19, 0x00	; 0
      f3c:	40 e0       	ldi	r20, 0x00	; 0
      f3e:	50 e0       	ldi	r21, 0x00	; 0
-            centroid = centroid + intermed;
-            sum_of_products += area * centroid;
-            sum_of_areas += area;
-			result = (sum_of_products/sum_of_areas); /* weighted average */
-        }
-        so->value = (int) result;  
      f40:	62 2f       	mov	r22, r18
      f42:	73 2f       	mov	r23, r19
      f44:	84 2f       	mov	r24, r20
@@ -2692,12 +2170,6 @@ void defuzzification()
      f4e:	fc 81       	ldd	r31, Y+4	; 0x04
      f50:	73 87       	std	Z+11, r23	; 0x0b
      f52:	62 87       	std	Z+10, r22	; 0x0a
-    double sum_of_areas;  /* sum of shortend trapezoid area */
-    double area;
-    double centroid;
-	double result;
-    /* compute a defuzzified value for each system output */
-    for(so=System_Outputs; so != NULL; so=so->next){
      f54:	86 85       	ldd	r24, Z+14	; 0x0e
      f56:	97 85       	ldd	r25, Z+15	; 0x0f
      f58:	9c 83       	std	Y+4, r25	; 0x04
@@ -2705,12 +2177,6 @@ void defuzzification()
      f5c:	89 2b       	or	r24, r25
      f5e:	09 f0       	breq	.+2      	; 0xf62 <defuzzification+0x15a>
      f60:	73 cf       	rjmp	.-282    	; 0xe48 <defuzzification+0x40>
-            sum_of_areas += area;
-			result = (sum_of_products/sum_of_areas); /* weighted average */
-        }
-        so->value = (int) result;  
-    }
-}
      f62:	26 96       	adiw	r28, 0x06	; 6
      f64:	0f b6       	in	r0, 0x3f	; 63
      f66:	f8 94       	cli
@@ -2738,12 +2204,6 @@ void defuzzification()
      f92:	08 95       	ret
 
 00000f94 <MATLAB_MF>:
- * MATLAB_MF takes four parameters defining a trapezoid or triangular mf
- * function in MATLAB's tool for fuzzy logic design and returns a MF according
- * to the format of general_FIS.c with two end points and two slopes
- */
-void MATLAB_MF(struct mf_type *newMf, char newname[MAXNAME], int p1, int p2, int p3, int p4)
-{
      f94:	af 92       	push	r10
      f96:	bf 92       	push	r11
      f98:	cf 92       	push	r12
@@ -2757,18 +2217,13 @@ void MATLAB_MF(struct mf_type *newMf, char newname[MAXNAME], int p1, int p2, int
      fa8:	ec 01       	movw	r28, r24
      faa:	6a 01       	movw	r12, r20
      fac:	59 01       	movw	r10, r18
-    strcpy(newMf->name, newname);
      fae:	0e 94 05 12 	call	0x240a	; 0x240a <strcpy>
-    newMf->value = 0;
      fb2:	1b 86       	std	Y+11, r1	; 0x0b
      fb4:	1a 86       	std	Y+10, r1	; 0x0a
-    newMf->point1 = p1;
      fb6:	dd 86       	std	Y+13, r13	; 0x0d
      fb8:	cc 86       	std	Y+12, r12	; 0x0c
-    newMf->point2 = p4;
      fba:	ff 86       	std	Y+15, r15	; 0x0f
      fbc:	ee 86       	std	Y+14, r14	; 0x0e
-    newMf->slope1 = (int)UPPER_LIMIT/(p2-p1);
      fbe:	b5 01       	movw	r22, r10
      fc0:	6c 19       	sub	r22, r12
      fc2:	7d 09       	sbc	r23, r13
@@ -2778,7 +2233,6 @@ void MATLAB_MF(struct mf_type *newMf, char newname[MAXNAME], int p1, int p2, int
      fca:	0e 94 bf 11 	call	0x237e	; 0x237e <__divmodhi4>
      fce:	79 8b       	std	Y+17, r23	; 0x11
      fd0:	68 8b       	std	Y+16, r22	; 0x10
-    newMf->slope2 = (int)UPPER_LIMIT/(p4-p3);
      fd2:	b7 01       	movw	r22, r14
      fd4:	60 1b       	sub	r22, r16
      fd6:	71 0b       	sbc	r23, r17
@@ -2786,7 +2240,6 @@ void MATLAB_MF(struct mf_type *newMf, char newname[MAXNAME], int p1, int p2, int
      fda:	0e 94 bf 11 	call	0x237e	; 0x237e <__divmodhi4>
      fde:	7b 8b       	std	Y+19, r23	; 0x13
      fe0:	6a 8b       	std	Y+18, r22	; 0x12
-}
      fe2:	df 91       	pop	r29
      fe4:	cf 91       	pop	r28
      fe6:	1f 91       	pop	r17
@@ -3787,12 +3240,6 @@ void intersection(int type, int gyro, int c, int v)
     15f6:	08 95       	ret
 
 000015f8 <__vector_28>:
-	//sens_info_ptr->dist_to_stop_line = ((unsigned) (short) UART1_reciever_buffer[15] << 8) | (unsigned) (short) UART1_reciever_buffer[14];
-	//sens_info_ptr->sign_type = UART1_reciever_buffer[16];
-	
-	counter_UART1_reciever = 0; //To be able to use counter as if-thing for reading
-	//Enable UART1 interrupts
-	UCSR1B |= (1<<RXCIE1);
     15f8:	1f 92       	push	r1
     15fa:	0f 92       	push	r0
     15fc:	0f b6       	in	r0, 0x3f	; 63
@@ -3846,12 +3293,6 @@ void intersection(int type, int gyro, int c, int v)
     1672:	08 95       	ret
 
 00001674 <main>:
-
-
-
-
-int main (void)
-{
     1674:	cf 93       	push	r28
     1676:	df 93       	push	r29
     1678:	cd b7       	in	r28, 0x3d	; 61
@@ -3862,12 +3303,6 @@ int main (void)
     1682:	de bf       	out	0x3e, r29	; 62
     1684:	0f be       	out	0x3f, r0	; 63
     1686:	cd bf       	out	0x3d, r28	; 61
-	
-
-
-
-
-	carInit();
     1688:	e6 df       	rcall	.-52     	; 0x1656 <carInit>
 	#else
 		//round up by default
@@ -3884,97 +3319,48 @@ int main (void)
     1696:	e1 f7       	brne	.-8      	; 0x1690 <main+0x1c>
     1698:	00 c0       	rjmp	.+0      	; 0x169a <main+0x26>
     169a:	00 00       	nop
-	//USART1_init(baud_setting);
-	//End of init for UART
-	
-
-	//Setting for Testing
-	DDRA = 0xFF;
     169c:	8f ef       	ldi	r24, 0xFF	; 255
     169e:	81 b9       	out	0x01, r24	; 1
-	//End of test setting
-	sei();
     16a0:	78 94       	sei
-					setServo(STRAIGHT);
-				}
-			}
-			else if (control_mode == 1)
-			{
-				FLC_obstacle(OCR1B, sF);
     16a2:	0a e8       	ldi	r16, 0x8A	; 138
     16a4:	10 e0       	ldi	r17, 0x00	; 0
-			
-			sei();
-			
-			//Sending back information
-			unsigned int esc_value_to_send;
-			esc_value_to_send = OCR1A;
     16a6:	0f 2e       	mov	r0, r31
     16a8:	f8 e8       	ldi	r31, 0x88	; 136
     16aa:	6f 2e       	mov	r6, r31
     16ac:	71 2c       	mov	r7, r1
     16ae:	f0 2d       	mov	r31, r0
-	//End of test setting
-	sei();
-	
-
-	while (1) {
-		if (is_package_recieved()) {
     16b0:	0c d2       	rcall	.+1048   	; 0x1aca <is_package_recieved>
     16b2:	88 23       	and	r24, r24
     16b4:	e9 f3       	breq	.-6      	; 0x16b0 <main+0x3c>
-			
-
-			//Reading Information
-			prev_control_mode = control_mode;
     16b6:	3b 84       	ldd	r3, Y+11	; 0x0b
-			read_sensor_info(&control_mode, sens_info_ptr);
     16b8:	be 01       	movw	r22, r28
     16ba:	6f 5f       	subi	r22, 0xFF	; 255
     16bc:	7f 4f       	sbci	r23, 0xFF	; 255
     16be:	ce 01       	movw	r24, r28
     16c0:	0b 96       	adiw	r24, 0x0b	; 11
     16c2:	0d d2       	rcall	.+1050   	; 0x1ade <read_sensor_info>
-			//Sens_info_read(sens_info_ptr);
-			
-			int sR = (int) sensor_info.dist_sonic_right;
-			int sF = (int) sensor_info.dist_sonic_middle;
     16c4:	ab 80       	ldd	r10, Y+3	; 0x03
     16c6:	b1 2c       	mov	r11, r1
-			int sL = (int) sensor_info.dist_sonic_left;
-			int sB = (int) sensor_info.dist_sonic_back;
-			
-			int c = (int) sensor_info.dist_right_line;
     16c8:	e9 80       	ldd	r14, Y+1	; 0x01
     16ca:	f1 2c       	mov	r15, r1
-			int v = (int) sensor_info.angular_diff;
     16cc:	ca 80       	ldd	r12, Y+2	; 0x02
     16ce:	d1 2c       	mov	r13, r1
-			int gyro_angle = (int) sensor_info.angle - 125;
     16d0:	28 84       	ldd	r2, Y+8	; 0x08
-			int intersection_type = (int) sensor_info.next_turn_decision;
     16d2:	8a 84       	ldd	r8, Y+10	; 0x0a
     16d4:	91 2c       	mov	r9, r1
-			
-			//Save k-value from stop line when control mode changes from 0 to 4
-			if(control_mode == 0x04 && prev_control_mode == 0x00){
     16d6:	8b 85       	ldd	r24, Y+11	; 0x0b
     16d8:	84 30       	cpi	r24, 0x04	; 4
     16da:	79 f4       	brne	.+30     	; 0x16fa <main+0x86>
     16dc:	31 10       	cpse	r3, r1
     16de:	1b c0       	rjmp	.+54     	; 0x1716 <main+0xa2>
-				count(1);
     16e0:	81 e0       	ldi	r24, 0x01	; 1
     16e2:	90 e0       	ldi	r25, 0x00	; 0
     16e4:	0e 94 66 00 	call	0xcc	; 0xcc <count>
-			k_value_stop_line = (int) sensor_info.dist_to_stop_line - 40;			
     16e8:	49 84       	ldd	r4, Y+9	; 0x09
     16ea:	51 2c       	mov	r5, r1
     16ec:	e8 e2       	ldi	r30, 0x28	; 40
     16ee:	4e 1a       	sub	r4, r30
     16f0:	51 08       	sbc	r5, r1
-			}
-			if (control_mode == 1 && control_mode != prev_control_mode && intersection_type == 'l') // if left turn is initiated
     16f2:	8b 85       	ldd	r24, Y+11	; 0x0b
     16f4:	81 30       	cpi	r24, 0x01	; 1
     16f6:	79 f4       	brne	.+30     	; 0x1716 <main+0xa2>
@@ -3989,41 +3375,24 @@ int main (void)
     1708:	82 16       	cp	r8, r18
     170a:	91 04       	cpc	r9, r1
     170c:	21 f4       	brne	.+8      	; 0x1716 <main+0xa2>
-			{
-				count(1);
     170e:	81 e0       	ldi	r24, 0x01	; 1
     1710:	90 e0       	ldi	r25, 0x00	; 0
     1712:	0e 94 66 00 	call	0xcc	; 0xcc <count>
-			}
-			
-			
-			
-			
-			cli();
     1716:	f8 94       	cli
-			
-			if (control_mode == 0)
     1718:	8b 85       	ldd	r24, Y+11	; 0x0b
     171a:	81 11       	cpse	r24, r1
     171c:	09 c0       	rjmp	.+18     	; 0x1730 <main+0xbc>
-			{
-				FLC_obstacle(OCR1B, sF);
     171e:	f8 01       	movw	r30, r16
     1720:	80 81       	ld	r24, Z
     1722:	91 81       	ldd	r25, Z+1	; 0x01
     1724:	b5 01       	movw	r22, r10
     1726:	5c d8       	rcall	.-3912   	; 0x7e0 <FLC_obstacle>
-				FLC_steering(c,v);
     1728:	b6 01       	movw	r22, r12
     172a:	c7 01       	movw	r24, r14
     172c:	34 d8       	rcall	.-3992   	; 0x796 <FLC_steering>
     172e:	29 c0       	rjmp	.+82     	; 0x1782 <main+0x10e>
-			}
-			else if (control_mode == 4)
     1730:	84 30       	cpi	r24, 0x04	; 4
     1732:	c1 f4       	brne	.+48     	; 0x1764 <main+0xf0>
-			{
-				if (TCNT3 < 300) // 0.3 seconds
     1734:	e4 e9       	ldi	r30, 0x94	; 148
     1736:	f0 e0       	ldi	r31, 0x00	; 0
     1738:	80 81       	ld	r24, Z
@@ -4031,148 +3400,81 @@ int main (void)
     173c:	8c 32       	cpi	r24, 0x2C	; 44
     173e:	91 40       	sbci	r25, 0x01	; 1
     1740:	30 f4       	brcc	.+12     	; 0x174e <main+0xda>
-				{
-					setESC(2835);
     1742:	83 e1       	ldi	r24, 0x13	; 19
     1744:	9b e0       	ldi	r25, 0x0B	; 11
     1746:	3c d0       	rcall	.+120    	; 0x17c0 <setESC>
-					stop(k_value_stop_line);
     1748:	c2 01       	movw	r24, r4
     174a:	08 d2       	rcall	.+1040   	; 0x1b5c <stop>
     174c:	1a c0       	rjmp	.+52     	; 0x1782 <main+0x10e>
-				}
-				else
-				{
-					count(0);
     174e:	80 e0       	ldi	r24, 0x00	; 0
     1750:	90 e0       	ldi	r25, 0x00	; 0
     1752:	0e 94 66 00 	call	0xcc	; 0xcc <count>
-					setESC(NEUTRAL);
     1756:	8d ec       	ldi	r24, 0xCD	; 205
     1758:	9a e0       	ldi	r25, 0x0A	; 10
     175a:	32 d0       	rcall	.+100    	; 0x17c0 <setESC>
-					setServo(STRAIGHT);
     175c:	84 e6       	ldi	r24, 0x64	; 100
     175e:	9a e0       	ldi	r25, 0x0A	; 10
     1760:	84 d0       	rcall	.+264    	; 0x186a <setServo>
     1762:	0f c0       	rjmp	.+30     	; 0x1782 <main+0x10e>
-				}
-			}
-			else if (control_mode == 1)
     1764:	81 30       	cpi	r24, 0x01	; 1
     1766:	69 f4       	brne	.+26     	; 0x1782 <main+0x10e>
-			{
-				FLC_obstacle(OCR1B, sF);
     1768:	f8 01       	movw	r30, r16
     176a:	80 81       	ld	r24, Z
     176c:	91 81       	ldd	r25, Z+1	; 0x01
     176e:	b5 01       	movw	r22, r10
     1770:	37 d8       	rcall	.-3986   	; 0x7e0 <FLC_obstacle>
-			int sL = (int) sensor_info.dist_sonic_left;
-			int sB = (int) sensor_info.dist_sonic_back;
-			
-			int c = (int) sensor_info.dist_right_line;
-			int v = (int) sensor_info.angular_diff;
-			int gyro_angle = (int) sensor_info.angle - 125;
     1772:	82 2d       	mov	r24, r2
     1774:	90 e0       	ldi	r25, 0x00	; 0
-				}
-			}
-			else if (control_mode == 1)
-			{
-				FLC_obstacle(OCR1B, sF);
-				intersection(gyro_angle, intersection_type, c, v);
     1776:	96 01       	movw	r18, r12
     1778:	a7 01       	movw	r20, r14
     177a:	b4 01       	movw	r22, r8
     177c:	8d 57       	subi	r24, 0x7D	; 125
     177e:	91 09       	sbc	r25, r1
     1780:	06 df       	rcall	.-500    	; 0x158e <intersection>
-			}
-			
-
-			
-			sei();
     1782:	78 94       	sei
-			
-			//Sending back information
-			unsigned int esc_value_to_send;
-			esc_value_to_send = OCR1A;
     1784:	f3 01       	movw	r30, r6
     1786:	c0 80       	ld	r12, Z
     1788:	d1 80       	ldd	r13, Z+1	; 0x01
-			unsigned int steering_value_to_send;
-			steering_value_to_send = OCR1B;
     178a:	f8 01       	movw	r30, r16
     178c:	e0 80       	ld	r14, Z
     178e:	f1 80       	ldd	r15, Z+1	; 0x01
-			//Big endian
-			unsigned int temp_ESC;
-			temp_ESC = (esc_value_to_send<<8) & 0xFF;
-			unsigned int temp_steering;
-			temp_steering = (steering_value_to_send<<8) & 0xFF;
-			spi_send_byte((unsigned) (char) temp_ESC);
     1790:	80 e0       	ldi	r24, 0x00	; 0
     1792:	45 d1       	rcall	.+650    	; 0x1a1e <spi_send_byte>
-			spi_send_byte((unsigned) (char) (esc_value_to_send));
     1794:	8c 2d       	mov	r24, r12
     1796:	43 d1       	rcall	.+646    	; 0x1a1e <spi_send_byte>
-			spi_send_byte((unsigned) (char) temp_steering);
     1798:	80 e0       	ldi	r24, 0x00	; 0
     179a:	41 d1       	rcall	.+642    	; 0x1a1e <spi_send_byte>
-			spi_send_byte((unsigned) (char) (steering_value_to_send));
     179c:	8e 2d       	mov	r24, r14
     179e:	3f d1       	rcall	.+638    	; 0x1a1e <spi_send_byte>
     17a0:	87 cf       	rjmp	.-242    	; 0x16b0 <main+0x3c>
 
 000017a2 <pwmInit>:
- * The formula of pwm length with current counter register settings:
- * pwm_length = counterValue/1843
-*/
-void pwmInit(void)
-{
-	DDRD = (1<<DDD5)|(1<<DDD4);
     17a2:	80 e3       	ldi	r24, 0x30	; 48
     17a4:	8a b9       	out	0x0a, r24	; 10
-	TCCR1A = (1<<WGM11)|(1<<COM1A1)|(1<<COM1B1);
     17a6:	82 ea       	ldi	r24, 0xA2	; 162
     17a8:	80 93 80 00 	sts	0x0080, r24
-	ICR1 = 36863;
     17ac:	8f ef       	ldi	r24, 0xFF	; 255
     17ae:	9f e8       	ldi	r25, 0x8F	; 143
     17b0:	90 93 87 00 	sts	0x0087, r25
     17b4:	80 93 86 00 	sts	0x0086, r24
-	TCCR1B = (1<<CS11)|(1<<WGM12)|(1<<WGM13);
     17b8:	8a e1       	ldi	r24, 0x1A	; 26
     17ba:	80 93 81 00 	sts	0x0081, r24
     17be:	08 95       	ret
 
 000017c0 <setESC>:
- * Input values outside of the valid interval are forced to the lower/upper limit
- * @param int counterEsc sets the upper limit to the 16-bit counter1 in the processor
-*/
-void setESC(int counterEsc){
-	
-	if(counterEsc <= MINESC)
     17c0:	80 36       	cpi	r24, 0x60	; 96
     17c2:	2a e0       	ldi	r18, 0x0A	; 10
     17c4:	92 07       	cpc	r25, r18
     17c6:	3c f4       	brge	.+14     	; 0x17d6 <setESC+0x16>
-	{
-		OCR1A = MINESC;
     17c8:	8f e5       	ldi	r24, 0x5F	; 95
     17ca:	9a e0       	ldi	r25, 0x0A	; 10
     17cc:	90 93 89 00 	sts	0x0089, r25
     17d0:	80 93 88 00 	sts	0x0088, r24
     17d4:	08 95       	ret
-	}
-	else if  (counterEsc >= MAXESC)
     17d6:	82 32       	cpi	r24, 0x22	; 34
     17d8:	2b e0       	ldi	r18, 0x0B	; 11
     17da:	92 07       	cpc	r25, r18
     17dc:	24 f1       	brlt	.+72     	; 0x1826 <setESC+0x66>
-	{
-		OCR1A = (int) (Q1 * OCR1A + Q2* MAXESC) / 10;
     17de:	e8 e8       	ldi	r30, 0x88	; 136
     17e0:	f0 e0       	ldi	r31, 0x00	; 0
     17e2:	60 81       	ld	r22, Z
@@ -4205,8 +3507,6 @@ void setESC(int counterEsc){
     1820:	71 83       	std	Z+1, r23	; 0x01
     1822:	60 83       	st	Z, r22
     1824:	08 95       	ret
-	} else {
-		OCR1A = (int) (Q1 * OCR1A + Q2* counterEsc) / 10;
     1826:	e8 e8       	ldi	r30, 0x88	; 136
     1828:	f0 e0       	ldi	r31, 0x00	; 0
     182a:	60 81       	ld	r22, Z
@@ -4239,39 +3539,24 @@ void setESC(int counterEsc){
     1868:	08 95       	ret
 
 0000186a <setServo>:
-*/
-void setServo (int counterServo)
-{
-	
-	
-	if (counterServo >= MAXRIGHT){
     186a:	84 3e       	cpi	r24, 0xE4	; 228
     186c:	2c e0       	ldi	r18, 0x0C	; 12
     186e:	92 07       	cpc	r25, r18
     1870:	3c f0       	brlt	.+14     	; 0x1880 <setServo+0x16>
-		
-		OCR1B = MAXRIGHT;
     1872:	84 ee       	ldi	r24, 0xE4	; 228
     1874:	9c e0       	ldi	r25, 0x0C	; 12
     1876:	90 93 8b 00 	sts	0x008B, r25
     187a:	80 93 8a 00 	sts	0x008A, r24
     187e:	08 95       	ret
-		
-	}	else if (counterServo <= MAXLEFT){
     1880:	87 3e       	cpi	r24, 0xE7	; 231
     1882:	27 e0       	ldi	r18, 0x07	; 7
     1884:	92 07       	cpc	r25, r18
     1886:	3c f4       	brge	.+14     	; 0x1896 <setServo+0x2c>
-
-		OCR1B = MAXLEFT;
     1888:	86 ee       	ldi	r24, 0xE6	; 230
     188a:	97 e0       	ldi	r25, 0x07	; 7
     188c:	90 93 8b 00 	sts	0x008B, r25
     1890:	80 93 8a 00 	sts	0x008A, r24
     1894:	08 95       	ret
-		
-	} else {
-		OCR1B = (int) (Q1*OCR1B + Q2*counterServo) / 10;
     1896:	ea e8       	ldi	r30, 0x8A	; 138
     1898:	f0 e0       	ldi	r31, 0x00	; 0
     189a:	60 81       	ld	r22, Z
@@ -4304,22 +3589,12 @@ void setServo (int counterServo)
     18d8:	08 95       	ret
 
 000018da <spi_get_byte>:
-	*/
-	
-	//if there is no data, value returned will be 0xFE
-	unsigned char value = 0xFE;
-	
-	cli();
     18da:	f8 94       	cli
-	//If data in buffer exists, read to value
-	if(rx_spi.num_bytes > 0){
     18dc:	20 91 68 02 	lds	r18, 0x0268
     18e0:	30 91 69 02 	lds	r19, 0x0269
     18e4:	21 15       	cp	r18, r1
     18e6:	31 05       	cpc	r19, r1
     18e8:	a9 f0       	breq	.+42     	; 0x1914 <spi_get_byte+0x3a>
-
-		value = rx_spi.buffer[rx_spi.i_first];
     18ea:	e4 e6       	ldi	r30, 0x64	; 100
     18ec:	f2 e0       	ldi	r31, 0x02	; 2
     18ee:	40 81       	ld	r20, Z
@@ -4328,68 +3603,30 @@ void setServo (int counterServo)
     18f4:	ac 5d       	subi	r26, 0xDC	; 220
     18f6:	bd 4f       	sbci	r27, 0xFD	; 253
     18f8:	8c 91       	ld	r24, X
-		rx_spi.i_first++;
     18fa:	4f 5f       	subi	r20, 0xFF	; 255
     18fc:	5f 4f       	sbci	r21, 0xFF	; 255
     18fe:	51 83       	std	Z+1, r21	; 0x01
     1900:	40 83       	st	Z, r20
-		rx_spi.num_bytes--;
     1902:	21 50       	subi	r18, 0x01	; 1
     1904:	31 09       	sbc	r19, r1
     1906:	30 93 69 02 	sts	0x0269, r19
     190a:	20 93 68 02 	sts	0x0268, r18
-	}
-	
-	if(rx_spi.num_bytes == 0){
     190e:	23 2b       	or	r18, r19
     1910:	21 f4       	brne	.+8      	; 0x191a <spi_get_byte+0x40>
     1912:	01 c0       	rjmp	.+2      	; 0x1916 <spi_get_byte+0x3c>
-	*otherwise, it will return null
-	*FIFO ring-buffer
-	*/
-	
-	//if there is no data, value returned will be 0xFE
-	unsigned char value = 0xFE;
     1914:	8e ef       	ldi	r24, 0xFE	; 254
-		rx_spi.i_first++;
-		rx_spi.num_bytes--;
-	}
-	
-	if(rx_spi.num_bytes == 0){
-		spi_rx_not_empty_flag = 0;
     1916:	10 92 dc 01 	sts	0x01DC, r1
-	}
-	
-	
-	//turnover for i_first
-	if(rx_spi.i_first == SPI_BUFFER_SIZE){
     191a:	20 91 64 02 	lds	r18, 0x0264
     191e:	30 91 65 02 	lds	r19, 0x0265
     1922:	20 34       	cpi	r18, 0x40	; 64
     1924:	31 05       	cpc	r19, r1
     1926:	21 f4       	brne	.+8      	; 0x1930 <spi_get_byte+0x56>
-		rx_spi.i_first = 0;
     1928:	10 92 65 02 	sts	0x0265, r1
     192c:	10 92 64 02 	sts	0x0264, r1
-	}
-	
-
-	sei();
     1930:	78 94       	sei
-	
-	return value;
-	
-		
-}
     1932:	08 95       	ret
 
 00001934 <__vector_19>:
-spi_buffer_typedef rx_spi = {{0}, 0 , 0 ,0}; //declaring a receive buffer
-spi_buffer_typedef tx_spi = {{0}, 0 , 0 ,0}; //declaring a transmit buffer
-
-unsigned char spi_stc_chain_in_work = 0;
-
-ISR(SPI_STC_vect){
     1934:	1f 92       	push	r1
     1936:	0f 92       	push	r0
     1938:	0f b6       	in	r0, 0x3f	; 63
@@ -4405,26 +3642,10 @@ ISR(SPI_STC_vect){
     194c:	bf 93       	push	r27
     194e:	ef 93       	push	r30
     1950:	ff 93       	push	r31
-
-
-	
-	//Turn PORTA0 to low so master can detect rising edge
-	PORTA &= ~(1<<PORTA0);
     1952:	10 98       	cbi	0x02, 0	; 2
-	
-	unsigned char in_value;
-	
-	//reading value from SPDR
-	in_value = SPDR;
     1954:	2e b5       	in	r18, 0x2e	; 46
-	
-	//if scrap value -> ignore
-	//if not scrap value -> read the byte to rx-buffer
-	if(in_value != 0xFD){
     1956:	2d 3f       	cpi	r18, 0xFD	; 253
     1958:	a9 f0       	breq	.+42     	; 0x1984 <__vector_19+0x50>
-		
-		rx_spi.buffer[rx_spi.i_last] = in_value;
     195a:	e6 e6       	ldi	r30, 0x66	; 102
     195c:	f2 e0       	ldi	r31, 0x02	; 2
     195e:	80 81       	ld	r24, Z
@@ -4433,11 +3654,9 @@ ISR(SPI_STC_vect){
     1964:	ac 5d       	subi	r26, 0xDC	; 220
     1966:	bd 4f       	sbci	r27, 0xFD	; 253
     1968:	2c 93       	st	X, r18
-		rx_spi.i_last++;
     196a:	01 96       	adiw	r24, 0x01	; 1
     196c:	91 83       	std	Z+1, r25	; 0x01
     196e:	80 83       	st	Z, r24
-		rx_spi.num_bytes++;
     1970:	e8 e6       	ldi	r30, 0x68	; 104
     1972:	f2 e0       	ldi	r31, 0x02	; 2
     1974:	80 81       	ld	r24, Z
@@ -4445,39 +3664,25 @@ ISR(SPI_STC_vect){
     1978:	01 96       	adiw	r24, 0x01	; 1
     197a:	91 83       	std	Z+1, r25	; 0x01
     197c:	80 83       	st	Z, r24
-		spi_rx_not_empty_flag = 1;
     197e:	81 e0       	ldi	r24, 0x01	; 1
     1980:	80 93 dc 01 	sts	0x01DC, r24
-	}
-	
-	//Turnover for i_last
-	if(rx_spi.i_last == SPI_BUFFER_SIZE){
     1984:	80 91 66 02 	lds	r24, 0x0266
     1988:	90 91 67 02 	lds	r25, 0x0267
     198c:	80 34       	cpi	r24, 0x40	; 64
     198e:	91 05       	cpc	r25, r1
     1990:	21 f4       	brne	.+8      	; 0x199a <__vector_19+0x66>
-		
-		rx_spi.i_last = 0;
     1992:	10 92 67 02 	sts	0x0267, r1
     1996:	10 92 66 02 	sts	0x0266, r1
-	}
-	
-	//if there is something to send, put the value in SPDR and set PORTA0 to high (handshake)
-	if(tx_spi.num_bytes > 0){
     199a:	80 91 22 02 	lds	r24, 0x0222
     199e:	90 91 23 02 	lds	r25, 0x0223
     19a2:	89 2b       	or	r24, r25
     19a4:	01 f1       	breq	.+64     	; 0x19e6 <__vector_19+0xb2>
-	
-		SPDR = tx_spi.buffer[tx_spi.i_first];
     19a6:	e0 91 1e 02 	lds	r30, 0x021E
     19aa:	f0 91 1f 02 	lds	r31, 0x021F
     19ae:	e2 52       	subi	r30, 0x22	; 34
     19b0:	fe 4f       	sbci	r31, 0xFE	; 254
     19b2:	80 81       	ld	r24, Z
     19b4:	8e bd       	out	0x2e, r24	; 46
-		tx_spi.i_first++;
     19b6:	ee e1       	ldi	r30, 0x1E	; 30
     19b8:	f2 e0       	ldi	r31, 0x02	; 2
     19ba:	80 81       	ld	r24, Z
@@ -4485,7 +3690,6 @@ ISR(SPI_STC_vect){
     19be:	01 96       	adiw	r24, 0x01	; 1
     19c0:	91 83       	std	Z+1, r25	; 0x01
     19c2:	80 83       	st	Z, r24
-		tx_spi.num_bytes--;
     19c4:	e2 e2       	ldi	r30, 0x22	; 34
     19c6:	f2 e0       	ldi	r31, 0x02	; 2
     19c8:	20 81       	ld	r18, Z
@@ -4494,34 +3698,16 @@ ISR(SPI_STC_vect){
     19ce:	31 09       	sbc	r19, r1
     19d0:	31 83       	std	Z+1, r19	; 0x01
     19d2:	20 83       	st	Z, r18
-		
-		PORTA |= (1<<PORTA0);
     19d4:	10 9a       	sbi	0x02, 0	; 2
-		
-		if(tx_spi.i_first == SPI_BUFFER_SIZE){
     19d6:	80 34       	cpi	r24, 0x40	; 64
     19d8:	91 05       	cpc	r25, r1
     19da:	49 f4       	brne	.+18     	; 0x19ee <__vector_19+0xba>
-			
-			tx_spi.i_first = 0;
     19dc:	10 92 1f 02 	sts	0x021F, r1
     19e0:	10 92 1e 02 	sts	0x021E, r1
     19e4:	04 c0       	rjmp	.+8      	; 0x19ee <__vector_19+0xba>
-	}
-	
-	else{  //if tx_spi.num_bytes == 0
-		
-		//put scrap in SPDR
-		SPDR = 0xFD;
     19e6:	8d ef       	ldi	r24, 0xFD	; 253
     19e8:	8e bd       	out	0x2e, r24	; 46
-		spi_stc_chain_in_work = 0;
     19ea:	10 92 dd 01 	sts	0x01DD, r1
-		
-	} 	
-	
-
-}
     19ee:	ff 91       	pop	r31
     19f0:	ef 91       	pop	r30
     19f2:	bf 91       	pop	r27
@@ -4539,47 +3725,23 @@ ISR(SPI_STC_vect){
     1a0a:	18 95       	reti
 
 00001a0c <spi_slave_init>:
-	
-	
-void spi_slave_init(void){
-	
-	//Set MISO output, all others input, DDPB6= MISO
-	DDRB = (1<<DDB6);
     1a0c:	80 e4       	ldi	r24, 0x40	; 64
     1a0e:	84 b9       	out	0x04, r24	; 4
-	//Enable SPI and enable SPI_STC interrupt
-	SPCR = (1<<SPE) | (1<<SPIE) |  (0<<MSTR);
     1a10:	80 ec       	ldi	r24, 0xC0	; 192
     1a12:	8c bd       	out	0x2c, r24	; 44
-	//Setting PORTA0 as output and set it to low, so master can detect rising edge
-	DDRA |= (1<<PORTA0);
     1a14:	08 9a       	sbi	0x01, 0	; 1
-	PORTA &= ~(1<<PORTA0);
     1a16:	10 98       	cbi	0x02, 0	; 2
-	
-	SPDR = 0xFD;
     1a18:	8d ef       	ldi	r24, 0xFD	; 253
     1a1a:	8e bd       	out	0x2e, r24	; 46
     1a1c:	08 95       	ret
 
 00001a1e <spi_send_byte>:
-		
-}
-
-void spi_send_byte(unsigned char value){
-	
-	cli();
     1a1e:	f8 94       	cli
-	
-	//if there is space in tx-buffer, put value in it.
-	if (tx_spi.num_bytes < SPI_BUFFER_SIZE){	//if there is room in the buffer
     1a20:	20 91 22 02 	lds	r18, 0x0222
     1a24:	30 91 23 02 	lds	r19, 0x0223
     1a28:	20 34       	cpi	r18, 0x40	; 64
     1a2a:	31 05       	cpc	r19, r1
     1a2c:	90 f4       	brcc	.+36     	; 0x1a52 <spi_send_byte+0x34>
-			
-		tx_spi.buffer[tx_spi.i_last] = value; //data transfer to buffer
     1a2e:	e0 e2       	ldi	r30, 0x20	; 32
     1a30:	f2 e0       	ldi	r31, 0x02	; 2
     1a32:	40 81       	ld	r20, Z
@@ -4588,34 +3750,21 @@ void spi_send_byte(unsigned char value){
     1a38:	a2 52       	subi	r26, 0x22	; 34
     1a3a:	be 4f       	sbci	r27, 0xFE	; 254
     1a3c:	8c 93       	st	X, r24
-		tx_spi.i_last++;			//inc index of most recent
     1a3e:	4f 5f       	subi	r20, 0xFF	; 255
     1a40:	5f 4f       	sbci	r21, 0xFF	; 255
     1a42:	51 83       	std	Z+1, r21	; 0x01
     1a44:	40 83       	st	Z, r20
-		tx_spi.num_bytes++;		//inc number of bytes in buffer
     1a46:	2f 5f       	subi	r18, 0xFF	; 255
     1a48:	3f 4f       	sbci	r19, 0xFF	; 255
     1a4a:	30 93 23 02 	sts	0x0223, r19
     1a4e:	20 93 22 02 	sts	0x0222, r18
-	}
-		
-	//index turn-around
-	if(tx_spi.i_last == SPI_BUFFER_SIZE){
     1a52:	80 91 20 02 	lds	r24, 0x0220
     1a56:	90 91 21 02 	lds	r25, 0x0221
     1a5a:	80 34       	cpi	r24, 0x40	; 64
     1a5c:	91 05       	cpc	r25, r1
     1a5e:	21 f4       	brne	.+8      	; 0x1a68 <spi_send_byte+0x4a>
-		tx_spi.i_last = 0;
     1a60:	10 92 21 02 	sts	0x0221, r1
     1a64:	10 92 20 02 	sts	0x0220, r1
-	
-			
-	//if there is only one byte in buffer, no SPI_STC is "in work"
-	//Therefore, it is started by adding the byte to SPDR and requesting a send to master
-	//PORTA0 is first set to low, so Master can detect rising edge
-	if(tx_spi.num_bytes == 1 && !(spi_stc_chain_in_work)){
     1a68:	80 91 22 02 	lds	r24, 0x0222
     1a6c:	90 91 23 02 	lds	r25, 0x0223
     1a70:	01 97       	sbiw	r24, 0x01	; 1
@@ -4623,15 +3772,12 @@ void spi_send_byte(unsigned char value){
     1a74:	80 91 dd 01 	lds	r24, 0x01DD
     1a78:	81 11       	cpse	r24, r1
     1a7a:	1a c0       	rjmp	.+52     	; 0x1ab0 <spi_send_byte+0x92>
-		
-		SPDR = tx_spi.buffer[tx_spi.i_first];
     1a7c:	e0 91 1e 02 	lds	r30, 0x021E
     1a80:	f0 91 1f 02 	lds	r31, 0x021F
     1a84:	e2 52       	subi	r30, 0x22	; 34
     1a86:	fe 4f       	sbci	r31, 0xFE	; 254
     1a88:	80 81       	ld	r24, Z
     1a8a:	8e bd       	out	0x2e, r24	; 46
-		tx_spi.i_first++;
     1a8c:	ee e1       	ldi	r30, 0x1E	; 30
     1a8e:	f2 e0       	ldi	r31, 0x02	; 2
     1a90:	80 81       	ld	r24, Z
@@ -4639,7 +3785,6 @@ void spi_send_byte(unsigned char value){
     1a94:	01 96       	adiw	r24, 0x01	; 1
     1a96:	91 83       	std	Z+1, r25	; 0x01
     1a98:	80 83       	st	Z, r24
-		tx_spi.num_bytes--;
     1a9a:	e2 e2       	ldi	r30, 0x22	; 34
     1a9c:	f2 e0       	ldi	r31, 0x02	; 2
     1a9e:	80 81       	ld	r24, Z
@@ -4647,38 +3792,20 @@ void spi_send_byte(unsigned char value){
     1aa2:	01 97       	sbiw	r24, 0x01	; 1
     1aa4:	91 83       	std	Z+1, r25	; 0x01
     1aa6:	80 83       	st	Z, r24
-		PORTA |= (1<<PORTA0);
     1aa8:	10 9a       	sbi	0x02, 0	; 2
-		spi_stc_chain_in_work = 1;
     1aaa:	81 e0       	ldi	r24, 0x01	; 1
     1aac:	80 93 dd 01 	sts	0x01DD, r24
-	}
-			
-	//index turn-around
-	if(tx_spi.i_first == SPI_BUFFER_SIZE){
     1ab0:	80 91 1e 02 	lds	r24, 0x021E
     1ab4:	90 91 1f 02 	lds	r25, 0x021F
     1ab8:	80 34       	cpi	r24, 0x40	; 64
     1aba:	91 05       	cpc	r25, r1
     1abc:	21 f4       	brne	.+8      	; 0x1ac6 <spi_send_byte+0xa8>
-		tx_spi.i_first = 0;
     1abe:	10 92 1f 02 	sts	0x021F, r1
     1ac2:	10 92 1e 02 	sts	0x021E, r1
-	}
-			
-			
-
-	sei();
     1ac6:	78 94       	sei
     1ac8:	08 95       	ret
 
 00001aca <is_package_recieved>:
-}
-
-
-unsigned char is_package_recieved(void){
-	
-	if (rx_spi.num_bytes < (RECEIVED_PACKAGE_SIZE)){
     1aca:	81 e0       	ldi	r24, 0x01	; 1
     1acc:	20 91 68 02 	lds	r18, 0x0268
     1ad0:	30 91 69 02 	lds	r19, 0x0269
@@ -4686,37 +3813,19 @@ unsigned char is_package_recieved(void){
     1ad6:	31 05       	cpc	r19, r1
     1ad8:	08 f4       	brcc	.+2      	; 0x1adc <is_package_recieved+0x12>
     1ada:	80 e0       	ldi	r24, 0x00	; 0
-		return 0;
-	}
-	
-	return 1;
-}
     1adc:	08 95       	ret
 
 00001ade <read_sensor_info>:
-
-
-//returns true (i.e. >0) if succesfull, false (==0) else
-//Also deletes all bytes before header byte, in order to reach header byte. Therefore, it is important to only call this function when is_package_recieved() is true.
-unsigned char read_sensor_info(unsigned char* control_mode_ptr, struct Sensor_information* sens_info_ptr){
     1ade:	0f 93       	push	r16
     1ae0:	1f 93       	push	r17
     1ae2:	cf 93       	push	r28
     1ae4:	df 93       	push	r29
     1ae6:	8c 01       	movw	r16, r24
     1ae8:	eb 01       	movw	r28, r22
-	
-	//If no bytes to get, return "failure"
-	if(!(rx_spi.num_bytes)){
     1aea:	20 91 68 02 	lds	r18, 0x0268
     1aee:	30 91 69 02 	lds	r19, 0x0269
     1af2:	23 2b       	or	r18, r19
     1af4:	69 f1       	breq	.+90     	; 0x1b50 <read_sensor_info+0x72>
-		return 0;
-	}
-	
-	//First check if header-byte first in buffer and if enough bytes for a package to be recieved
-	if( (rx_spi.buffer[rx_spi.i_first] == 0xFF) && (is_package_recieved())){
     1af6:	e0 91 64 02 	lds	r30, 0x0264
     1afa:	f0 91 65 02 	lds	r31, 0x0265
     1afe:	ec 5d       	subi	r30, 0xDC	; 220
@@ -4727,80 +3836,40 @@ unsigned char read_sensor_info(unsigned char* control_mode_ptr, struct Sensor_in
     1b08:	e0 df       	rcall	.-64     	; 0x1aca <is_package_recieved>
     1b0a:	88 23       	and	r24, r24
     1b0c:	11 f1       	breq	.+68     	; 0x1b52 <read_sensor_info+0x74>
-		
-		//dont use header byte
-		unsigned char temp_for_header;
-		temp_for_header = spi_get_byte();
     1b0e:	e5 de       	rcall	.-566    	; 0x18da <spi_get_byte>
-		
-		
-		//Read all info and write it to sensor struct
-
-		*control_mode_ptr = spi_get_byte();
     1b10:	e4 de       	rcall	.-568    	; 0x18da <spi_get_byte>
     1b12:	f8 01       	movw	r30, r16
     1b14:	80 83       	st	Z, r24
-		sens_info_ptr->dist_right_line = spi_get_byte();
     1b16:	e1 de       	rcall	.-574    	; 0x18da <spi_get_byte>
     1b18:	88 83       	st	Y, r24
-		sens_info_ptr->angular_diff = spi_get_byte();
     1b1a:	df de       	rcall	.-578    	; 0x18da <spi_get_byte>
     1b1c:	89 83       	std	Y+1, r24	; 0x01
-		sens_info_ptr->dist_sonic_middle = spi_get_byte();
     1b1e:	dd de       	rcall	.-582    	; 0x18da <spi_get_byte>
     1b20:	8a 83       	std	Y+2, r24	; 0x02
-		sens_info_ptr->dist_sonic_left = spi_get_byte();
     1b22:	db de       	rcall	.-586    	; 0x18da <spi_get_byte>
     1b24:	8b 83       	std	Y+3, r24	; 0x03
-		sens_info_ptr->dist_sonic_right = spi_get_byte();
     1b26:	d9 de       	rcall	.-590    	; 0x18da <spi_get_byte>
     1b28:	8c 83       	std	Y+4, r24	; 0x04
-		sens_info_ptr->dist_sonic_back = spi_get_byte();
     1b2a:	d7 de       	rcall	.-594    	; 0x18da <spi_get_byte>
     1b2c:	8d 83       	std	Y+5, r24	; 0x05
-		sens_info_ptr->angle = spi_get_byte;
     1b2e:	8d e6       	ldi	r24, 0x6D	; 109
     1b30:	9c e0       	ldi	r25, 0x0C	; 12
     1b32:	8f 83       	std	Y+7, r24	; 0x07
-		sens_info_ptr->next_turn_decision = spi_get_byte();
     1b34:	d2 de       	rcall	.-604    	; 0x18da <spi_get_byte>
     1b36:	89 87       	std	Y+9, r24	; 0x09
-		sens_info_ptr->dist_to_stop_line = spi_get_byte();
     1b38:	d0 de       	rcall	.-608    	; 0x18da <spi_get_byte>
     1b3a:	88 87       	std	Y+8, r24	; 0x08
-		//sens_info_ptr->sign_type = spi_get_byte();
-		
-		
-		return 1;
     1b3c:	81 e0       	ldi	r24, 0x01	; 1
     1b3e:	09 c0       	rjmp	.+18     	; 0x1b52 <read_sensor_info+0x74>
-	} else if (is_package_recieved()){
     1b40:	c4 df       	rcall	.-120    	; 0x1aca <is_package_recieved>
     1b42:	88 23       	and	r24, r24
     1b44:	31 f0       	breq	.+12     	; 0x1b52 <read_sensor_info+0x74>
-		
-		//if there are bytes before header byte, throw them away. Then go into read_sensor_info again to check wheter there
-		//is something to read or not. The return value is evaluated by the last read_sensor_info.
-		unsigned char temp_scrap;
-		temp_scrap = spi_get_byte();
     1b46:	c9 de       	rcall	.-622    	; 0x18da <spi_get_byte>
-		return read_sensor_info(control_mode_ptr, sens_info_ptr);
     1b48:	be 01       	movw	r22, r28
     1b4a:	c8 01       	movw	r24, r16
     1b4c:	c8 df       	rcall	.-112    	; 0x1ade <read_sensor_info>
     1b4e:	01 c0       	rjmp	.+2      	; 0x1b52 <read_sensor_info+0x74>
-//Also deletes all bytes before header byte, in order to reach header byte. Therefore, it is important to only call this function when is_package_recieved() is true.
-unsigned char read_sensor_info(unsigned char* control_mode_ptr, struct Sensor_information* sens_info_ptr){
-	
-	//If no bytes to get, return "failure"
-	if(!(rx_spi.num_bytes)){
-		return 0;
     1b50:	80 e0       	ldi	r24, 0x00	; 0
-	
-	
-	//if reaches this point, there are is a header byte but not enough of bytes to read
-	return 0;
-	
     1b52:	df 91       	pop	r29
     1b54:	cf 91       	pop	r28
     1b56:	1f 91       	pop	r17
@@ -5291,12 +4360,6 @@ void stop(int k_value)
     1e46:	08 95       	ret
 
 00001e48 <__vector_20>:
-
-buffer_typedef rx_uart0 = {{0}, 0 , 0 ,0}; //declaring a receive buffer
-buffer_typedef tx_uart0 = {{0}, 0 , 0 ,0}; //declaring a transmit buffer
-
-ISR(USART0_RX_vect)
-{
     1e48:	1f 92       	push	r1
     1e4a:	0f 92       	push	r0
     1e4c:	0f b6       	in	r0, 0x3f	; 63
@@ -5313,25 +4376,18 @@ ISR(USART0_RX_vect)
     1e62:	bf 93       	push	r27
     1e64:	ef 93       	push	r30
     1e66:	ff 93       	push	r31
-	if(rx_uart0.num_bytes == BUFFER_SIZE) { // if buffer full, set flag
     1e68:	80 91 f4 02 	lds	r24, 0x02F4
     1e6c:	90 91 f5 02 	lds	r25, 0x02F5
     1e70:	80 34       	cpi	r24, 0x40	; 64
     1e72:	91 05       	cpc	r25, r1
     1e74:	31 f4       	brne	.+12     	; 0x1e82 <__vector_20+0x3a>
-		uart0_rx_overf_flag = 1;
     1e76:	81 e0       	ldi	r24, 0x01	; 1
     1e78:	80 93 20 03 	sts	0x0320, r24
-		unsigned char scrap_var;
-		scrap_var = UDR0; //UDR0 has to be read, therefore the scrap variable
     1e7c:	80 91 c6 00 	lds	r24, 0x00C6
     1e80:	16 c0       	rjmp	.+44     	; 0x1eae <__vector_20+0x66>
-		} else if(rx_uart0.num_bytes < BUFFER_SIZE) { //if there is space in buffer     //CHECK IF THIS IS RIGHT LATER
     1e82:	80 34       	cpi	r24, 0x40	; 64
     1e84:	91 05       	cpc	r25, r1
     1e86:	e8 f4       	brcc	.+58     	; 0x1ec2 <__vector_20+0x7a>
-		
-		rx_uart0.buffer[rx_uart0.i_last] = UDR0;
     1e88:	e2 ef       	ldi	r30, 0xF2	; 242
     1e8a:	f2 e0       	ldi	r31, 0x02	; 2
     1e8c:	20 81       	ld	r18, Z
@@ -5341,48 +4397,29 @@ ISR(USART0_RX_vect)
     1e96:	a0 55       	subi	r26, 0x50	; 80
     1e98:	bd 4f       	sbci	r27, 0xFD	; 253
     1e9a:	4c 93       	st	X, r20
-		
-		rx_uart0.i_last++;
     1e9c:	2f 5f       	subi	r18, 0xFF	; 255
     1e9e:	3f 4f       	sbci	r19, 0xFF	; 255
     1ea0:	31 83       	std	Z+1, r19	; 0x01
     1ea2:	20 83       	st	Z, r18
-		rx_uart0.num_bytes++;
     1ea4:	01 96       	adiw	r24, 0x01	; 1
     1ea6:	90 93 f5 02 	sts	0x02F5, r25
     1eaa:	80 93 f4 02 	sts	0x02F4, r24
-		
-	}
-	
-	//Check if buffer is full now. If yes, set full_flag
-	if(rx_uart0.num_bytes == BUFFER_SIZE){
     1eae:	80 91 f4 02 	lds	r24, 0x02F4
     1eb2:	90 91 f5 02 	lds	r25, 0x02F5
     1eb6:	80 34       	cpi	r24, 0x40	; 64
     1eb8:	91 05       	cpc	r25, r1
     1eba:	19 f4       	brne	.+6      	; 0x1ec2 <__vector_20+0x7a>
-		uart0_rx_full_flag = 1;
     1ebc:	81 e0       	ldi	r24, 0x01	; 1
     1ebe:	80 93 1e 03 	sts	0x031E, r24
-	}
-
-
-	//If index has reached the end of buffer, set the i_last to 0 to go around
-	if(rx_uart0.i_last == BUFFER_SIZE){
     1ec2:	80 91 f2 02 	lds	r24, 0x02F2
     1ec6:	90 91 f3 02 	lds	r25, 0x02F3
     1eca:	80 34       	cpi	r24, 0x40	; 64
     1ecc:	91 05       	cpc	r25, r1
     1ece:	21 f4       	brne	.+8      	; 0x1ed8 <__vector_20+0x90>
-		rx_uart0.i_last = 0;
     1ed0:	10 92 f3 02 	sts	0x02F3, r1
     1ed4:	10 92 f2 02 	sts	0x02F2, r1
-	}
-
-	uart0_rx_not_empty_flag = 1; //Not empty is something has been placed in buffer
     1ed8:	81 e0       	ldi	r24, 0x01	; 1
     1eda:	80 93 1d 03 	sts	0x031D, r24
-}
     1ede:	ff 91       	pop	r31
     1ee0:	ef 91       	pop	r30
     1ee2:	bf 91       	pop	r27
@@ -5401,12 +4438,6 @@ ISR(USART0_RX_vect)
     1efc:	18 95       	reti
 
 00001efe <__vector_22>:
-
-
-
-
-ISR(USART0_TX_vect)
-{
     1efe:	1f 92       	push	r1
     1f00:	0f 92       	push	r0
     1f02:	0f b6       	in	r0, 0x3f	; 63
@@ -5418,33 +4449,21 @@ ISR(USART0_TX_vect)
     1f0e:	9f 93       	push	r25
     1f10:	ef 93       	push	r30
     1f12:	ff 93       	push	r31
-	
-	//check if buffer is full. If yes, clear flag because we gonna make room for
-	if(tx_uart0.num_bytes == BUFFER_SIZE){
     1f14:	80 91 ae 02 	lds	r24, 0x02AE
     1f18:	90 91 af 02 	lds	r25, 0x02AF
     1f1c:	80 34       	cpi	r24, 0x40	; 64
     1f1e:	91 05       	cpc	r25, r1
     1f20:	19 f4       	brne	.+6      	; 0x1f28 <__vector_22+0x2a>
-		uart0_tx_full_flag = 0;
     1f22:	10 92 1c 03 	sts	0x031C, r1
     1f26:	02 c0       	rjmp	.+4      	; 0x1f2c <__vector_22+0x2e>
-	}
-	
-	//if data exist, put the sending_byte in the buffer
-	if(tx_uart0.num_bytes > 0){
     1f28:	89 2b       	or	r24, r25
     1f2a:	b9 f0       	breq	.+46     	; 0x1f5a <__vector_22+0x5c>
-		
-		UDR0 = tx_uart0.buffer[tx_uart0.i_first];
     1f2c:	e0 91 aa 02 	lds	r30, 0x02AA
     1f30:	f0 91 ab 02 	lds	r31, 0x02AB
     1f34:	e6 59       	subi	r30, 0x96	; 150
     1f36:	fd 4f       	sbci	r31, 0xFD	; 253
     1f38:	80 81       	ld	r24, Z
     1f3a:	80 93 c6 00 	sts	0x00C6, r24
-		
-		tx_uart0.i_first++;
     1f3e:	ea ea       	ldi	r30, 0xAA	; 170
     1f40:	f2 e0       	ldi	r31, 0x02	; 2
     1f42:	80 81       	ld	r24, Z
@@ -5452,7 +4471,6 @@ ISR(USART0_TX_vect)
     1f46:	01 96       	adiw	r24, 0x01	; 1
     1f48:	91 83       	std	Z+1, r25	; 0x01
     1f4a:	80 83       	st	Z, r24
-		tx_uart0.num_bytes--;
     1f4c:	ee ea       	ldi	r30, 0xAE	; 174
     1f4e:	f2 e0       	ldi	r31, 0x02	; 2
     1f50:	80 81       	ld	r24, Z
@@ -5460,43 +4478,23 @@ ISR(USART0_TX_vect)
     1f54:	01 97       	sbiw	r24, 0x01	; 1
     1f56:	91 83       	std	Z+1, r25	; 0x01
     1f58:	80 83       	st	Z, r24
-	}
-	
-	//if reaches the end of buffer, set it to 0 to go around
-	if(tx_uart0.i_first == BUFFER_SIZE){
     1f5a:	80 91 aa 02 	lds	r24, 0x02AA
     1f5e:	90 91 ab 02 	lds	r25, 0x02AB
     1f62:	80 34       	cpi	r24, 0x40	; 64
     1f64:	91 05       	cpc	r25, r1
     1f66:	21 f4       	brne	.+8      	; 0x1f70 <__vector_22+0x72>
-		tx_uart0.i_first = 0;
     1f68:	10 92 ab 02 	sts	0x02AB, r1
     1f6c:	10 92 aa 02 	sts	0x02AA, r1
-	}
-	
-	//if no more data in buffer, set not_empty_flag to 0
-	if(tx_uart0.num_bytes == 0){
     1f70:	80 91 ae 02 	lds	r24, 0x02AE
     1f74:	90 91 af 02 	lds	r25, 0x02AF
     1f78:	89 2b       	or	r24, r25
     1f7a:	39 f4       	brne	.+14     	; 0x1f8a <__vector_22+0x8c>
-		uart0_tx_not_empty_flag = 0;
     1f7c:	10 92 1f 03 	sts	0x031F, r1
-		
-		//Disable UART "TX hw buffer empty" interrupt here
-		//I do this by setting UDRIE0 in UCSR0B to 0
-		UCSR0B &= ~(1<<TXCIE0);
     1f80:	e1 ec       	ldi	r30, 0xC1	; 193
     1f82:	f0 e0       	ldi	r31, 0x00	; 0
     1f84:	80 81       	ld	r24, Z
     1f86:	8f 7b       	andi	r24, 0xBF	; 191
     1f88:	80 83       	st	Z, r24
-		//if using shared RX/TX hardware buffer (WHICH I DO, OR DO WE?) enable RX data interrupt here
-		//UCSR0B |= (1<<RXEN0);
-		
-	}
-	
-}
     1f8a:	ff 91       	pop	r31
     1f8c:	ef 91       	pop	r30
     1f8e:	9f 91       	pop	r25
