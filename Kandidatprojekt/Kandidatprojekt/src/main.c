@@ -252,7 +252,7 @@ int main (void)
 			
 			//Save k-value from stop line when control mode changes from 0 to 4
 			if(control_mode == 0x04 && prev_control_mode == 0x00){
-				count(1);
+				//count(1);
 				k_value_stop_line = (int) sensor_info.dist_to_stop_line - 40;			
 			}
 			if (control_mode == 1 && control_mode != prev_control_mode && intersection_type == 'l') // if left turn is initiated
@@ -279,7 +279,7 @@ int main (void)
 				//}
 				//else
 				//{
-					count(0);
+					//count(0);
 					setESC(NEUTRAL);
 					setServo(STRAIGHT);
 				//}

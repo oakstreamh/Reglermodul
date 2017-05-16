@@ -147,9 +147,9 @@ void FLC_speed(int currentServo, int midSonicRange, int currentEsc)
 	struct mf_type low;
 	MATLAB_MF(&low, "low", 2825, 2835, 2835, 2845);
 	struct mf_type medium;
-	MATLAB_MF(&medium, "medium", 2830, 2840, 2840, 2850);
+	MATLAB_MF(&medium, "medium", 2828, 2838, 2838, 2848);
 	struct mf_type high;
-	MATLAB_MF(&high, "high", 2835, 2845, 2845, 2855);
+	MATLAB_MF(&high, "high", 2830, 2840, 2840, 2850);
 
 	// Linked list for MFs
 	esc.membership_functions = &neutral;
@@ -181,9 +181,9 @@ void FLC_speed(int currentServo, int midSonicRange, int currentEsc)
 	struct mf_type slow;
 	MATLAB_MF(&slow, "slow", 2825, 2835, 2835, 2845);
 	struct mf_type average;
-	MATLAB_MF(&average, "average", 2830, 2840, 2840, 2850);
+	MATLAB_MF(&average, "average", 2828, 2838, 2838, 2848);
 	struct mf_type fast;
-	MATLAB_MF(&fast, "fast", 2835, 2845, 2845, 2855);
+	MATLAB_MF(&fast, "fast", 2830, 2840, 2840, 2850);
 
 	// Linked list for MFs
 	speed.membership_functions = &zero;
@@ -320,6 +320,5 @@ void FLC_speed(int currentServo, int midSonicRange, int currentEsc)
 		setESC(speed.value);
 	}
     
-    printf("%d\n", speed.value);
     
 }

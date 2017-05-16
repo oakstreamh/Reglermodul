@@ -216,7 +216,7 @@
     <Compile Include="src\ASF\config\conf_board.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\CFile1.c">
+    <Compile Include="src\backUp.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\counter16b.c">

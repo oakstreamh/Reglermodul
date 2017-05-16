@@ -255,7 +255,7 @@ void intersection(int type, int gyro, int c, int v)
     
     if (type == 'r')
     {
-		rightTurn(gyro);
+		setServo(MAXRIGHT);
     }
 	else if (type == 'l')
 	{
