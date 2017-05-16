@@ -2,7 +2,7 @@
 #define SERVO_H_
 
 
-#define MAXESC 2840		// MAX/MIN limit for driving on the floor
+#define MAXESC 2850		// MAX/MIN limit for driving on the floor
 #define MINESC 2655
 
 #define MAXLEFT 2022	// Limits before servo is exhausted

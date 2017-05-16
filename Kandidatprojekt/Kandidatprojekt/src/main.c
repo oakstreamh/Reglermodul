@@ -192,7 +192,7 @@ int main (void)
 	// FOR TESTING
 	//	FLC_obstacle(2800, 150);
 
-	FLC_speed(210, 10);
+
 
 
 
@@ -268,7 +268,7 @@ int main (void)
 			if (control_mode == 0)
 			{
 				FLC_steering(c,v);
-				FLC_speed(OCR1B, sF);
+				FLC_speed(OCR1B, sF, OCR1A);
 			}
 			else if (control_mode == 4)
 			{
@@ -286,7 +286,7 @@ int main (void)
 			}
 			else if (control_mode == 1)
 			{
-				FLC_speed(OCR1A, sF);
+				FLC_speed(OCR1B, sF, OCR1A);
 				intersection(gyro_angle, intersection_type, c, v);
 			}
 			

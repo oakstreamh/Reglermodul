@@ -9,7 +9,7 @@
 #ifndef FLC_SPEED_H_
 #define FLC_SPEED_H_
 
-void FLC_speed(int currentServo, int midSonicRange);
+void FLC_speed(int currentServo, int midSonicRange, int currentEsc);
 
 
 

@@ -157,6 +157,8 @@ void spi_send_byte(unsigned char value){
 	//PORTA0 is first set to low, so Master can detect rising edge
 	if(tx_spi.num_bytes == 1 && !(spi_stc_chain_in_work)){
 		
+		PORTA &= ~(1<<PORTA0); //TEST
+		
 		SPDR = tx_spi.buffer[tx_spi.i_first];
 		tx_spi.i_first++;
 		tx_spi.num_bytes--;
