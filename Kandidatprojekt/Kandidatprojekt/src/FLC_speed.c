@@ -24,6 +24,9 @@
 // DEFINITIONS
 //////////////////////////////////////////////////////////////////////////////////
 
+#define MAXLEFT 2022	// Limits before servo is exhausted
+#define MAXRIGHT 3300
+
 #define MIN_DISTANCE 0          // lower limit of distance variable
 #define MAX_DISTANCE 75        // upper limit of distance variable
 #define MIN_SPEED 2740          // lower limit of speed input variable
@@ -59,9 +62,9 @@ void FLC_speed(int currentServo, int midSonicRange, int currentEsc)
 	}
 	
 	// Variable assigned its reference value
-	if (currentEsc<MINESC)
+	if (currentEsc<2780)
 	{
-		esc.value = MINESC;
+		esc.value = 2780;
 	}
 	else if (currentEsc>MAXESC)
 	{
@@ -233,7 +236,7 @@ void FLC_speed(int currentServo, int midSonicRange, int currentEsc)
 	// if dist is close then speed is slow
 	struct rule_element_type if21, then2;
 	rule2.if_side = &if21; if21.next = NULL; rule2.then_side = &then2; then2.next = NULL;
-	if21.value = &close.value; then2.value = &low.value;
+	if21.value = &close.value; then2.value = &slow.value;
 
 	// if dist is faar and steering is right then speed is average
 	struct rule_element_type if31, if32, then3;
@@ -273,7 +276,7 @@ void FLC_speed(int currentServo, int midSonicRange, int currentEsc)
 	// if dist is faar and steering is straight and currentEsc is neutral then speed is average
 	struct rule_element_type if101, if102, if103, then10;
 	rule10.if_side = &if101; if101.next = &if102; if102.next = &if103; if103.next = NULL; rule10.then_side = &then10; then10.next = NULL;
-	if101.value = &faar.value; if102.value = &straight.value; if103.value = &neutral; then10.value = &slow.value;
+	if101.value = &faar.value; if102.value = &straight.value; if103.value = &neutral.value; then10.value = &slow.value;
 
 	// if dist is faar and steering is straight and currentEsc is low then speed is average
 	struct rule_element_type if111, if112, if113, then11;
@@ -316,4 +319,7 @@ void FLC_speed(int currentServo, int midSonicRange, int currentEsc)
 	{
 		setESC(speed.value);
 	}
+    
+    printf("%d\n", speed.value);
+    
 }
