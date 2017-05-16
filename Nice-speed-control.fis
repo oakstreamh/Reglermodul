@@ -1,0 +1,65 @@
+[System]
+Name='Nice-speed-control'
+Type='mamdani'
+Version=2.0
+NumInputs=3
+NumOutputs=1
+NumRules=14
+AndMethod='min'
+OrMethod='max'
+ImpMethod='min'
+AggMethod='max'
+DefuzzMethod='centroid'
+
+[Input1]
+Name='currentServo'
+Range=[202 330]
+NumMFs=5
+MF1='maxLeft':'trapmf',[201 202 205 230]
+MF2='left':'trapmf',[205 230 237 262]
+MF3='straight':'trapmf',[236.5 266 266 295.5]
+MF4='right':'trapmf',[267 295 302 325]
+MF5='maxRight':'trapmf',[301 325 330 331]
+
+[Input2]
+Name='distance'
+Range=[0 75]
+NumMFs=4
+MF1='stopDist':'trapmf',[-1 0 10 20]
+MF2='close':'trapmf',[10 30 30 50]
+MF3='faar':'trapmf',[50 70 75 76]
+MF4='distant':'trapmf',[30 50 50 70]
+
+[Input3]
+Name='currentEsc'
+Range=[2780 2855]
+NumMFs=4
+MF1='neutral':'trapmf',[2779 2780 2802 2830]
+MF2='low':'trapmf',[2825 2835 2835 2845]
+MF3='medium':'trapmf',[2830 2840 2840 2850]
+MF4='high':'trapmf',[2835 2845 2845 2855]
+
+[Output1]
+Name='speed'
+Range=[2780 2855]
+NumMFs=4
+MF1='zero':'trapmf',[2779 2780 2802 2830]
+MF2='slow':'trapmf',[2825 2835 2835 2845]
+MF3='average':'trapmf',[2830 2840 2840 2850]
+MF4='fast':'trapmf',[2835 2845 2845 2855]
+
+[Rules]
+0 1 0, 1 (1) : 1
+0 2 0, 2 (1) : 1
+4 3 0, 3 (1) : 1
+2 3 0, 3 (1) : 1
+5 3 0, 2 (1) : 1
+1 3 0, 2 (1) : 1
+0 4 1, 2 (1) : 1
+0 4 2, 3 (1) : 1
+0 4 3, 3 (1) : 1
+3 3 1, 2 (1) : 1
+3 3 2, 3 (1) : 1
+3 3 3, 4 (1) : 1
+3 3 4, 4 (1) : 1
+3 3 0, 4 (1) : 1
