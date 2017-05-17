@@ -157,6 +157,8 @@ void spi_send_byte(unsigned char value){
 	//PORTA0 is first set to low, so Master can detect rising edge
 	if(tx_spi.num_bytes == 1 && !(spi_stc_chain_in_work)){
 		
+		PORTA &= ~(1<<PORTA0); //TEST
+		
 		SPDR = tx_spi.buffer[tx_spi.i_first];
 		tx_spi.i_first++;
 		tx_spi.num_bytes--;
@@ -214,7 +216,7 @@ unsigned char read_sensor_info(unsigned char* control_mode_ptr, struct Sensor_in
 		sens_info_ptr->dist_sonic_right = spi_get_byte();
 		sens_info_ptr->dist_sonic_back = spi_get_byte();
 		sens_info_ptr->angle = spi_get_byte;
-		sens_info_ptr->car_speed = spi_get_byte();
+		sens_info_ptr->next_turn_decision = spi_get_byte();
 		sens_info_ptr->dist_to_stop_line = spi_get_byte();
 		//sens_info_ptr->sign_type = spi_get_byte();
 		

@@ -1,6 +1,4 @@
-src/ASF/common/boards/user_board/init.d \
- src/ASF/common/boards/user_board/init.o: \
- ../src/ASF/common/boards/user_board/init.c ../src/asf.h \
+src/counter16b.d src/counter16b.o: ../src/counter16b.c ../src/asf.h \
  ../src/ASF/common/boards/user_board/user_board.h \
  ../src/config/conf_board.h ../src/ASF/common/boards/board.h \
  ../src/ASF/mega/utils/compiler.h \
@@ -23,7 +21,7 @@ src/ASF/common/boards/user_board/init.d \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\avr\interrupt.h \
  ../src/ASF/mega/utils/progmem.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\avr\pgmspace.h \
- ../src/ASF/mega/utils/status_codes.h
+ ../src/ASF/mega/utils/status_codes.h ../src/counter16b.h
 
 ../src/asf.h:
 
@@ -76,3 +74,5 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-g
 c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\avr\pgmspace.h:
 
 ../src/ASF/mega/utils/status_codes.h:
+
+../src/counter16b.h:

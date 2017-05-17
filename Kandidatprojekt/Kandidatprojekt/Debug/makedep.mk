@@ -2,7 +2,11 @@
 # Automatically-generated file. Do not edit or delete the file
 ################################################################################
 
-src\CFile1.c
+src\backUp.c
+
+src\counter16b.c
+
+src\FLC_speed.c
 
 src\fuzzyParkingAlgorithm.c
 

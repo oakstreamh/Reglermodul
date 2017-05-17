@@ -20,7 +20,7 @@ struct Sensor_information{
 	unsigned char car_speed;
 	unsigned char angle;
 	unsigned char dist_to_stop_line;
-	unsigned char sign_type; //Not sure we gonna use this one. Depends if camera can detect signs
+	unsigned char next_turn_decision; //Not sure we gonna use this one. Depends if camera can detect signs
 };
 
 

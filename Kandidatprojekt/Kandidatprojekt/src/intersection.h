@@ -11,4 +11,6 @@
 
 #include <stdio.h>
 
+void intersection(int type, int gyro, int c, int v);
+
 #endif /* intersection_h */
