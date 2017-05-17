@@ -235,7 +235,7 @@ void leftTurn(int gyro)
 }
 
 
-void intersection(int type, int gyro, int c, int v)
+void intersection(int gyro, int type, int c, int v)
 {
 	
 	if (gyro<0)
