@@ -258,6 +258,12 @@
     <Compile Include="src\manualMode.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\newFuzzySteering.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\newFuzzySteering.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\OldSteering.c">
       <SubType>compile</SubType>
     </Compile>

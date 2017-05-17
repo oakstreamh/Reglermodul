@@ -1,4 +1,4 @@
-﻿
+
 //////////////////////////////////////////////////////////////////////////////////
 // FUZZY SPEED CONTROLLER                                                       //
 //////////////////////////////////////////////////////////////////////////////////
@@ -29,7 +29,7 @@ struct io_type delta_V;
 // METHODS                                                                      //
 //////////////////////////////////////////////////////////////////////////////////
 
-void doFuzzy(int c, int v)
+void newDoFuzzy(int c, int v)
 {
 	///// DECLARATION OF C INPUT VARIABLE ///////////////////////////////////
 	
@@ -77,7 +77,7 @@ void doFuzzy(int c, int v)
 	inNyll.next = &inPlus;
 	inPlus.next = NULL;
 	
-	// set V's input value to V´s value
+	// set V's input value to V�s value
 	if(v<1)				// if sensor value is smaller than error's input set lower limit
 	{
 		delta_V.value = 1;  // force input value to lowest point in delta_V's input set
@@ -327,7 +327,7 @@ void doFuzzy(int c, int v)
  *
  * The fuzzy logic controller is designed to manage the fourth state
  */
-int FLC_steering(int c, int v)
+int fuzzySteering(int c, int v)
 {
     
     
@@ -342,7 +342,7 @@ int FLC_steering(int c, int v)
 	}
 	else                                   // straight road, do fuzzy
 	{
-		doFuzzy(c,v);
+		newDoFuzzy(c,v);
 	}
 	
 	
