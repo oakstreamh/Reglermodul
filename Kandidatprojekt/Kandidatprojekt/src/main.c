@@ -31,6 +31,7 @@
 #include "spi_buffer_slave.h"
 #include "fuzzyParkingAlgorithm.h"
 #include "stopLine.h"
+#include "counter16b.h"
 
 
 //////////////// STRUCTS /////////////////////////////////////////////////////////
@@ -141,11 +142,6 @@ void carInit(void)
 	
 }
 
-void count(void)
-{
-	TCNT3 = 0;
-	TCCR3B = (1<<CS32)|(1<<CS30);
-}
 
 
 
@@ -244,7 +240,7 @@ int main (void)
 			//Save k-value from stop line when control mode changes from 0 to 4
 			if(control_mode == 0x04 && prev_control_mode == 0x00){
 				onGoingStop = 0;
-				count();
+				count(1);
 				k_value_stop_line = (int) sensor_info.dist_to_stop_line - 40;			}
 			
 			int sR = (int) sensor_info.dist_sonic_right;

@@ -9,6 +9,6 @@
 #ifndef FUZZYSTEERING_H_
 #define FUZZYSTEERING_H_
 
-int fuzzySteering(int c, int v);
+int newFuzzySteering(int c, int v);
 
 #endif /* FUZZYSTEERING_H_ */

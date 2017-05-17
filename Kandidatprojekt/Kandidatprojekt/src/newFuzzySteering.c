@@ -35,26 +35,32 @@ void newDoFuzzy(int c, int v)
 	
 	struct io_type delta_C; strcpy(delta_C.name, "delta_C");
 	
-	struct mf_type rightSide;
-	MATLAB_MF(&rightSide, "rightSide", 99, 100, 120, 135); // Min_value = 100
+	struct mf_type farRight;
+	MATLAB_MF(&farRight, "farRight", 99, 100, 110, 125); // Min_value = 100
+	struct mf_type right;
+	MATLAB_MF(&right, "right", 115, 130, 130, 145);
 	struct mf_type centre;
-	MATLAB_MF(&centre, "centre", 125, 145, 155, 175);
-	struct mf_type leftSide;
-	MATLAB_MF(&leftSide, "leftSide", 165, 180, 199, 200);  // Max_value = 199
+	MATLAB_MF(&centre, "centre", 135, 150, 150, 165);
+	struct mf_type left;
+	MATLAB_MF(&left, "left", 155, 170, 170, 185);
+	struct mf_type farLeft;
+	MATLAB_MF(&farLeft, "farLeft", 175, 190, 200, 201);  // Max_value = 200
 	
-	delta_C.membership_functions = &rightSide;
-	rightSide.next = &centre;
-	centre.next = &leftSide;
-	leftSide.next = NULL;
+	delta_C.membership_functions = &farRight;
+	farRight.next = &right;
+	right.next = &centre;
+	centre.next = &left;
+	left.next = &farLeft;
+	farLeft.next = NULL;
 	
 	// set iErr's input value to measErr value
 	if(c<100)				// if sensor value is smaller than delta_C's input set's lower limit
 	{
 		delta_C.value = 100;  // force input value to lowest point in delta_C's input set
 	}
-	else if(c>199)			// if sensor value is bigger than delta_C's input set's upper limit
+	else if(c>200)			// if sensor value is bigger than delta_C's input set's upper limit
 	{
-		delta_C.value = 199;  // force input value to lowest point in delta_C's input set
+		delta_C.value = 200;  // force input value to lowest point in delta_C's input set
 	}
 	else
 	{
@@ -65,26 +71,28 @@ void newDoFuzzy(int c, int v)
 	
 	struct io_type delta_V; strcpy(delta_V.name, "delta_V");
 	
-	struct mf_type inMinus;
-	MATLAB_MF(&inMinus, "inMinus", 0, 1, 20, 35); // min V is 1
-	struct mf_type inNyll;
-	MATLAB_MF(&inNyll, "inNyll", 15, 35, 40, 55);
-	struct mf_type inPlus;
-	MATLAB_MF(&inPlus, "inPlus", 40, 50, 74 , 75); // max V is 74
+	struct mf_type leftOriented;
+	MATLAB_MF(&leftOriented, "leftOrien", 0, 30, 30, 60); // min V is 0
 	
-	delta_V.membership_functions = &inMinus;
-	inMinus.next = &inNyll;
-	inNyll.next = &inPlus;
-	inPlus.next = NULL;
+	struct mf_type straightOriented;
+	MATLAB_MF(&straightOriented, "straOrient", 10, 40, 40, 70);
+	
+	struct mf_type rightOriented;
+	MATLAB_MF(&rightOriented, "righOrient", 20, 50, 50, 80); // max V is 80
+	
+	delta_V.membership_functions = &leftOriented;
+	leftOriented.next = &straightOriented;
+	straightOriented.next = &rightOriented;
+	rightOriented.next = NULL;
 	
 	// set V's input value to V´s value
-	if(v<1)				// if sensor value is smaller than error's input set lower limit
+	if(v<0)				// if sensor value is smaller than error's input set lower limit
 	{
-		delta_V.value = 1;  // force input value to lowest point in delta_V's input set
+		delta_V.value = 0;  // force input value to lowest point in delta_V's input set
 	}
-	else if(v>74)			// if sensor value is bigger than error's input set's upper limit
+	else if(v>80)			// if sensor value is bigger than error's input set's upper limit
 	{
-		delta_V.value = 74;  // force input value to lowest point in error's input set
+		delta_V.value = 80;  // force input value to lowest point in error's input set
 	}
 	else
 	{
@@ -96,15 +104,15 @@ void newDoFuzzy(int c, int v)
 	struct io_type steering; strcpy(steering.name, "steering");
 	
 	struct mf_type sharpLeft;
-	MATLAB_MF(&sharpLeft, "sharpLeft", 2359, 2360, 2360, 2460);
+	MATLAB_MF(&sharpLeft, "sharpLeft", 2209, 2210, 2210, 2390);
 	struct mf_type left;
-	MATLAB_MF(&left, "left", 2400, 2460, 2460, 2560);
+	MATLAB_MF(&left, "left", 2310, 2450, 2450, 2590);
 	struct mf_type straight;
-	MATLAB_MF(&straight, "straight", 2520, 2660, 2660, 2720);
+	MATLAB_MF(&straight, "straight", 2510, 2660, 2660, 2810);
 	struct mf_type right;
-	MATLAB_MF(&right, "right", 2700, 2800, 2800, 2900);
+	MATLAB_MF(&right, "right", 2730, 2870, 2870, 3010);
 	struct mf_type sharpRight;
-	MATLAB_MF(&sharpRight, "sharpRight", 2860, 2960, 2960, 2961);
+	MATLAB_MF(&sharpRight, "sharpRight", 2930, 3110, 3110, 3111);
 	
 	steering.membership_functions = &sharpRight;
 	sharpRight.next = &right;
@@ -316,7 +324,7 @@ void newDoFuzzy(int c, int v)
 
 /* FLC_steering is a fuzzy logic controller to perform lane following.
  * Input values are unitless reference values derived from image processing.
- * The image processing detects straight lines through the Hough transform.
+ * The image processing detects straight lines through Hough transform.
  * To manage sharp curvatures, the image processing application implements a state 
  * machine.
  * Input parameters are c and v. Three reserved pairs defines states.
@@ -327,7 +335,7 @@ void newDoFuzzy(int c, int v)
  *
  * The fuzzy logic controller is designed to manage the fourth state
  */
-int fuzzySteering(int c, int v)
+int newFuzzySteering(int c, int v)
 {
     
     
