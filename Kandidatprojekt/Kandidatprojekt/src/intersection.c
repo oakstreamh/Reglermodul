@@ -12,7 +12,7 @@
 #include "fuzzySteering.h"
 #include "general_FIS.h"
 #include <stdio.h>
-#include "fuzzySteering.h"
+#include "nFuzzySteering.h"
 #include "counter16b.h"
 
 // DEFINITIONS
@@ -261,7 +261,7 @@ void intersection(int gyro, int type, int c, int v)
 	{
 		if (checkCount(500) == 0) // if count less than 500 ms then, keep straight
 		{
-			FLC_steering(c,v);
+			nFuzzySteering(c,v);
 		}
 		else
 		{

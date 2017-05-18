@@ -32,7 +32,8 @@
 #include "fuzzyParkingAlgorithm.h"
 #include "stopLine.h"
 #include "counter16b.h"
-#include "nFuzzySteering.h"
+#include "nFuzzySteering.h"'
+#include "intersection.h"
 
 
 //////////////// STRUCTS /////////////////////////////////////////////////////////
@@ -138,7 +139,7 @@ void carInit(void)
 {
 	pwmInit();
 	spi_slave_init();
-	OCR1A = NEUTRAL;  
+	OCR1A = NEUTRAL;
 	OCR1B = STRAIGHT;
 	
 }
@@ -194,8 +195,8 @@ void Sens_info_read(struct Sensor_information* sens_info_ptr) //There is no chec
 
 int main (void)
 {
-	// FOR TESTING	
-	nFuzzySteering(150, 40);
+	// FOR TESTING
+	
 	
 	
 	carInit();
@@ -240,20 +241,19 @@ int main (void)
 			if(control_mode == 0x04 && prev_control_mode == 0x00){
 				onGoingStop = 0;
 				count(1);
-				k_value_stop_line = (int) sensor_info.dist_to_stop_line - 40;			}
+			k_value_stop_line = (int) sensor_info.dist_to_stop_line - 40;			}
 			if(control_mode == 1 && prev_control_mode != 1){
-                count(1);
-            }
-            
+				count(1);
+			}
+			
 			int sR = (int) sensor_info.dist_sonic_right;
 			int sF = (int) sensor_info.dist_sonic_middle;
 			int sL = (int) sensor_info.dist_sonic_left;
 			int sB = (int) sensor_info.dist_sonic_back;
-			
 			int c = (int) sensor_info.dist_right_line;
 			int v = (int) sensor_info.angular_diff;
-            int gyro = (int) sensor_info.gyro;
-            char type = (char) sensor_info.type;
+			int gyro = (int) sensor_info.angle;
+			char type = (char) sensor_info.next_turn_decision;
 			
 			cli();
 			
@@ -264,15 +264,15 @@ int main (void)
 			}
 			else if (control_mode == 4)
 			{
-		
-                setEsc(NEUTRAL);
-                setServo(STRAIGHT);
-				}
+				
+				setESC(NEUTRAL);
+				setServo(STRAIGHT);
 			}
-            else if (control_mode == 1)
-            {
-                intersection(gyro, type, c, v)
-            }
+			
+			else if (control_mode == 1)
+			{
+				intersection(gyro, type, c, v);
+			}
 
 			
 			sei();
@@ -299,12 +299,10 @@ int main (void)
 		
 		
 	}
-	
+
+
+
 
 }
-
-
-
-
 
 

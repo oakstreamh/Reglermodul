@@ -22,11 +22,7 @@ src\main.c
 
 src\manualMode.c
 
-src\newFuzzySteering.c
-
 src\nFuzzySteering.c
-
-src\OldSteering.c
 
 src\pid.c
 

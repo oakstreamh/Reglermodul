@@ -60,9 +60,7 @@ C_SRCS +=  \
 ../src/intersection.c \
 ../src/main.c \
 ../src/manualMode.c \
-../src/newFuzzySteering.c \
 ../src/nFuzzySteering.c \
-../src/OldSteering.c \
 ../src/pid.c \
 ../src/servo.c \
 ../src/spi_buffer_slave.c \
@@ -89,9 +87,7 @@ src/general_FIS.o \
 src/intersection.o \
 src/main.o \
 src/manualMode.o \
-src/newFuzzySteering.o \
 src/nFuzzySteering.o \
-src/OldSteering.o \
 src/pid.o \
 src/servo.o \
 src/spi_buffer_slave.o \
@@ -111,9 +107,7 @@ src/general_FIS.o \
 src/intersection.o \
 src/main.o \
 src/manualMode.o \
-src/newFuzzySteering.o \
 src/nFuzzySteering.o \
-src/OldSteering.o \
 src/pid.o \
 src/servo.o \
 src/spi_buffer_slave.o \
@@ -133,9 +127,7 @@ src/general_FIS.d \
 src/intersection.d \
 src/main.d \
 src/manualMode.d \
-src/newFuzzySteering.d \
 src/nFuzzySteering.d \
-src/OldSteering.d \
 src/pid.d \
 src/servo.d \
 src/spi_buffer_slave.d \
@@ -155,9 +147,7 @@ src/general_FIS.d \
 src/intersection.d \
 src/main.d \
 src/manualMode.d \
-src/newFuzzySteering.d \
 src/nFuzzySteering.d \
-src/OldSteering.d \
 src/pid.d \
 src/servo.d \
 src/spi_buffer_slave.d \
@@ -180,10 +170,6 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
-
-
-
-
 
 
 
