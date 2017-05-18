@@ -196,7 +196,7 @@ int main (void)
 {
 	// FOR TESTING	
 	nFuzzySteering(150, 40);
-	FLC_steering(150, 50);
+	
 	
 	carInit();
 	_delay_ms(5000);
@@ -241,7 +241,10 @@ int main (void)
 				onGoingStop = 0;
 				count(1);
 				k_value_stop_line = (int) sensor_info.dist_to_stop_line - 40;			}
-			
+			if(control_mode == 1 && prev_control_mode != 1){
+                count(1);
+            }
+            
 			int sR = (int) sensor_info.dist_sonic_right;
 			int sF = (int) sensor_info.dist_sonic_middle;
 			int sL = (int) sensor_info.dist_sonic_left;
@@ -249,30 +252,27 @@ int main (void)
 			
 			int c = (int) sensor_info.dist_right_line;
 			int v = (int) sensor_info.angular_diff;
+            int gyro = (int) sensor_info.gyro;
+            char type = (char) sensor_info.type;
 			
 			cli();
 			
 			if (control_mode == 0)
 			{
 				FLC_obstacle(OCR1A, sF, v);
-				FLC_steering(c,v);
+				nFuzzySteering(c,v);
 			}
 			else if (control_mode == 4)
 			{
 		
-				if (TCNT3 < 4319) // 0.3 seconds
-				{
-					setESC(2835);
-					stop(k_value_stop_line);
-				}
-				else
-				{
-					TCCR3B = (0<<CS32)|(0<<CS30);
-					setESC(NEUTRAL);
-					setServo(STRAIGHT);
+                setEsc(NEUTRAL);
+                setServo(STRAIGHT);
 				}
 			}
-			
+            else if (control_mode == 1)
+            {
+                intersection(gyro, type, c, v)
+            }
 
 			
 			sei();
