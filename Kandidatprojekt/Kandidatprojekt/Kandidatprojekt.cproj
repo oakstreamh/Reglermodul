@@ -270,16 +270,10 @@
     <Compile Include="src\manualMode.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\newFuzzySteering.c">
+    <Compile Include="src\nFuzzySteering.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\newFuzzySteering.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\OldSteering.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\OldSteering.h">
+    <Compile Include="src\nFuzzySteering.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\pid.c">

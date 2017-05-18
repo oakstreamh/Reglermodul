@@ -32,6 +32,7 @@
 #include "fuzzyParkingAlgorithm.h"
 #include "stopLine.h"
 #include "counter16b.h"
+#include "nFuzzySteering.h"
 
 
 //////////////// STRUCTS /////////////////////////////////////////////////////////
@@ -193,15 +194,13 @@ void Sens_info_read(struct Sensor_information* sens_info_ptr) //There is no chec
 
 int main (void)
 {
-	// FOR TESTING
-	//	FLC_obstacle(2800, 150);
-
-	FLC_obstacle(2840,250,81);
-
-
-
+	// FOR TESTING	
+	nFuzzySteering(150, 40);
+	FLC_steering(150, 50);
+	
 	carInit();
 	_delay_ms(5000);
+
 	
 	//-----Variables and pointers for Sensor information
 	//Er info finns i sensor_info.dist_right_line;
@@ -260,7 +259,8 @@ int main (void)
 			}
 			else if (control_mode == 4)
 			{
-				if (TCNT3 < 300) // 0.3 seconds
+		
+				if (TCNT3 < 4319) // 0.3 seconds
 				{
 					setESC(2835);
 					stop(k_value_stop_line);
