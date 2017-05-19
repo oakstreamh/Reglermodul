@@ -121,7 +121,7 @@ MATLAB_MF(&cruise, "cruise", 2830, 2835, 2835, 2840);
 struct mf_type medHigh;
 MATLAB_MF(&medHigh, "medHigh", 2830, 2840, 2840, 2850);
 struct mf_type max;
-MATLAB_MF(&max, "max", 2835, 2845, 28545, 2855);
+MATLAB_MF(&max, "max", 2835, 2845, 2845, 2855);
 
 // Linked list for MFs
 pwm.membership_functions = &noSpeed;
@@ -233,9 +233,9 @@ fuzzification();
 rule_evaluation();
 defuzzification();
 
-if (pwm.value > 2845)
+if (pwm.value > 2840)
 {
-setESC(2845+adjustment);
+setESC(2840+adjustment);
 }
 else if (pwm.value < 2750)
 {
