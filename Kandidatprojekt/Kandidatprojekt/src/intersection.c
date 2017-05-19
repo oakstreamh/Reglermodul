@@ -235,7 +235,7 @@ void leftTurn(int gyro)
 }
 
 
-void intersection(int gyro, int type, int c, int v)
+void intersection(int gyro, unsigned char type, int c, int v)
 {
 	
 	if (gyro<0)
@@ -259,14 +259,14 @@ void intersection(int gyro, int type, int c, int v)
     }
 	else if (type == 'l')
 	{
-		if (checkCount(500) == 0) // if count less than 500 ms then, keep straight
+		if (checkCount(1200) == 0) // if count less than 500 ms then, keep straight
 		{
-			nFuzzySteering(c,v);
+			setServo(STRAIGHT);
 		}
 		else
 		{
 		count(0);
-		leftTurn(gyro);	
+		setServo(MAXLEFT);
 		}
 	}
 }

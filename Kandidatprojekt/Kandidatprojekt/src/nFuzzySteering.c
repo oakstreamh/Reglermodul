@@ -11,7 +11,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 #include <string.h>
-#include "fuzzySteering.h"
+#include "nfuzzySteering.h"
 #include "general_FIS.h"
 #include <stdio.h>
 #include "servo.h"
@@ -71,14 +71,14 @@ void nDoFuzzy(int c, int v)
 	struct io_type delta_V; strcpy(delta_V.name, "delta_V");
 	
 	struct mf_type leftOriented;
-	MATLAB_MF(&leftOriented, "leftOrien", -1, 0, 30, 60); // min V is 0
+	MATLAB_MF(&leftOriented, "leftOri", -1, 0, 0, 60); // min V is 0
 	
 	struct mf_type straightOriented;
 	MATLAB_MF(&straightOriented, "straOri", 10, 40, 40, 70);
-	
+		
 	struct mf_type rightOriented;
-	MATLAB_MF(&rightOriented, "righOri", 20, 50, 80, 81); // max V is 80
-	
+	MATLAB_MF(&rightOriented, "rightOri", 20, 80, 80, 81); // max V is 80
+
 	delta_V.membership_functions = &leftOriented;
 	leftOriented.next = &straightOriented;
 	straightOriented.next = &rightOriented;
@@ -100,18 +100,18 @@ void nDoFuzzy(int c, int v)
 	
 	///// DECLARATION OF STEERING OUTPUT VARIABLE ///////////////////////////////////
 
-	struct io_type steering; strcpy(steering.name, "steering");
+	struct io_type steering; strcpy(steering.name, "steering"); // All outputs downscaled by a factor 10
 	
 	struct mf_type sharpLeft;
-	MATLAB_MF(&sharpLeft, "sharpLe", 2209, 2210, 2210, 2390);
+	MATLAB_MF(&sharpLeft, "sharpLe", 220, 221, 221, 239);
 	struct mf_type left;
-	MATLAB_MF(&left, "left", 2310, 2450, 2450, 2590);
+	MATLAB_MF(&left, "left", 231, 245, 245, 259);
 	struct mf_type straight;
-	MATLAB_MF(&straight, "straight", 2510, 2660, 2660, 2810);
+	MATLAB_MF(&straight, "straight", 251, 266, 266, 281);
 	struct mf_type right;
-	MATLAB_MF(&right, "right", 2730, 2870, 2870, 3010);
+	MATLAB_MF(&right, "right", 273, 287, 287, 301);
 	struct mf_type sharpRight;
-	MATLAB_MF(&sharpRight, "sharpRi", 2930, 3110, 3110, 3111);
+	MATLAB_MF(&sharpRight, "sharpRi", 293, 311, 311, 312);
 	
 	steering.membership_functions = &sharpRight;
 	sharpRight.next = &right;
@@ -335,8 +335,6 @@ void nDoFuzzy(int c, int v)
 	rule5.then_side = &then5;
 	rule5.next = &rule6;
 
-	
-
 	//RULE 4 "if deltaC is smallLeft and deltaV is rightOriented then steering is left"
 	struct rule_element_type then4;
 	then4.value = &left.value;
@@ -416,6 +414,7 @@ void nDoFuzzy(int c, int v)
 	fuzzification();
 	rule_evaluation();
 	defuzzification();
+	steering.value = steering.value*10;
 	if (steering.value < MAXLEFT)
 	{
 		setServo(MAXLEFT);

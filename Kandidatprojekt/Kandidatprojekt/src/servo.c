@@ -18,9 +18,6 @@
 //////////////// CONSTANTS ///////////////////////////////////////////////////////
 
 
-int Q1 = 2;
-int Q2 = 8;
-
 //////////////// METHODS /////////////////////////////////////////////////////////
 
 /*
@@ -75,6 +72,6 @@ void setServo (int counterServo)
 		OCR1B = MAXLEFT;
 		
 	} else {
-		OCR1B = (int) (Q1*OCR1B + Q2*counterServo) / 10;
+		OCR1B = counterServo;
 	}
 }

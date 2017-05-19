@@ -143,7 +143,7 @@ void FLC_speed(int currentServo, int midSonicRange, int currentEsc)
 
 	// Set MFs
 	struct mf_type neutral;
-	MATLAB_MF(&neutral, "neutral", 2779, 2780, 2802, 2830);
+	MATLAB_MF(&neutral, "neutral", 2779, 2780, 2800, 2830);
 	struct mf_type low;
 	MATLAB_MF(&low, "low", 2825, 2835, 2835, 2845);
 	struct mf_type medium;

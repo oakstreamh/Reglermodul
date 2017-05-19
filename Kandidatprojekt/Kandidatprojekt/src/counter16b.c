@@ -30,7 +30,7 @@ void count(int mode)
 
 int checkCount(int req_delay)
 {
-	int req_count = (int) req_delay*F_CPU/1024-1;
+	int req_count = (int) req_delay*F_CPU/1024000-1;
 	if(TCNT3<req_count)
 	{
 		return 0;

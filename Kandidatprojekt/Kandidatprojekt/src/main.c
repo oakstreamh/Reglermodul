@@ -32,8 +32,9 @@
 #include "fuzzyParkingAlgorithm.h"
 #include "stopLine.h"
 #include "counter16b.h"
-#include "nFuzzySteering.h"'
+#include "nFuzzySteering.h"
 #include "intersection.h"
+#include "FLC_speed.h"
 
 
 //////////////// STRUCTS /////////////////////////////////////////////////////////
@@ -197,7 +198,7 @@ int main (void)
 {
 	// FOR TESTING
 	
-	
+
 	
 	carInit();
 	_delay_ms(5000);
@@ -227,6 +228,7 @@ int main (void)
 	//End of test setting
 	sei();
 	
+	
 
 	while (1) {
 		if (is_package_recieved()) {
@@ -242,7 +244,7 @@ int main (void)
 				onGoingStop = 0;
 				count(1);
 			k_value_stop_line = (int) sensor_info.dist_to_stop_line - 40;			}
-			if(control_mode == 1 && prev_control_mode != 1){
+			if(control_mode == 1 && prev_control_mode == 4 && sensor_info.next_turn_decision == 'l'){
 				count(1);
 			}
 			
@@ -253,24 +255,24 @@ int main (void)
 			int c = (int) sensor_info.dist_right_line;
 			int v = (int) sensor_info.angular_diff;
 			int gyro = (int) sensor_info.angle;
-			char type = (char) sensor_info.next_turn_decision;
+			unsigned char type = (unsigned) (char) sensor_info.next_turn_decision;
 			
 			cli();
 			
 			if (control_mode == 0)
 			{
-				FLC_obstacle(OCR1A, sF, v);
+				FLC_speed(OCR1A, sF, OCR1B);
 				nFuzzySteering(c,v);
 			}
 			else if (control_mode == 4)
 			{
-				
 				setESC(NEUTRAL);
 				setServo(STRAIGHT);
 			}
 			
 			else if (control_mode == 1)
 			{
+				FLC_speed(OCR1A, sF, OCR1B);
 				intersection(gyro, type, c, v);
 			}
 
