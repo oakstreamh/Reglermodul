@@ -273,7 +273,7 @@ int main (void)
 			else if (control_mode == 1)
 			{
 				FLC_speed(OCR1A, sF, OCR1B);
-				intersection(gyro, type, c, v);
+				intersection(gyro, sensor_info.next_turn_decision, c, v);
 			}
 
 			

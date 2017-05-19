@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include "nFuzzySteering.h"
 #include "counter16b.h"
+#include <avr/io.h>
 
 // DEFINITIONS
 //////////////////////////////////////////////////////////////////////////////////////
@@ -237,7 +238,7 @@ void leftTurn(int gyro)
 
 void intersection(int gyro, unsigned char type, int c, int v)
 {
-	
+	PORTA |= (1<<PORTA1);
 	if (gyro<0)
 	{
 		gyro = -gyro; 
@@ -255,10 +256,12 @@ void intersection(int gyro, unsigned char type, int c, int v)
     
     if (type == 'r')
     {
+		PORTA |= (1<<PORTA2);
 		setServo(MAXRIGHT);
     }
 	else if (type == 'l')
 	{
+		PORTA |= (1<<PORTA3);
 		if (checkCount(1200) == 0) // if count less than 500 ms then, keep straight
 		{
 			setServo(STRAIGHT);

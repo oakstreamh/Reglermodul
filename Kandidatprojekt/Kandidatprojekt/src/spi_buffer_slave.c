@@ -215,7 +215,7 @@ unsigned char read_sensor_info(unsigned char* control_mode_ptr, struct Sensor_in
 		sens_info_ptr->dist_sonic_left = spi_get_byte();
 		sens_info_ptr->dist_sonic_right = spi_get_byte();
 		sens_info_ptr->dist_sonic_back = spi_get_byte();
-		sens_info_ptr->angle = spi_get_byte;
+		sens_info_ptr->angle = spi_get_byte();
 		sens_info_ptr->next_turn_decision = spi_get_byte();
 		sens_info_ptr->dist_to_stop_line = spi_get_byte();
 		//sens_info_ptr->sign_type = spi_get_byte();
