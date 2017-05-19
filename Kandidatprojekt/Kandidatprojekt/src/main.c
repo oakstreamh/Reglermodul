@@ -197,7 +197,7 @@ void Sens_info_read(struct Sensor_information* sens_info_ptr) //There is no chec
 int main (void)
 {
 	// FOR TESTING
-	
+	nFuzzySteering(120, 0);
 
 	
 	carInit();
