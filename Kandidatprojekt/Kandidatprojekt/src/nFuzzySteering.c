@@ -20,7 +20,7 @@
 // DEFINITIONS OF I/O AND POINTERS TO TOP OF LISTS                              //
 //////////////////////////////////////////////////////////////////////////////////
 
-
+void nDoFuzzy(int c, int v);
 struct io_type delta_C;
 struct io_type delta_V;
 
@@ -32,18 +32,21 @@ void nDoFuzzy(int c, int v)
 {
 	///// DECLARATION OF C INPUT VARIABLE ///////////////////////////////////
 	
+	
+	int adjustC = 10;
+	
 	struct io_type delta_C; strcpy(delta_C.name, "delta_C");
 	
 	struct mf_type farRight;
-	MATLAB_MF(&farRight, "farRight", 99, 100, 110, 125); // Min_value = 100
+	MATLAB_MF(&farRight, "farRight", 99, 100, 120+adjustC, 130+adjustC); // Min_value = 100
 	struct mf_type smallRight;
-	MATLAB_MF(&smallRight, "smallRig", 115, 130, 130, 145);
+	MATLAB_MF(&smallRight, "smallRig", 120+adjustC, 130+adjustC, 140+adjustC, 145+adjustC);
 	struct mf_type centre;
-	MATLAB_MF(&centre, "centre", 135, 150, 150, 165);
+	MATLAB_MF(&centre, "centre", 135+adjustC, 150+adjustC, 150+adjustC, 165+adjustC);
 	struct mf_type smallLeft;
-	MATLAB_MF(&smallLeft, "smallLe", 155, 170, 170, 185);
+	MATLAB_MF(&smallLeft, "smallLe", 155+adjustC, 160+adjustC, 170+adjustC, 180+adjustC);
 	struct mf_type farLeft;
-	MATLAB_MF(&farLeft, "farLeft", 175, 190, 200, 201);  // Max_value = 200
+	MATLAB_MF(&farLeft, "farLeft", 170+adjustC, 180+adjustC, 200+adjustC, 201+adjustC);  // Max_value = 200
 	
 	delta_C.membership_functions = &farRight;
 	farRight.next = &smallRight;
@@ -57,9 +60,9 @@ void nDoFuzzy(int c, int v)
 	{
 		delta_C.value = 100;  // force input value to lowest point in delta_C's input set
 	}
-	else if(c>200)			// if sensor value is bigger than delta_C's input set's upper limit
+	else if(c>200+adjustC)			// if sensor value is bigger than delta_C's input set's upper limit
 	{
-		delta_C.value = 200;  // force input value to lowest point in delta_C's input set
+		delta_C.value = 200+adjustC;  // force input value to lowest point in delta_C's input set
 	}
 	else
 	{
@@ -103,15 +106,15 @@ void nDoFuzzy(int c, int v)
 	struct io_type steering; strcpy(steering.name, "steering"); // All outputs downscaled by a factor 10
 	
 	struct mf_type sharpLeft;
-	MATLAB_MF(&sharpLeft, "sharpLe", 220, 221, 221, 239);
+	MATLAB_MF(&sharpLeft, "sharpLe", 223, 224, 224, 242);
 	struct mf_type left;
-	MATLAB_MF(&left, "left", 231, 245, 245, 259);
+	MATLAB_MF(&left, "left", 231, 246, 246, 261);
 	struct mf_type straight;
 	MATLAB_MF(&straight, "straight", 251, 266, 266, 281);
 	struct mf_type right;
-	MATLAB_MF(&right, "right", 273, 287, 287, 301);
+	MATLAB_MF(&right, "right", 271, 286, 286, 301); 
 	struct mf_type sharpRight;
-	MATLAB_MF(&sharpRight, "sharpRi", 293, 311, 311, 312);
+	MATLAB_MF(&sharpRight, "sharpRi", 292, 309, 309, 310);
 	
 	steering.membership_functions = &sharpRight;
 	sharpRight.next = &right;
@@ -130,284 +133,56 @@ void nDoFuzzy(int c, int v)
 	System_Outputs = &steering;
 	steering.next = NULL;
 
-	//RULE 15 "if deltaC is farRight and deltaV is leftOriented then steering is straight"
-	struct rule_element_type then15;
-	then15.value = &straight.value;
-	then15.next = NULL;
 
-	struct rule_element_type if152;
-	if152.value = &leftOriented.value;
-	if152.next = NULL;
+	struct rule_type rule1; Rule_Base = &rule1;
+	struct rule_type rule2; rule1.next = &rule2;
+	struct rule_type rule3; rule2.next = &rule3;
+	struct rule_type rule4; rule3.next = &rule4;
+	struct rule_type rule5; rule4.next = &rule5;
+	struct rule_type rule6; rule5.next = &rule6;
+	struct rule_type rule7; rule6.next = &rule7;
+	rule7.next = NULL;
 
-	struct rule_element_type if151;
-	if151.value = &farRight.value;
-	if151.next = &if152;
 
-	struct rule_type rule15;
-	rule15.if_side = &if151;
-	rule15.then_side = &then15;
-	rule15.next = NULL;
+	// RULE SETUP
+	//////////////////////////////////////////////////////////////////////////////
+
+	////RULE 1 "if deltaC is farLeft then steering is SharpRight"
+	struct rule_element_type if11, then1;
+	rule1.if_side = &if11; if11.next = NULL; rule1.then_side = &then1; then1.next = NULL;
+	if11.value = &farLeft.value; then1.value = &sharpRight.value;
+
+	////RULE 2 "if deltaC is smallLeft then steering is right"
+	struct rule_element_type if21, then2;
+	rule2.if_side = &if21; if21.next = NULL; rule2.then_side = &then2; then2.next = NULL;
+	if21.value = &smallLeft.value; then2.value = &right.value;
+
+	////RULE 5 "if deltaC is centre and deltaV is rightOriented then steering is left"
+	struct rule_element_type if31, if32, then3;
+	rule3.if_side = &if31; if31.next = &if32; if32.next = NULL; rule3.then_side = &then3; then3.next = NULL;
+	if31.value = &centre.value; if32.value = &rightOriented.value; then3.value = &left.value;
 	
+	////RULE 6 "if deltaC is centre and deltaV is straightOriented then steering is straight"
+	struct rule_element_type if41, if42, then4;
+	rule4.if_side = &if41; if41.next = &if42; if42.next = NULL; rule4.then_side = &then4; then4.next = NULL;
+	if41.value = &centre.value; if42.value = &straightOriented.value; then4.value = &straight.value;
 	
-	//RULE 14 "if deltaC is farRight and deltaV is straightOriented then steering is left"
-	struct rule_element_type then14;
-	then14.value = &left.value;
-	then14.next = NULL;
-
-	struct rule_element_type if142;
-	if142.value = &straightOriented.value;
-	if142.next = NULL;
-
-	struct rule_element_type if141;
-	if141.value = &farRight.value;
-	if141.next = &if142;
-
-	struct rule_type rule14;
-	rule14.if_side = &if141;
-	rule14.then_side = &then14;
-	rule14.next = &rule15;
-
-	//RULE 13 "if deltaC is farRight and deltaV is rightOriented then steering is sharpLeft"
-	struct rule_element_type then13;
-	then13.value = &sharpLeft.value;
-	then13.next = NULL;
-
-	struct rule_element_type if132;
-	if132.value = &rightOriented.value;
-	if132.next = NULL;
-
-	struct rule_element_type if131;
-	if131.value = &farRight.value;
-	if131.next = &if132;
-
-	struct rule_type rule13;
-	rule13.if_side = &if131;
-	rule13.then_side = &then13;
-	rule13.next = &rule14;
-
-	//RULE 12 "if deltaC is smallRight and deltaV is leftOriented then steering is right"
-	struct rule_element_type then12;
-	then12.value = &right.value;
-	then12.next = NULL;
-
-	struct rule_element_type if122;
-	if122.value = &leftOriented.value;
-	if122.next = NULL;
-
-	struct rule_element_type if121;
-	if121.value = &smallRight.value;
-	if121.next = &if122;
-
-	struct rule_type rule12;
-	rule12.if_side = &if121;
-	rule12.then_side = &then12;
-	rule12.next = &rule13;
-
-
-	//RULE 11 "if deltaC is smallRight and deltaV is straightOriented then steering is left"
-	struct rule_element_type then11;
-	then11.value = &left.value;
-	then11.next = NULL;
-
-	struct rule_element_type if112;
-	if112.value = &straightOriented.value;
-	if112.next = NULL;
-
-	struct rule_element_type if111;
-	if111.value = &smallRight.value;
-	if111.next = &if112;
-
-	struct rule_type rule11;
-	rule11.if_side = &if111;
-	rule11.then_side = &then11;
-	rule11.next = &rule12;
-
-
-	//RULE 10 "if deltaC is smallRight and deltaV is rightOriented then steering is sharpLeft"
-	struct rule_element_type then10;
-	then10.value = &sharpLeft.value;
-	then10.next = NULL;
-
-	struct rule_element_type if102;
-	if102.value = &rightOriented.value;
-	if102.next = NULL;
-
-	struct rule_element_type if101;
-	if101.value = &smallRight.value;
-	if101.next = &if102;
-
-	struct rule_type rule10;
-	rule10.if_side = &if101;
-	rule10.then_side = &then10;
-	rule10.next = &rule11;
+	////RULE 5 "if deltaC is centre and deltaV is leftOriented then steering is right"
+	struct rule_element_type if51, if52, then5;
+	rule5.if_side = &if51; if51.next = &if52; if52.next = NULL; rule5.then_side = &then5; then5.next = NULL;
+	if51.value = &centre.value; if52.value = &leftOriented.value; then5.value = &right.value;
 	
-	//RULE 9 "if deltaC is centre and deltaV is leftOriented then steering is right"
-	struct rule_element_type then9;
-	then9.value = &right.value;
-	then9.next = NULL;
-
-	struct rule_element_type if92;
-	if92.value = &leftOriented.value;
-	if92.next = NULL;
-
-	struct rule_element_type if91;
-	if91.value = &centre.value;
-	if91.next = &if92;
-
-	struct rule_type rule9;
-	rule9.if_side = &if91;
-	rule9.then_side = &then9;
-	rule9.next = &rule10;
-
+	////RULE 6 "if deltaC is smallRight then steering is Left"
+	struct rule_element_type if61, then6;
+	rule6.if_side = &if61; if61.next = NULL; rule6.then_side = &then6; then6.next = NULL;
+	if61.value = &smallRight.value; then6.value = &left.value;
 	
-	//RULE 8 "if deltaC is centre and deltaV is straightOriented then steering is straight"
-	struct rule_element_type then8;
-	then8.value = &straight.value;
-	then8.next = NULL;
-
-	struct rule_element_type if82;
-	if82.value = &straightOriented.value;
-	if82.next = NULL;
-
-	struct rule_element_type if81;
-	if81.value = &centre.value;
-	if81.next = &if82;
-
-	struct rule_type rule8;
-	rule8.if_side = &if81;
-	rule8.then_side = &then8;
-	rule8.next = &rule9;
-	
-	//RULE 7 "if deltaC is centre and deltaV is rightOriented then steering is left"
-	struct rule_element_type then7;
-	then7.value = &left.value;
-	then7.next = NULL;
-
-	struct rule_element_type if72;
-	if72.value = &rightOriented.value;
-	if72.next = NULL;
-
-	struct rule_element_type if71;
-	if71.value = &centre.value;
-	if71.next = &if72;
-
-	struct rule_type rule7;
-	rule7.if_side = &if71;
-	rule7.then_side = &then7;
-	rule7.next = &rule8;
-	
-	
-	//RULE 6 "if deltaC is smallLeft and deltaV is leftOriented then steering is sharpRight"
-	struct rule_element_type then6;
-	then6.value = &sharpRight.value;
-	then6.next = NULL;
-
-	struct rule_element_type if62;
-	if62.value = &leftOriented.value;
-	if62.next = NULL;
-
-	struct rule_element_type if61;
-	if61.value = &smallLeft.value;
-	if61.next = &if62;
-
-	struct rule_type rule6;
-	rule6.if_side = &if61;
-	rule6.then_side = &then6;
-	rule6.next = &rule7;
-
+	////RULE 7 "if deltaC is farRight then steering is sharpLeft"
+	struct rule_element_type if71, then7;
+	rule7.if_side = &if71; if71.next = NULL; rule7.then_side = &then7; then7.next = NULL;
+	if71.value = &farRight.value;  then7.value = &sharpLeft.value;
 	
 
-	//RULE 5 "if deltaC is smallLeft and deltaV is straightOriented then steering is right"
-	struct rule_element_type then5;
-	then5.value = &right.value;
-	then5.next = NULL;
-
-	struct rule_element_type if52;
-	if52.value = &straightOriented.value;
-	if52.next = NULL;
-
-	struct rule_element_type if51;
-	if51.value = &smallLeft.value;
-	if51.next = &if52;
-
-	struct rule_type rule5;
-	rule5.if_side = &if51;
-	rule5.then_side = &then5;
-	rule5.next = &rule6;
-
-	//RULE 4 "if deltaC is smallLeft and deltaV is rightOriented then steering is left"
-	struct rule_element_type then4;
-	then4.value = &left.value;
-	then4.next = NULL;
-	
-	struct rule_element_type if42;
-	if42.value = &rightOriented.value;
-	if42.next = NULL;
-	
-	struct rule_element_type if41;
-	if41.value = &smallLeft.value;
-	if41.next = &if42;
-
-	struct rule_type rule4;
-	rule4.if_side = &if41;
-	rule4.then_side = &then4;
-	rule4.next = &rule5;
-	
-	//RULE 3 "if deltaC is farLeft and deltaV is leftOriented then steering is sharpRight"
-	struct rule_element_type then3;
-	then3.value = &sharpRight.value;
-	then3.next = NULL;
-	
-	struct rule_element_type if32;
-	if32.value = &leftOriented.value;
-	if32.next = NULL;
-	
-	struct rule_element_type if31;
-	if31.value = &farLeft.value;
-	if31.next = &if32;
-
-	struct rule_type rule3;
-	rule3.if_side = &if31;
-	rule3.then_side = &then3;
-	rule3.next = &rule4;
-	
-	
-	//RULE 2 "if deltaC is farLeft and deltaV is straightOriented then steering is right"
-	struct rule_element_type then2;
-	then2.value = &right.value;
-	then2.next = NULL;
-
-	struct rule_element_type if22;
-	if22.value = &straightOriented.value;
-	if22.next = NULL;
-	
-	struct rule_element_type if21;
-	if21.value = &farLeft.value;
-	if21.next = &if22;
-
-	struct rule_type rule2;
-	rule2.if_side = &if21;
-	rule2.then_side = &then2;
-	rule2.next = &rule3;
-
-	//RULE 1 "if deltaC is farLeft and deltaV is rightOriented then steering is straight"
-	struct rule_element_type then1;
-	then1.value = &straight.value;
-	then1.next = NULL;
-
-	struct rule_element_type if12;
-	if12.value = &rightOriented.value;
-	if12.next = NULL;
-
-	struct rule_element_type if11;
-	if11.value = &farLeft.value;
-	if11.next = &if12;
-
-	struct rule_type rule1;
-	rule1.if_side = &if11;
-	rule1.then_side = &then1;
-	rule1.next = &rule2;
-	Rule_Base = &rule1;
 	
 	
 	// the methods performing the FLC
@@ -457,6 +232,4 @@ void nFuzzySteering(int c, int v)
 	{
 		nDoFuzzy(c,v);
 	}
-	
-	
 }

@@ -12,7 +12,7 @@
 void testSteering(void);
 void testmanual(unsigned char);
 void testSpeed(void);
-
+void testRoad(void);
 
 
 #endif /* TEST_METHODS_H_ */

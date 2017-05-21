@@ -26,12 +26,9 @@
 
 #define MAXLEFT 2022	// Limits before servo is exhausted
 #define MAXRIGHT 3300
-
 #define MIN_DISTANCE 0          // lower limit of distance variable
 #define MAX_DISTANCE 75        // upper limit of distance variable
 #define MIN_SPEED 2740          // lower limit of speed input variable
-
-
 
 // FLC OBSTACLE AVOIDER
 //////////////////////////////////////////////////////////////////////////////////
@@ -39,6 +36,9 @@
 
 void FLC_speed(int currentServo, int midSonicRange, int currentEsc)
 {
+	
+	int fullBatteryAdjust = 2;
+	
 	// Inputs
 	struct io_type distance; strcpy(distance.name, "distance");
 	struct io_type steering; strcpy(steering.name, "steering");
@@ -147,9 +147,9 @@ void FLC_speed(int currentServo, int midSonicRange, int currentEsc)
 	struct mf_type low;
 	MATLAB_MF(&low, "low", 2825, 2835, 2835, 2845);
 	struct mf_type medium;
-	MATLAB_MF(&medium, "medium", 2828, 2838, 2838, 2848);
+	MATLAB_MF(&medium, "medium", 2830, 2840, 2840, 2850);
 	struct mf_type high;
-	MATLAB_MF(&high, "high", 2830, 2840, 2840, 2850);
+	MATLAB_MF(&high, "high", 2835, 2845, 2845, 2855);
 
 	// Linked list for MFs
 	esc.membership_functions = &neutral;
@@ -177,13 +177,13 @@ void FLC_speed(int currentServo, int midSonicRange, int currentEsc)
 
 	// Set MFs
 	struct mf_type zero;
-	MATLAB_MF(&zero, "zero", 2779, 2780, 2802, 2830);
+	MATLAB_MF(&zero, "zero", 2779-fullBatteryAdjust, 2780-fullBatteryAdjust, 2802-fullBatteryAdjust, 2830-fullBatteryAdjust);
 	struct mf_type slow;
-	MATLAB_MF(&slow, "slow", 2825, 2835, 2835, 2845);
+	MATLAB_MF(&slow, "slow", 2825-fullBatteryAdjust, 2835-fullBatteryAdjust, 2835-fullBatteryAdjust, 2845-fullBatteryAdjust);
 	struct mf_type average;
-	MATLAB_MF(&average, "average", 2828, 2838, 2838, 2848);
+	MATLAB_MF(&average, "average", 2828-fullBatteryAdjust, 2838-fullBatteryAdjust, 2838-fullBatteryAdjust, 2848-fullBatteryAdjust);
 	struct mf_type fast;
-	MATLAB_MF(&fast, "fast", 2830, 2840, 2840, 2850);
+	MATLAB_MF(&fast, "fast", 2830-fullBatteryAdjust, 2840-fullBatteryAdjust, 2840-fullBatteryAdjust, 2850-fullBatteryAdjust);
 
 	// Linked list for MFs
 	speed.membership_functions = &zero;

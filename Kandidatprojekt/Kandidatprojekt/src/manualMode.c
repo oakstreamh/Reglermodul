@@ -13,14 +13,13 @@ int MANUAL_FORWARD = 2840;
 int MANUAL_REVERSE = 2665;
 int VELOCITY = 0;
 int STEERING = 0;
-//int manualInstruction[4] = {0,0,0,0}; // right,forward,left,reverse
 
 /*
  * This method performs the manual mode of driving
  * The manual instructions are forward, left, right, reverse stored in array manualInstruction
  *
  */
-void manualMode(char manualInstructions)
+void manualMode(char manualInstructions, int sF, int sB)
 {
 	cli(); //disable interrupts	
 	
@@ -50,9 +49,15 @@ void manualMode(char manualInstructions)
 		VELOCITY = 0;
 	}
 	
+	if (sF<30 || sB<30)
+	{
+		setESC(NEUTRAL);
+	}
+	else
+	{
+		setESC(NEUTRAL + VELOCITY);	
+	}
 	
-	setESC(NEUTRAL + VELOCITY);
 	setServo(STRAIGHT + STEERING);
 	
-	sei(); // enable global interrupts
 }

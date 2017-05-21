@@ -8,12 +8,6 @@ src\counter16b.c
 
 src\FLC_speed.c
 
-src\fuzzyParkingAlgorithm.c
-
-src\fuzzySteering.c
-
-src\fuzzy_speed_controller.c
-
 src\general_FIS.c
 
 src\intersection.c
@@ -24,13 +18,9 @@ src\manualMode.c
 
 src\nFuzzySteering.c
 
-src\pid.c
-
 src\servo.c
 
 src\spi_buffer_slave.c
-
-src\stopLine.c
 
 src\test_methods.c
 

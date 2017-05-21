@@ -231,24 +231,6 @@
     <Compile Include="src\FLC_speed.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\fuzzyParkingAlgorithm.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\fuzzyParkingAlgorithm.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\fuzzySteering.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\fuzzySteering.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\fuzzy_speed_controller.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\fuzzy_speed_controller.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="src\general_FIS.c">
       <SubType>compile</SubType>
     </Compile>
@@ -276,15 +258,6 @@
     <Compile Include="src\nFuzzySteering.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\pid.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\pid.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\PID_TEST.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="src\servo.c">
       <SubType>compile</SubType>
     </Compile>
@@ -295,12 +268,6 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\spi_buffer_slave.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\stopLine.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\stopLine.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\test_methods.c">

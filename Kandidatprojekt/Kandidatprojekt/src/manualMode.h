@@ -9,6 +9,6 @@
 #ifndef MANUALMODE_H_
 #define MANUALMODE_H_
 
-void manualMode(char manualInstructions);
+void manualMode(char manualInstructions, int sF, int sB);
 
 #endif /* MANUALMODE_H_ */

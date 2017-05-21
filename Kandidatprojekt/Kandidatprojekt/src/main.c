@@ -25,12 +25,8 @@
 #include "pid.h"
 #include <string.h>
 #include "stdint.h"
-#include "fuzzy_speed_controller.h"
 #include "general_FIS.h"
-#include "fuzzySteering.h"
 #include "spi_buffer_slave.h"
-#include "fuzzyParkingAlgorithm.h"
-#include "stopLine.h"
 #include "counter16b.h"
 #include "nFuzzySteering.h"
 #include "intersection.h"
@@ -75,10 +71,7 @@ int elapsedSeconds = 0;
 // Declaration of input signals
 int carInitialized = 0;
 int drivingMode[6] = {0,0,0,0,0,0}; // if index i is set to 1 => driving mode i as specified by {courtyard,road,intersection,parkingLot,garage,manual}
-int speedCounter = 0;
-int speedInterrupt = 0;
-double circleArch = 0.053;
-int onGoingStop = 0;
+
 
 //--------UART Variables (temp)------------
 volatile unsigned char UART1_reciever_buffer[32];
@@ -120,15 +113,6 @@ ISR(USART1_RX_vect){
 
 
 
-/*
-* SPI port definitions
-* PB7 SCK (Master clock)
-* PB6 Slave output (MISO)
-* PB5 Slave input (MOSI)
-* PB4 Slave select (SS)
-*/
-
-
 
 
 /* This method initiates the car. PWM to servos are
@@ -142,7 +126,10 @@ void carInit(void)
 	spi_slave_init();
 	OCR1A = NEUTRAL;
 	OCR1B = STRAIGHT;
-	
+	_delay_ms(5000);
+	OCR1A = 3000;
+	_delay_ms(5000);
+	setESC(NEUTRAL);
 }
 
 
@@ -197,11 +184,12 @@ void Sens_info_read(struct Sensor_information* sens_info_ptr) //There is no chec
 int main (void)
 {
 	// FOR TESTING
-	
+
 
 	
 	carInit();
-	_delay_ms(5000);
+	
+	
 
 	
 	//-----Variables and pointers for Sensor information
@@ -209,12 +197,12 @@ int main (void)
 	//om counter_UART1_reciever true, finns info att hemta
 	
 	
-	struct Sensor_information sensor_info;
+	volatile struct Sensor_information sensor_info;
 	struct Sensor_information* sens_info_ptr;
 	sens_info_ptr = &sensor_info;
-	unsigned char control_mode;
+	volatile unsigned char control_mode;
 	unsigned char prev_control_mode;
-	int k_value_stop_line;
+//	int k_value_stop_line;
 	//--end of sensor information
 	
 	//Init for UART
@@ -230,8 +218,10 @@ int main (void)
 	
 	
 
-	while (1) {
-		if (is_package_recieved()) {
+	while (1) 
+	{
+		if (is_package_recieved()) 
+		{
 			
 
 			//Reading Information
@@ -240,22 +230,24 @@ int main (void)
 			//Sens_info_read(sens_info_ptr);
 			
 			//Save k-value from stop line when control mode changes from 0 to 4
-			if(control_mode == 0x04 && prev_control_mode == 0x00){
-				onGoingStop = 0;
+			if(control_mode == 0x04 && prev_control_mode == 0x00)
+			{
 				count(1);
-			k_value_stop_line = (int) sensor_info.dist_to_stop_line - 40;			}
-			if(control_mode == 1 && prev_control_mode == 4 && sensor_info.next_turn_decision == 'l'){
-				count(1);
+	//			k_value_stop_line = (int) sensor_info.dist_to_stop_line - 40;			
 			}
 			
-			int sR = (int) sensor_info.dist_sonic_right;
+			
+
 			int sF = (int) sensor_info.dist_sonic_middle;
-			int sL = (int) sensor_info.dist_sonic_left;
 			int sB = (int) sensor_info.dist_sonic_back;
 			int c = (int) sensor_info.dist_right_line;
 			int v = (int) sensor_info.angular_diff;
 			int gyro = (int) sensor_info.angle;
 			unsigned char type = (unsigned) (char) sensor_info.next_turn_decision;
+			
+			if(control_mode == 0x01 && prev_control_mode == 0x04){
+				count(1);
+			}
 			
 			cli();
 			
@@ -272,8 +264,42 @@ int main (void)
 			
 			else if (control_mode == 1)
 			{
+				
 				FLC_speed(OCR1A, sF, OCR1B);
-				intersection(gyro, sensor_info.next_turn_decision, c, v);
+				
+				if (type == 'r')
+				{
+					if (checkCount(100) == 0)
+					{
+						setServo(STRAIGHT);
+					}
+					else if (checkCount(100) == 1)
+					{
+						count(0);
+						setServo(MAXRIGHT);
+					}
+				}
+				else if (type == 'l')
+				{
+					if (checkCount(100) == 0)
+					{
+						setServo(STRAIGHT);
+					}
+					else if (checkCount(100) == 1)
+					{
+						count(0);
+						setServo(MAXLEFT);
+					}
+				}
+				else if (type == 'F')
+				{
+					intersection(gyro, sensor_info.next_turn_decision, c, v);
+				}
+
+			}
+			else if (control_mode == 6)
+			{
+			//	manualMode(manualInstruction, sF, sB);
 			}
 
 			
@@ -289,22 +315,14 @@ int main (void)
 			temp_ESC = (esc_value_to_send<<8) & 0xFF;
 			unsigned int temp_steering;
 			temp_steering = (steering_value_to_send<<8) & 0xFF;
-			spi_send_byte((unsigned) (char) temp_ESC);
-			spi_send_byte((unsigned) (char) (esc_value_to_send));
-			spi_send_byte((unsigned) (char) temp_steering);
-			spi_send_byte((unsigned) (char) (steering_value_to_send));
+			spi_send_byte(0x05);
+			spi_send_byte(0x06);
+			spi_send_byte(0x07);
+			spi_send_byte(0x08);
+			
 			
 		}
-		
-		
-		
-		
-		
 	}
-
-
-
-
 }
 
 

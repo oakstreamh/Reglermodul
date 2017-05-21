@@ -9,8 +9,6 @@
 #ifndef NFUZZYSTEERING_H_
 #define NFUZZYSTEERING_H_
 
-
 void nFuzzySteering(int c, int v);
-
 
 #endif /* NFUZZYSTEERING_H_ */

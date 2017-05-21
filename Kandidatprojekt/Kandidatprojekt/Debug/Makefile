@@ -53,18 +53,13 @@ C_SRCS +=  \
 ../src/backUp.c \
 ../src/counter16b.c \
 ../src/FLC_speed.c \
-../src/fuzzyParkingAlgorithm.c \
-../src/fuzzySteering.c \
-../src/fuzzy_speed_controller.c \
 ../src/general_FIS.c \
 ../src/intersection.c \
 ../src/main.c \
 ../src/manualMode.c \
 ../src/nFuzzySteering.c \
-../src/pid.c \
 ../src/servo.c \
 ../src/spi_buffer_slave.c \
-../src/stopLine.c \
 ../src/test_methods.c \
 ../src/uart_buffer.c \
 ../src/ASF/common/boards/user_board/init.c
@@ -80,18 +75,13 @@ OBJS +=  \
 src/backUp.o \
 src/counter16b.o \
 src/FLC_speed.o \
-src/fuzzyParkingAlgorithm.o \
-src/fuzzySteering.o \
-src/fuzzy_speed_controller.o \
 src/general_FIS.o \
 src/intersection.o \
 src/main.o \
 src/manualMode.o \
 src/nFuzzySteering.o \
-src/pid.o \
 src/servo.o \
 src/spi_buffer_slave.o \
-src/stopLine.o \
 src/test_methods.o \
 src/uart_buffer.o \
 src/ASF/common/boards/user_board/init.o
@@ -100,18 +90,13 @@ OBJS_AS_ARGS +=  \
 src/backUp.o \
 src/counter16b.o \
 src/FLC_speed.o \
-src/fuzzyParkingAlgorithm.o \
-src/fuzzySteering.o \
-src/fuzzy_speed_controller.o \
 src/general_FIS.o \
 src/intersection.o \
 src/main.o \
 src/manualMode.o \
 src/nFuzzySteering.o \
-src/pid.o \
 src/servo.o \
 src/spi_buffer_slave.o \
-src/stopLine.o \
 src/test_methods.o \
 src/uart_buffer.o \
 src/ASF/common/boards/user_board/init.o
@@ -120,18 +105,13 @@ C_DEPS +=  \
 src/backUp.d \
 src/counter16b.d \
 src/FLC_speed.d \
-src/fuzzyParkingAlgorithm.d \
-src/fuzzySteering.d \
-src/fuzzy_speed_controller.d \
 src/general_FIS.d \
 src/intersection.d \
 src/main.d \
 src/manualMode.d \
 src/nFuzzySteering.d \
-src/pid.d \
 src/servo.d \
 src/spi_buffer_slave.d \
-src/stopLine.d \
 src/test_methods.d \
 src/uart_buffer.d \
 src/ASF/common/boards/user_board/init.d
@@ -140,18 +120,13 @@ C_DEPS_AS_ARGS +=  \
 src/backUp.d \
 src/counter16b.d \
 src/FLC_speed.d \
-src/fuzzyParkingAlgorithm.d \
-src/fuzzySteering.d \
-src/fuzzy_speed_controller.d \
 src/general_FIS.d \
 src/intersection.d \
 src/main.d \
 src/manualMode.d \
 src/nFuzzySteering.d \
-src/pid.d \
 src/servo.d \
 src/spi_buffer_slave.d \
-src/stopLine.d \
 src/test_methods.d \
 src/uart_buffer.d \
 src/ASF/common/boards/user_board/init.d
@@ -170,16 +145,6 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
-
-
-
-
-
-
-
-
-
-
 
 
 
