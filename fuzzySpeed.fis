@@ -1,5 +1,5 @@
 [System]
-Name='Nice-speed-control'
+Name='fuzzySpeed'
 Type='mamdani'
 Version=2.0
 NumInputs=3
@@ -12,7 +12,7 @@ AggMethod='max'
 DefuzzMethod='centroid'
 
 [Input1]
-Name='currentServo'
+Name='currentServo-(OCR1B)'
 Range=[202 330]
 NumMFs=5
 MF1='maxLeft':'trapmf',[201 202 205 230]
@@ -22,7 +22,7 @@ MF4='right':'trapmf',[267 295 302 325]
 MF5='maxRight':'trapmf',[301 325 330 331]
 
 [Input2]
-Name='distance'
+Name='distance-[cm]'
 Range=[0 75]
 NumMFs=4
 MF1='stopDist':'trapmf',[-1 0 10 20]
@@ -31,7 +31,7 @@ MF3='faar':'trapmf',[50 70 75 76]
 MF4='distant':'trapmf',[30 50 50 70]
 
 [Input3]
-Name='currentEsc'
+Name='currentEsc-(OCR1A)'
 Range=[2780 2855]
 NumMFs=4
 MF1='neutral':'trapmf',[2779 2780 2802 2830]
@@ -40,7 +40,7 @@ MF3='medium':'trapmf',[2830 2840 2840 2850]
 MF4='high':'trapmf',[2835 2845 2845 2855]
 
 [Output1]
-Name='speed'
+Name='speed-(OCR1A)'
 Range=[2780 2855]
 NumMFs=4
 MF1='zero':'trapmf',[2779 2780 2802 2830]

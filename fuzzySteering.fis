@@ -1,0 +1,49 @@
+[System]
+Name='fuzzySteering'
+Type='mamdani'
+Version=2.0
+NumInputs=2
+NumOutputs=1
+NumRules=7
+AndMethod='min'
+OrMethod='max'
+ImpMethod='min'
+AggMethod='max'
+DefuzzMethod='centroid'
+
+[Input1]
+Name='deltaC'
+Range=[100 200]
+NumMFs=5
+MF1='farRight':'trapmf',[99 100 120 130]
+MF2='centre':'trapmf',[135 150 150 165]
+MF3='farLeft':'trapmf',[170 180 200 201]
+MF4='smallRight':'trapmf',[120 130 140 145]
+MF5='smallLeft':'trapmf',[155 160 170 180]
+
+[Input2]
+Name='deltaV'
+Range=[0 80]
+NumMFs=3
+MF1='leftOriented':'trapmf',[-1 0 0 45]
+MF2='straightOriented':'trapmf',[5 40 40 75]
+MF3='rightOriented':'trapmf',[35 80 80 81]
+
+[Output1]
+Name='steering'
+Range=[224 309]
+NumMFs=5
+MF1='sharpLeft':'trapmf',[223 224 224 242]
+MF2='left':'trapmf',[231 246 246 261]
+MF3='straight':'trapmf',[251 266 266 281]
+MF4='right':'trapmf',[271 286 286 301]
+MF5='sharpRight':'trapmf',[292 309 309 310]
+
+[Rules]
+3 0, 5 (1) : 1
+5 0, 4 (1) : 1
+2 3, 2 (1) : 1
+2 2, 3 (1) : 1
+2 1, 4 (1) : 1
+4 0, 2 (1) : 1
+1 0, 1 (1) : 1
