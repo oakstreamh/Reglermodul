@@ -202,17 +202,17 @@ void leftTurn(int gyro)
 	// if gyro is start then servo is noSpeed
 	struct rule_element_type if11, then1;
 	rule1.if_side = &if11; if11.next = NULL; rule1.then_side = &then1; then1.next = NULL;
-	if11.value = &start.value; then1.value = &sharpLeft.value;
+	if11.value = &start.value; then1.value = &left.value;
 	
 	// if speed is low and distance is oneM then speed is slow    struct rule_element_type if21, if22, then2;
 	struct rule_element_type if21, then2;
 	rule2.if_side = &if21; if21.next = NULL; rule2.then_side = &then2; then2.next = NULL;
-	if21.value = &middle.value; then2.value = &left.value;
+	if21.value = &middle.value; then2.value = &sharpLeft.value;
 	
 	// if speed is medium and distance is oneM then speed is cruise
 	struct rule_element_type if31, then3;
 	rule3.if_side = &if31; if31.next = NULL; rule3.then_side = &then3; then3.next = NULL;
-	if31.value = &end.value; then3.value = &straight.value;
+	if31.value = &end.value; then3.value = &sharpLeft.value;
 
 	
 	
@@ -406,14 +406,22 @@ void intersection(int gyro, unsigned char type, int c, int v)
 	
 	if (type == 'r')
 	{
-		setServo(MAXRIGHT-200);
+		setServo(MAXRIGHT-150);
 	}
 	else if (type == 'l')
 	{
-		setServo(STRAIGHT-500);
+		leftTurn(gyro);
 	}
-	else if (type == 's')
+	else if (type == 'F')
 	{
-		straightIntersection(c,v);
+		if (v==81)
+		{
+			setServo(MAXLEFT+200);
+		}
+		else
+		{
+			straightIntersection(c,v);	
+		}
+		
 	}
 }

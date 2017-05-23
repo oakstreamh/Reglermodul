@@ -10,7 +10,7 @@
 #define intersection_h
 
 #include <stdio.h>
-
+void leftTurn(int gyro);
 void intersection(int gyro, unsigned char type, int c, int v);
 
 #endif /* intersection_h */

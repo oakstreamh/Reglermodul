@@ -11,6 +11,8 @@
 #include <avr/interrupt.h>
 #include <avr/io.h>
 #include "counter16b.h"
+#include <stdint.h>
+#include <string.h>
 
 
 
@@ -28,9 +30,9 @@ void count(int mode)
 	
 }
 
-int checkCount(int req_delay)
+int checkCount(uint16_t req_delay)
 {
-	int req_count = (int) req_delay*F_CPU/1024000-1;
+	uint16_t req_count = (uint16_t) req_delay*F_CPU/1024000-1;
 	if(TCNT3<req_count)
 	{
 		return 0;

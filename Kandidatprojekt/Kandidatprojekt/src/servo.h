@@ -9,7 +9,7 @@
 #define MAXRIGHT 3300
 
 #define NEUTRAL 2765
-#define STRAIGHT 2660
+#define STRAIGHT 2590
 
 void setServo(int counterServo);
 void setESC(int counterESC);

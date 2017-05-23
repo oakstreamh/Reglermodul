@@ -10,7 +10,7 @@
 #define COUNTER16B_H_
 
 void count(int mode);
-int checkCount(int req_delay);
+int checkCount(uint16_t req_delay);
 
 
 

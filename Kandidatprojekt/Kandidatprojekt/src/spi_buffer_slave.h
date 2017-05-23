@@ -36,6 +36,6 @@ void spi_send_byte(unsigned char value);
 unsigned char is_package_recieved(void);
 
 //returns true (i.e. >0) if succesfull, false (==0) else
-unsigned char read_sensor_info(unsigned char* control_mode_ptr, struct Sensor_information* sens_info_ptr);
+volatile unsigned char read_sensor_info(unsigned char* control_mode_ptr, struct Sensor_information* sens_info_ptr);
 
 #endif
