@@ -245,11 +245,11 @@ void straightIntersection(int c1, int v1)
 	struct io_type cPosition; strcpy(cPosition.name, "cPosition");
 
 	struct mf_type cRight;
-	MATLAB_MF(&cRight, "cRight", 159, 160, 170, 220); // Min_value = 160
+	MATLAB_MF(&cRight, "cRight", 49, 50, 80, 100); // Min_value = 160
 	struct mf_type centre;
-	MATLAB_MF(&centre, "centre", 170, 220, 250, 360);
+	MATLAB_MF(&centre, "centre", 80, 120, 120, 160);
 	struct mf_type cLeft;
-	MATLAB_MF(&cLeft, "cLeft", 250, 360, 370, 371); // Max_value = 370
+	MATLAB_MF(&cLeft, "cLeft", 140, 300, 400, 401); // Max_value = 370
 
 
 	cPosition.membership_functions = &cRight;
@@ -258,13 +258,13 @@ void straightIntersection(int c1, int v1)
 	cLeft.next = NULL;
 
 	// set iErr's input value to measErr value
-	if(c1<100)				// if sensor value is smaller than cPosition's input set's lower limit
+	if(c1<50)				// if sensor value is smaller than cPosition's input set's lower limit
 	{
-		cPosition.value = 160;  // force input value to lowest point in cPosition's input set
+		cPosition.value = 50;  // force input value to lowest point in cPosition's input set
 	}
-	else if(c1>200)			// if sensor value is bigger than cPosition's input set's upper limit
+	else if(c1>400)			// if sensor value is bigger than cPosition's input set's upper limit
 	{
-		cPosition.value = 371;  // force input value to lowest point in cPosition's input set
+		cPosition.value = 400;  // force input value to lowest point in cPosition's input set
 	}
 	else
 	{
@@ -355,7 +355,7 @@ void straightIntersection(int c1, int v1)
 	////RULE 5 "if cPosition is centre and vOrientation is rightOriented then steering is left"
 	struct rule_element_type if31, if32, then3;
 	rule3.if_side = &if31; if31.next = &if32; if32.next = NULL; rule3.then_side = &then3; then3.next = NULL;
-	if31.value = &centre.value; if32.value = &rightOriented.value; then3.value = &left.value;
+	if31.value = &centre.value; if32.value = &rightOriented.value; then3.value = &straight.value;
 
 	////RULE 6 "if cPosition is centre and vOrientation is straightOriented then steering is straight"
 	struct rule_element_type if41, if42, then4;
@@ -365,7 +365,7 @@ void straightIntersection(int c1, int v1)
 	////RULE 5 "if cPosition is centre and vPosition is leftOriented then steering is right"
 	struct rule_element_type if51, if52, then5;
 	rule5.if_side = &if51; if51.next = &if52; if52.next = NULL; rule5.then_side = &then5; then5.next = NULL;
-	if51.value = &centre.value; if52.value = &leftOriented.value; then5.value = &right.value;
+	if51.value = &centre.value; if52.value = &leftOriented.value; then5.value = &straight.value;
 
 
 
@@ -414,9 +414,9 @@ void intersection(int gyro, unsigned char type, int c, int v)
 	}
 	else if (type == 'F')
 	{
-		if (v==81)
+		if (v==81 & c == 2)
 		{
-			setServo(MAXLEFT+200);
+			setServo(MAXLEFT+400);
 		}
 		else
 		{

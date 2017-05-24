@@ -935,7 +935,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000     0x28be
+.text           0x00000000     0x28d4
  *(.vectors)
  .vectors       0x00000000       0x8c c:/users/hjaeks621/desktop/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm1284p.o
                 0x00000000                __vector_default
@@ -1056,121 +1056,121 @@ END GROUP
                 0x0000124c      0x494 src/intersection.o
                 0x0000124c                straightIntersection
  .text.intersection
-                0x000016e0       0x44 src/intersection.o
+                0x000016e0       0x5a src/intersection.o
                 0x000016e0                intersection
- .text.carInit  0x00001724       0x54 src/main.o
-                0x00001724                carInit
- .text.main     0x00001778      0x150 src/main.o
-                0x00001778                main
+ .text.carInit  0x0000173a       0x54 src/main.o
+                0x0000173a                carInit
+ .text.main     0x0000178e      0x150 src/main.o
+                0x0000178e                main
  .text.manualMode
-                0x000018c8       0xbe src/manualMode.o
-                0x000018c8                manualMode
+                0x000018de       0xbe src/manualMode.o
+                0x000018de                manualMode
  .text.nDoFuzzy
-                0x00001986      0x64c src/nFuzzySteering.o
-                0x00001986                nDoFuzzy
+                0x0000199c      0x64c src/nFuzzySteering.o
+                0x0000199c                nDoFuzzy
  .text.nFuzzySteering
-                0x00001fd2       0x42 src/nFuzzySteering.o
-                0x00001fd2                nFuzzySteering
- .text.pwmInit  0x00002014       0x1e src/servo.o
-                0x00002014                pwmInit
- .text.setESC   0x00002032       0x36 src/servo.o
-                0x00002032                setESC
+                0x00001fe8       0x42 src/nFuzzySteering.o
+                0x00001fe8                nFuzzySteering
+ .text.pwmInit  0x0000202a       0x1e src/servo.o
+                0x0000202a                pwmInit
+ .text.setESC   0x00002048       0x36 src/servo.o
+                0x00002048                setESC
  .text.setServo
-                0x00002068       0x36 src/servo.o
-                0x00002068                setServo
+                0x0000207e       0x36 src/servo.o
+                0x0000207e                setServo
  .text.__vector_19
-                0x0000209e       0xd8 src/spi_buffer_slave.o
-                0x0000209e                __vector_19
+                0x000020b4       0xd8 src/spi_buffer_slave.o
+                0x000020b4                __vector_19
  .text.spi_slave_init
-                0x00002176       0x12 src/spi_buffer_slave.o
-                0x00002176                spi_slave_init
+                0x0000218c       0x12 src/spi_buffer_slave.o
+                0x0000218c                spi_slave_init
  .text.spi_get_byte
-                0x00002188       0x5a src/spi_buffer_slave.o
-                0x00002188                spi_get_byte
+                0x0000219e       0x5a src/spi_buffer_slave.o
+                0x0000219e                spi_get_byte
  .text.spi_send_byte
-                0x000021e2       0xae src/spi_buffer_slave.o
-                0x000021e2                spi_send_byte
+                0x000021f8       0xae src/spi_buffer_slave.o
+                0x000021f8                spi_send_byte
  .text.is_package_recieved
-                0x00002290       0x14 src/spi_buffer_slave.o
-                0x00002290                is_package_recieved
+                0x000022a6       0x14 src/spi_buffer_slave.o
+                0x000022a6                is_package_recieved
  .text.read_sensor_info
-                0x000022a4       0x84 src/spi_buffer_slave.o
-                0x000022a4                read_sensor_info
+                0x000022ba       0x84 src/spi_buffer_slave.o
+                0x000022ba                read_sensor_info
  .text.__vector_20
-                0x00002328       0xb6 src/uart_buffer.o
-                0x00002328                __vector_20
+                0x0000233e       0xb6 src/uart_buffer.o
+                0x0000233e                __vector_20
  .text.__vector_22
-                0x000023de       0xa2 src/uart_buffer.o
-                0x000023de                __vector_22
+                0x000023f4       0xa2 src/uart_buffer.o
+                0x000023f4                __vector_22
  .text.avr-libc.fplib
-                0x00002480        0xa c:/users/hjaeks621/desktop/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(addsf3.o)
-                0x00002480                __subsf3
-                0x00002482                __addsf3
+                0x00002496        0xa c:/users/hjaeks621/desktop/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(addsf3.o)
+                0x00002496                __subsf3
+                0x00002498                __addsf3
  .text.avr-libc.fplib
-                0x0000248a       0xc0 c:/users/hjaeks621/desktop/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(addsf3x.o)
-                0x000024a4                __addsf3x
+                0x000024a0       0xc0 c:/users/hjaeks621/desktop/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(addsf3x.o)
+                0x000024ba                __addsf3x
  .text.avr-libc.fplib
-                0x0000254a        0x4 c:/users/hjaeks621/desktop/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(divsf3.o)
-                0x0000254a                __divsf3
+                0x00002560        0x4 c:/users/hjaeks621/desktop/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(divsf3.o)
+                0x00002560                __divsf3
  .text.avr-libc.fplib
-                0x0000254e       0xcc c:/users/hjaeks621/desktop/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(divsf3x.o)
-                0x00002564                __divsf3x
-                0x00002568                __divsf3_pse
+                0x00002564       0xcc c:/users/hjaeks621/desktop/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(divsf3x.o)
+                0x0000257a                __divsf3x
+                0x0000257e                __divsf3_pse
  .text.avr-libc.fplib
-                0x0000261a        0xa c:/users/hjaeks621/desktop/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(fixsfsi.o)
-                0x0000261a                __fixsfsi
+                0x00002630        0xa c:/users/hjaeks621/desktop/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(fixsfsi.o)
+                0x00002630                __fixsfsi
  .text.avr-libc.fplib
-                0x00002624       0x58 c:/users/hjaeks621/desktop/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(fixunssfsi.o)
-                0x00002624                __fixunssfsi
+                0x0000263a       0x58 c:/users/hjaeks621/desktop/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(fixunssfsi.o)
+                0x0000263a                __fixunssfsi
  .text.avr-libc.fplib
-                0x0000267c       0x7a c:/users/hjaeks621/desktop/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(floatsisf.o)
-                0x0000267c                __floatunsisf
-                0x00002680                __floatsisf
+                0x00002692       0x7a c:/users/hjaeks621/desktop/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(floatsisf.o)
+                0x00002692                __floatunsisf
+                0x00002696                __floatsisf
  .text.avr-libc.fplib
-                0x000026f6        0xc c:/users/hjaeks621/desktop/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(fp_inf.o)
-                0x000026f6                __fp_inf
+                0x0000270c        0xc c:/users/hjaeks621/desktop/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(fp_inf.o)
+                0x0000270c                __fp_inf
  .text.avr-libc.fplib
-                0x00002702        0x6 c:/users/hjaeks621/desktop/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(fp_nan.o)
-                0x00002702                __fp_nan
+                0x00002718        0x6 c:/users/hjaeks621/desktop/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(fp_nan.o)
+                0x00002718                __fp_nan
  .text.avr-libc.fplib
-                0x00002708        0xe c:/users/hjaeks621/desktop/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(fp_pscA.o)
-                0x00002708                __fp_pscA
+                0x0000271e        0xe c:/users/hjaeks621/desktop/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(fp_pscA.o)
+                0x0000271e                __fp_pscA
  .text.avr-libc.fplib
-                0x00002716        0xe c:/users/hjaeks621/desktop/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(fp_pscB.o)
-                0x00002716                __fp_pscB
+                0x0000272c        0xe c:/users/hjaeks621/desktop/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(fp_pscB.o)
+                0x0000272c                __fp_pscB
  .text.avr-libc.fplib
-                0x00002724       0x22 c:/users/hjaeks621/desktop/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(fp_round.o)
-                0x00002724                __fp_round
+                0x0000273a       0x22 c:/users/hjaeks621/desktop/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(fp_round.o)
+                0x0000273a                __fp_round
  .text.avr-libc.fplib
-                0x00002746       0x44 c:/users/hjaeks621/desktop/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(fp_split3.o)
-                0x00002746                __fp_split3
-                0x00002756                __fp_splitA
+                0x0000275c       0x44 c:/users/hjaeks621/desktop/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(fp_split3.o)
+                0x0000275c                __fp_split3
+                0x0000276c                __fp_splitA
  .text.avr-libc.fplib
-                0x0000278a        0xe c:/users/hjaeks621/desktop/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(fp_zero.o)
-                0x0000278a                __fp_zero
-                0x0000278c                __fp_szero
+                0x000027a0        0xe c:/users/hjaeks621/desktop/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(fp_zero.o)
+                0x000027a0                __fp_zero
+                0x000027a2                __fp_szero
  .text.avr-libc.fplib
-                0x00002798        0x4 c:/users/hjaeks621/desktop/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(mulsf3.o)
-                0x00002798                __mulsf3
+                0x000027ae        0x4 c:/users/hjaeks621/desktop/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(mulsf3.o)
+                0x000027ae                __mulsf3
  .text.avr-libc.fplib
-                0x0000279c       0xc2 c:/users/hjaeks621/desktop/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(mulsf3x.o)
-                0x000027b0                __mulsf3x
-                0x000027b4                __mulsf3_pse
+                0x000027b2       0xc2 c:/users/hjaeks621/desktop/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libm.a(mulsf3x.o)
+                0x000027c6                __mulsf3x
+                0x000027ca                __mulsf3_pse
  .text.libgcc.div
-                0x0000285e       0x26 c:/users/hjaeks621/desktop/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_divmodhi4.o)
-                0x0000285e                _div
-                0x0000285e                __divmodhi4
+                0x00002874       0x26 c:/users/hjaeks621/desktop/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_divmodhi4.o)
+                0x00002874                _div
+                0x00002874                __divmodhi4
  .text.libgcc.div
-                0x00002884       0x28 c:/users/hjaeks621/desktop/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_udivmodhi4.o)
-                0x00002884                __udivmodhi4
+                0x0000289a       0x28 c:/users/hjaeks621/desktop/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_udivmodhi4.o)
+                0x0000289a                __udivmodhi4
  .text.avr-libc
-                0x000028ac        0xe c:/users/hjaeks621/desktop/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(strcpy.o)
-                0x000028ac                strcpy
-                0x000028ba                . = ALIGN (0x2)
+                0x000028c2        0xe c:/users/hjaeks621/desktop/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(strcpy.o)
+                0x000028c2                strcpy
+                0x000028d0                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x000028ba        0x0 c:/users/hjaeks621/desktop/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_exit.o)
-                0x000028ba                _exit
-                0x000028ba                exit
+ .fini9         0x000028d0        0x0 c:/users/hjaeks621/desktop/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_exit.o)
+                0x000028d0                _exit
+                0x000028d0                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -1189,11 +1189,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x000028ba        0x4 c:/users/hjaeks621/desktop/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_exit.o)
+ .fini0         0x000028d0        0x4 c:/users/hjaeks621/desktop/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_exit.o)
  *(.fini0)
-                0x000028be                _etext = .
+                0x000028d4                _etext = .
 
-.data           0x00800100      0x138 load address 0x000028be
+.data           0x00800100      0x138 load address 0x000028d4
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
@@ -1245,8 +1245,8 @@ END GROUP
                 0x0080035c                uart0_rx_overf_flag
                 0x0080035d                uart0_tx_overf_flag
                 0x0080035e                PROVIDE (__bss_end, .)
-                0x000028be                __data_load_start = LOADADDR (.data)
-                0x000029f6                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x000028d4                __data_load_start = LOADADDR (.data)
+                0x00002a0c                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x0080035e        0x0
                 0x0080035e                PROVIDE (__noinit_start, .)
@@ -1422,18 +1422,18 @@ END GROUP
  .debug_str     0x00010c1d       0xf6 src/uart_buffer.o
                                0x738f (size before relaxing)
 
-.debug_loc      0x00000000     0x1a80
+.debug_loc      0x00000000     0x1a70
  *(.debug_loc)
  .debug_loc     0x00000000       0xce src/counter16b.o
  .debug_loc     0x000000ce      0x1e6 src/FLC_speed.o
  .debug_loc     0x000002b4      0x996 src/general_FIS.o
- .debug_loc     0x00000c4a      0x5aa src/intersection.o
- .debug_loc     0x000011f4       0xb5 src/main.o
- .debug_loc     0x000012a9      0x18a src/manualMode.o
- .debug_loc     0x00001433      0x236 src/nFuzzySteering.o
- .debug_loc     0x00001669       0xa8 src/servo.o
- .debug_loc     0x00001711      0x203 src/spi_buffer_slave.o
- .debug_loc     0x00001914      0x16c src/uart_buffer.o
+ .debug_loc     0x00000c4a      0x59a src/intersection.o
+ .debug_loc     0x000011e4       0xb5 src/main.o
+ .debug_loc     0x00001299      0x18a src/manualMode.o
+ .debug_loc     0x00001423      0x236 src/nFuzzySteering.o
+ .debug_loc     0x00001659       0xa8 src/servo.o
+ .debug_loc     0x00001701      0x203 src/spi_buffer_slave.o
+ .debug_loc     0x00001904      0x16c src/uart_buffer.o
 
 .debug_macinfo
  *(.debug_macinfo)

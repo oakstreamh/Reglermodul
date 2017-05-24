@@ -142,7 +142,7 @@ int main (void)
 				}
 				else if (type == 'l')
 				{
-					if (gyro<40)
+					if (gyro<5)
 					{
 						setServo(STRAIGHT-300);
 					}
