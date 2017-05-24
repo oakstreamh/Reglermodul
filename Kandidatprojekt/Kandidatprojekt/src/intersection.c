@@ -32,26 +32,28 @@ void straightIntersection(int c1);
 
 void straightIntersection(int c1)
 {
-    
-    // set iErr's input value to measErr value
-    if(c1<50)				// if sensor value is smaller than cPosition's input set's lower limit
-    {
-        cPosition.value = 50;  // force input value to lowest point in cPosition's input set
-    }
-    else if(c1>400)			// if sensor value is bigger than cPosition's input set's upper limit
-    {
-        cPosition.value = 400;  // force input value to lowest point in cPosition's input set
-    }
-    else
-    {
-        cPosition.value = c1;
-    }
+	
+	
 
-    
+	
 	///// DECLARATION OF C INPUT VARIABLE ///////////////////////////////////
-    //
+	//
 	struct io_type cPosition; strcpy(cPosition.name, "cPosition");
 
+
+	// set iErr's input value to measErr value
+	if(c1<50)				// if sensor value is smaller than cPosition's input set's lower limit
+	{
+		cPosition.value = 50;  // force input value to lowest point in cPosition's input set
+	}
+	else if(c1>400)			// if sensor value is bigger than cPosition's input set's upper limit
+	{
+		cPosition.value = 400;  // force input value to lowest point in cPosition's input set
+	}
+	else
+	{
+		cPosition.value = c1;
+	}
 	struct mf_type cRight;
 	MATLAB_MF(&cRight, "cRight", 49, 50, 80, 100); // Min_value = 160
 	struct mf_type centre;
@@ -67,7 +69,7 @@ void straightIntersection(int c1)
 
 	
 	///// DECLARATION OF STEERING OUTPUT VARIABLE ///////////////////////////////////
-    //
+	//
 	struct io_type steering; strcpy(steering.name, "steering"); // All outputs downscaled by a factor 10
 
 	struct mf_type left;
@@ -86,7 +88,7 @@ void straightIntersection(int c1)
 
 
 	// pointers to top of lists
-    //
+	//
 	System_Inputs = &cPosition;
 	cPosition.next = NULL;
 	System_Outputs = &steering;
@@ -151,29 +153,29 @@ void intersection(int gyro, unsigned char type, int c, int v)
 	}
 	
 	
-    if (type == 'r')
-    {
-        // rightTurn(gyro);
-        if (gyro<3)
-        {
-            setServo(MAXRIGHT-300);
-        }
-        else
-        {
-            setServo(MAXRIGHT-150); // maxright-180
-        }
-    }
+	if (type == 'r')
+	{
+		// rightTurn(gyro);
+		if (gyro<3)
+		{
+			setServo(MAXRIGHT-300);
+		}
+		else
+		{
+			setServo(MAXRIGHT-150); // maxright-180
+		}
+	}
 	else if (type == 'l')
 	{
-        // leftTurn(gyro);               // original plan
-        if (gyro < 20)                  // hard coded
-        {
-            setServo(STRAIGHT-350)
-        }
-        else
-        {
-            setServo(MAXLEFT-300);
-        }
+		// leftTurn(gyro);               // original plan
+		if (gyro < 20)                  // hard coded
+		{
+			setServo(STRAIGHT-200);
+		}
+		else
+		{
+			setServo(MAXLEFT-300);
+		}
 	}
 	else if (type == 'F')
 	{
