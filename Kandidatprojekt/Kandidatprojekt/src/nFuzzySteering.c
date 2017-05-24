@@ -106,15 +106,15 @@ void nDoFuzzy(int c, int v)
 	struct io_type steering; strcpy(steering.name, "steering"); // All outputs downscaled by a factor 10
 	
 	struct mf_type sharpLeft;
-	MATLAB_MF(&sharpLeft, "sharpLe", 223, 224, 224, 242);
+	MATLAB_MF(&sharpLeft, "sharpLe", 216, 217, 217, 235);
 	struct mf_type left;
-	MATLAB_MF(&left, "left", 231, 246, 246, 261);
+	MATLAB_MF(&left, "left", 224, 239, 239, 254);
 	struct mf_type straight;
-	MATLAB_MF(&straight, "straight", 251, 266, 266, 281);
+	MATLAB_MF(&straight, "straight", 244, 259, 259, 274);
 	struct mf_type right;
-	MATLAB_MF(&right, "right", 271, 286, 286, 301); 
+	MATLAB_MF(&right, "right", 264, 279, 279, 294);
 	struct mf_type sharpRight;
-	MATLAB_MF(&sharpRight, "sharpRi", 292, 309, 309, 310);
+	MATLAB_MF(&sharpRight, "sharpRi", 285, 302, 302, 303);
 	
 	steering.membership_functions = &sharpRight;
 	sharpRight.next = &right;

@@ -11,7 +11,6 @@
 
 #define F_CPU 14745600
 
-
 //////////////// INCLUDING PROGRAMS //////////////////////////////////////////////
 
 #include <asf.h>
@@ -35,16 +34,8 @@
 
 void carInit(void);
 
-
 //////////////// VARIABLES ///////////////////////////////////////////////////////
 volatile unsigned char spi_rx_not_empty_flag = 0;
-
-
-
-
-
-
-
 
 
 /* This method initiates the car. PWM to servos are
@@ -66,14 +57,7 @@ void carInit(void)
 
 
 
-
-
-
-
-
-
-
-
+//////////////// MAIN /////////////////////////////////////////////////////////////
 int main (void)
 {
 
