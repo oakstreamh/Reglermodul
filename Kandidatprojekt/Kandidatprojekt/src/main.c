@@ -60,12 +60,22 @@ void carInit(void)
 //////////////// MAIN /////////////////////////////////////////////////////////////
 int main (void)
 {
-	straightIntersection(200);
+	
 	int man_velocity = 0;
 	int man_steering = 0;
 
 	carInit();
 
+    
+    
+    counterInit(500);
+    sei();
+    while(1)
+    {
+        stop();
+    }
+    
+    
 	volatile struct Sensor_information sensor_info;
 	struct Sensor_information* sens_info_ptr;
 	sens_info_ptr = &sensor_info;

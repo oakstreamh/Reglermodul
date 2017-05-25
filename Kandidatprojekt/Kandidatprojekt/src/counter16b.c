@@ -15,18 +15,22 @@
 #include <string.h>
 
 
-
-void count(int mode)
+void ISR(TIMER3_OVF)
 {
-	if (mode == 1)
-	{
-		TCNT3 = 0;
-		TCCR3B = (1<<CS32)|(1<<CS30);
-	}
-	else if (mode == 0)
-	{
-		TCCR3B = (0<<CS32)|(0<<CS30);
-	}
+    overflow++;
+}
+
+
+void countInit(int req_delay)
+{
+    OCR3A = (int) req_delay*F_CPU/1024000-1
+    
+    TCCR3A = (1<<WGM32);                // CTC-mode compare with OCR1A
+    TIMSK = (1<<TOIE3);
+	TCCR3B = (1<<CS32)|(1<<CS30);
+	
+    TCNT3 = 0;
+
 	
 }
 
