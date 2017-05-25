@@ -60,7 +60,7 @@ void carInit(void)
 //////////////// MAIN /////////////////////////////////////////////////////////////
 int main (void)
 {
-
+	straightIntersection(200);
 	int man_velocity = 0;
 	int man_steering = 0;
 
@@ -111,35 +111,10 @@ int main (void)
 			else if (control_mode == 1)
 			{
 				
-				FLC_speed(OCR1A, sF, OCR1B);
+			FLC_speed(OCR1A, sF, OCR1B);
 				
-				if (type == 'r')
-				{
-					if (gyro<3)
-					{
-						setServo(MAXRIGHT-300);
-					}
-					else
-					{
-						setServo(MAXRIGHT-150); // maxright-180	
-					}
-				}
-				else if (type == 'l')
-				{
-					if (gyro<5)
-					{
-						setServo(STRAIGHT-300);
-					}
-					else
-					{
-						setServo(MAXLEFT); // straight-450
-					}
-					//intersection(gyro, sensor_info.next_turn_decision, c, v);
-				}
-				else if (type == 'F')
-				{
-					intersection(gyro, type, c, v);
-				}
+			intersection(gyro, sensor_info.next_turn_decision, c, v);
+	
 
 			}
 			else if (control_mode == 6)

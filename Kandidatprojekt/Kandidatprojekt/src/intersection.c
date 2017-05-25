@@ -46,9 +46,9 @@ void straightIntersection(int c1)
 	{
 		cPosition.value = 50;  // force input value to lowest point in cPosition's input set
 	}
-	else if(c1>400)			// if sensor value is bigger than cPosition's input set's upper limit
+	else if(c1>200)			// if sensor value is bigger than cPosition's input set's upper limit
 	{
-		cPosition.value = 400;  // force input value to lowest point in cPosition's input set
+		cPosition.value = 200;  // force input value to lowest point in cPosition's input set
 	}
 	else
 	{
@@ -156,35 +156,36 @@ void intersection(int gyro, unsigned char type, int c, int v)
 	if (type == 'r')
 	{
 		// rightTurn(gyro);
-		if (gyro<3)
+		if (gyro<25)
 		{
-			setServo(MAXRIGHT-300);
+			setServo(MAXRIGHT-400);
 		}
 		else
 		{
-			setServo(MAXRIGHT-150); // maxright-180
+			setServo(MAXRIGHT); // maxright-180
 		}
 	}
 	else if (type == 'l')
 	{
 		// leftTurn(gyro);               // original plan
-		if (gyro < 20)                  // hard coded
+		if (gyro < 6)                  // hard coded
 		{
-			setServo(STRAIGHT-200);
+			setServo(STRAIGHT-150);
 		}
 		else
 		{
-			setServo(MAXLEFT-300);
+			setServo(MAXLEFT);
 		}
 	}
 	else if (type == 'F')
 	{
-		if (v==81 & c == 2)             // State "no left side"
+		if (v==81 && c == 2)             // State "no left side"
 		{
-			setServo(STRAIGHT-350);
+			setServo(STRAIGHT-100);
 		}
 		else
 		{
+			//setServo(STRAIGHT);
 			straightIntersection(c);
 		}
 		
