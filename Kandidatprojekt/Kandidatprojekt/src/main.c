@@ -61,17 +61,9 @@ void carInit(void)
 //////////////// MAIN /////////////////////////////////////////////////////////////
 int main (void)
 {
-	
 	int man_velocity = 0;
 	int man_steering = 0;
 	carInit();
-
-
-	
-	
-	
-	
-	
 	
 	volatile struct Sensor_information sensor_info;
 	struct Sensor_information* sens_info_ptr;

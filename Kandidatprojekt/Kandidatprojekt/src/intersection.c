@@ -181,7 +181,7 @@ void intersection(int gyro, unsigned char type, int c, int v)
 	{
 		if (v==81 && c == 2)             // State "no left side"
 		{
-			setServo(STRAIGHT-150);
+			setServo(STRAIGHT-300);
 		}
 		else
 		{
