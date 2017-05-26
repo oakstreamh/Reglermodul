@@ -318,7 +318,7 @@ void FLC_speed(int currentServo, int midSonicRange, int currentEsc)
 	else
 	{
 	
-		setESC(speed.value);
+		setESC(speed.value+10);
 	}
     
     

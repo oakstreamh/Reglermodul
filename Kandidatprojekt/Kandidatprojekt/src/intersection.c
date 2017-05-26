@@ -59,7 +59,7 @@ void straightIntersection(int c1)
 	struct mf_type centre;
 	MATLAB_MF(&centre, "centre", 80, 120, 120, 160);
 	struct mf_type cLeft;
-	MATLAB_MF(&cLeft, "cLeft", 140, 300, 400, 401); // Max_value = 370
+	MATLAB_MF(&cLeft, "cLeft", 140, 180, 200, 201); // Max_value = 370
 
 
 	cPosition.membership_functions = &cRight;
@@ -73,11 +73,11 @@ void straightIntersection(int c1)
 	struct io_type steering; strcpy(steering.name, "steering"); // All outputs downscaled by a factor 10
 
 	struct mf_type left;
-	MATLAB_MF(&left, "left", 223, 224, 228, 252);           // TODO: needs to be tuned
+	MATLAB_MF(&left, "left", 246, 251, 251, 255);           // TODO: needs to be tuned
 	struct mf_type straight;
-	MATLAB_MF(&straight, "straight", 248, 259, 259, 270);
+	MATLAB_MF(&straight, "straight", 253, 259, 259, 265);
 	struct mf_type right;
-	MATLAB_MF(&right, "right", 266, 305, 309, 310);         // TODO: needs to be tuned
+	MATLAB_MF(&right, "right", 262, 267, 267, 272);         // TODO: needs to be tuned
 
 
 	steering.membership_functions = &right;
@@ -181,7 +181,7 @@ void intersection(int gyro, unsigned char type, int c, int v)
 	{
 		if (v==81 && c == 2)             // State "no left side"
 		{
-			setServo(STRAIGHT-100);
+			setServo(STRAIGHT-150);
 		}
 		else
 		{
