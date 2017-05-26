@@ -66,7 +66,7 @@ int main (void)
 	carInit();
 	
 	volatile struct Sensor_information sensor_info;
-	struct Sensor_information* sens_info_ptr;
+	struct Sensor_information* sens_inf o_ptr;
 	sens_info_ptr = &sensor_info;
 	volatile unsigned char control_mode;
 	unsigned char prev_control_mode;
