@@ -60,7 +60,7 @@ void carInit(void)
 //////////////// MAIN /////////////////////////////////////////////////////////////
 int main (void)
 {
-	straightIntersection(200);
+
 	int man_velocity = 0;
 	int man_steering = 0;
 
