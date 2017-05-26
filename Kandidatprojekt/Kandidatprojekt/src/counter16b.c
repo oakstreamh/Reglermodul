@@ -15,22 +15,21 @@
 #include <string.h>
 
 
-void ISR(TIMER3_OVF)
+ISR(TIMER3_COMPA_vect)
 {
-    overflow++;
+    step=step+1;
 }
 
 
 void countInit(int req_delay)
 {
-    OCR3A = (int) req_delay*F_CPU/1024000-1
-    
-    TCCR3A = (1<<WGM32);                // CTC-mode compare with OCR1A
-    TIMSK = (1<<TOIE3);
-	TCCR3B = (1<<CS32)|(1<<CS30);
+    OCR3A =  req_delay;
+	TCNT3 = 0;
+    TIMSK3 = (1<<OCIE3A);
+	TCCR3B = (1<<WGM32)|(1<<CS32)|(1<<CS30); // CTC-mode 4 to compare with OCR1A, 
 	
-    TCNT3 = 0;
-
+    
+	step = 0;
 	
 }
 

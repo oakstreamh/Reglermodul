@@ -270,6 +270,12 @@
     <Compile Include="src\spi_buffer_slave.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\stopLine.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\stopLine.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\test_methods.c">
       <SubType>compile</SubType>
     </Compile>

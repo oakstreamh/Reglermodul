@@ -9,7 +9,7 @@
 #ifndef STOPLINE_H_
 #define STOPLINE_H_
 
-void stop(int k_value);
+void stop();
 
 
 

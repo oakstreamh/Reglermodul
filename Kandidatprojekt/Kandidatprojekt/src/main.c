@@ -29,6 +29,7 @@
 #include "nFuzzySteering.h"
 #include "intersection.h"
 #include "FLC_speed.h"
+#include "stopLine.h"
 
 //////////////// PROTOTYPES /////////////////////////////////////////////////////////
 
@@ -50,9 +51,9 @@ void carInit(void)
 	OCR1A = NEUTRAL;
 	OCR1B = STRAIGHT;
 	_delay_ms(5000);
-	OCR1A = 2900;
-	_delay_ms(5000);
-	setESC(NEUTRAL);
+	//OCR1A = 2900;
+//	_delay_ms(4000);
+	//setESC(NEUTRAL);
 }
 
 
@@ -63,17 +64,13 @@ int main (void)
 	
 	int man_velocity = 0;
 	int man_steering = 0;
-
 	carInit();
 
+
+   
+ 
+ 
     
-    
-    counterInit(500);
-    sei();
-    while(1)
-    {
-        stop();
-    }
     
     
 	volatile struct Sensor_information sensor_info;
@@ -101,8 +98,8 @@ int main (void)
 			unsigned char type = (unsigned) (char) sensor_info.next_turn_decision;
 			int manualInstruction = (int) sensor_info.dist_right_line;
 			
-			if(control_mode == 0x01 && prev_control_mode == 0x04){
-				count(1);
+			if(control_mode == 0x02 && prev_control_mode == 0x04){
+				countInit(28000);
 			}
 			
 			cli();
@@ -130,6 +127,10 @@ int main (void)
 			else if (control_mode == 6)
 			{
 				manualMode(manualInstruction, sF, sB, &man_velocity, &man_steering);
+			}
+			else if (control_mode == 2)
+			{
+				stop();
 			}
 
 			

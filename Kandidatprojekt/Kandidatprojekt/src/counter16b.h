@@ -9,10 +9,10 @@
 #ifndef COUNTER16B_H_
 #define COUNTER16B_H_
 
-void count(int req_delay);
+void countInit(int req_delay);
 int checkCount(uint16_t req_delay);
 
-volatile uint8_t overflow = 0;
+volatile uint8_t step;
 
 
 #endif /* COUNTER16B_H_ */
