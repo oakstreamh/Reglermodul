@@ -19,7 +19,7 @@
 #include <util/delay.h>
 #include "test_methods.h"
 #include "servo.h"
-#include "manualMode.h"         
+#include "manualMode.h"
 #include "pid.h"
 #include <string.h>
 #include "stdint.h"
@@ -51,9 +51,9 @@ void carInit(void)
 	OCR1A = NEUTRAL;
 	OCR1B = STRAIGHT;
 	_delay_ms(5000);
-	//OCR1A = 2900;
-//	_delay_ms(4000);
-	//setESC(NEUTRAL);
+	OCR1A = 2900;
+	_delay_ms(4000);
+	setESC(NEUTRAL);
 }
 
 
@@ -67,12 +67,12 @@ int main (void)
 	carInit();
 
 
-   
- 
- 
-    
-    
-    
+	
+	
+	
+	
+	
+	
 	volatile struct Sensor_information sensor_info;
 	struct Sensor_information* sens_info_ptr;
 	sens_info_ptr = &sensor_info;
@@ -80,7 +80,8 @@ int main (void)
 	unsigned char prev_control_mode;
 	sei();
 	
-
+	isParking = 0;
+	
 	while (1)
 	{
 		if (is_package_recieved())
@@ -98,37 +99,38 @@ int main (void)
 			unsigned char type = (unsigned) (char) sensor_info.next_turn_decision;
 			int manualInstruction = (int) sensor_info.dist_right_line;
 			
-			if(control_mode == 0x02 && prev_control_mode == 0x04){
+			if(control_mode == 0x05 && prev_control_mode == 0x04){
 				countInit(28000);
+				isParking = 1;
 			}
 			
 			cli();
 			
-			if (control_mode == 0)
+			if(!isParking)
 			{
-				FLC_speed(OCR1A, sF, OCR1B);
-				nFuzzySteering(c,v);
-			}
-			else if (control_mode == 4)
-			{
-				setESC(NEUTRAL);
-				setServo(STRAIGHT);
-			}
-			
-			else if (control_mode == 1)
-			{
+				if (control_mode == 0)
+				{
+					FLC_speed(OCR1A, sF, OCR1B);
+					nFuzzySteering(c,v);
+				}
+				else if (control_mode == 4)
+				{
+					setESC(NEUTRAL);
+					setServo(STRAIGHT);
+				}
 				
-			FLC_speed(OCR1A, sF, OCR1B);
-				
-			intersection(gyro, sensor_info.next_turn_decision, c, v);
-	
-
+				else if (control_mode == 1)
+				{
+					
+					FLC_speed(OCR1A, sF, OCR1B);
+					intersection(gyro, sensor_info.next_turn_decision, c, v);
+				}
+				else if (control_mode == 6)
+				{
+					manualMode(manualInstruction, sF, sB, &man_velocity, &man_steering);
+				}
 			}
-			else if (control_mode == 6)
-			{
-				manualMode(manualInstruction, sF, sB, &man_velocity, &man_steering);
-			}
-			else if (control_mode == 2)
+			else if (isParking)
 			{
 				stop();
 			}

@@ -11,8 +11,10 @@
 
 void countInit(int req_delay);
 int checkCount(uint16_t req_delay);
+void resetCounter(void);
 
 volatile uint8_t step;
+volatile uint8_t isParking;
 
 
 #endif /* COUNTER16B_H_ */

@@ -55,11 +55,12 @@ void stop()
 	else if (step==6)
 	{
 		setServo(STRAIGHT);
-		OCR3A = 28799;
+		OCR3A = 14399;
 	}
 	else if (step==7)
 	{
-		setESC(NEUTRAL);
+		isParking = 0;
+		resetCounter();
 	}
 	
 }

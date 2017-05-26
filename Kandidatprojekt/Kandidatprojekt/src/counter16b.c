@@ -33,6 +33,11 @@ void countInit(int req_delay)
 	
 }
 
+void resetCounter(void)
+{
+	 TCCR3B = (0<<CS32)|(0<<CS30);
+}
+
 int checkCount(uint16_t req_delay)
 {
 	uint16_t req_count = (uint16_t) req_delay*F_CPU/1024000-1;
