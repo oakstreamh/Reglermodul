@@ -22,7 +22,7 @@ void stop()
     
     if (step==0)
     {
-        setESC(2836);
+        setESC(2830);
         setServo(MAXRIGHT);
     }
     else if (step==1)
@@ -44,7 +44,7 @@ void stop()
     else if (step==4)
     {
 		OCR3A = 30000;
-        setESC(2836);
+        setESC(2830);
         setServo(MAXLEFT);
     }
 	else if (step==5)

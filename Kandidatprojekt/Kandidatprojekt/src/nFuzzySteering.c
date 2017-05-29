@@ -226,7 +226,7 @@ void nFuzzySteering(int c, int v)
 	}
 	else if ((c == 2) && (v == 81))       // left curvature, turn left
 	{
-		setServo(MAXLEFT+70);
+		setServo(MAXLEFT);
 	}
 	else                                   // straight road, do fuzzy
 	{

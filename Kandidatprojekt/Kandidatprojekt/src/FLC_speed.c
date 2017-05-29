@@ -37,7 +37,7 @@
 void FLC_speed(int currentServo, int midSonicRange, int currentEsc)
 {
 	
-	int fullBatteryAdjust = 0;
+	int fullBatteryAdjust = 11;
 	
 	// Inputs
 	struct io_type distance; strcpy(distance.name, "distance");

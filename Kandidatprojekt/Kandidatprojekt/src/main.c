@@ -1,7 +1,7 @@
 
 //////////////////////////////////////////////////////////////////////////////////
 // main.c contains the ISR, important signals and the control loop.             //
-// AUTHORS: MATHIAS DALSHAGEN, HJALMAR EKSTRÖM & SIMON MÅRTENSSON                              //
+// AUTHORS: MATHIAS DALSHAGEN, HJALMAR EKSTRÖM & SIMON MÅRTENSSON               //
 //                                                                              //
 //                                                                              //
 //////////////////////////////////////////////////////////////////////////////////
@@ -51,9 +51,9 @@ void carInit(void)
 	OCR1A = NEUTRAL;
 	OCR1B = STRAIGHT;
 	_delay_ms(5000);
-	OCR1A = 2900;
-	_delay_ms(4000);
-	setESC(NEUTRAL);
+	//OCR1A = 2900;
+	//_delay_ms(4000);
+	//setESC(NEUTRAL);
 }
 
 
