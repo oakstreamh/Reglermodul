@@ -61,12 +61,14 @@ void carInit(void)
 //////////////// MAIN /////////////////////////////////////////////////////////////
 int main (void)
 {
+	straightIntersection(200);
+	
 	int man_velocity = 0;
 	int man_steering = 0;
 	carInit();
 	
 	volatile struct Sensor_information sensor_info;
-	struct Sensor_information* sens_inf o_ptr;
+	struct Sensor_information* sens_info_ptr;
 	sens_info_ptr = &sensor_info;
 	volatile unsigned char control_mode;
 	unsigned char prev_control_mode;
@@ -92,7 +94,7 @@ int main (void)
 			int manualInstruction = (int) sensor_info.dist_right_line;
 			
 			if(control_mode == 0x05 && prev_control_mode == 0x04){
-				countInit(28000);
+				countInit(30000);
 				isParking = 1;
 			}
 			

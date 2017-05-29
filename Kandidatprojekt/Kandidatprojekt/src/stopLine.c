@@ -22,7 +22,7 @@ void stop()
     
     if (step==0)
     {
-        setESC(2840);
+        setESC(2836);
         setServo(MAXRIGHT);
     }
     else if (step==1)
@@ -32,7 +32,7 @@ void stop()
 	}
 	else if (step ==2)
 	{
-		OCR3A = 28000;
+		OCR3A = 30000;
         setServo(MAXLEFT);
     }
     else if (step==3)
@@ -43,19 +43,19 @@ void stop()
     }
     else if (step==4)
     {
-		OCR3A = 33000;
-        setESC(2840);
+		OCR3A = 30000;
+        setESC(2836);
         setServo(MAXLEFT);
     }
 	else if (step==5)
 	{
-		OCR3A = 28000;
+		OCR3A = 27000;
 		setServo(MAXRIGHT);
 	}
 	else if (step==6)
 	{
 		setServo(STRAIGHT);
-		OCR3A = 14399;
+		OCR3A = 10000;
 	}
 	else if (step==7)
 	{

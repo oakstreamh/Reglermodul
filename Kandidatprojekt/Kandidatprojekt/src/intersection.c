@@ -73,11 +73,11 @@ void straightIntersection(int c1)
 	struct io_type steering; strcpy(steering.name, "steering"); // All outputs downscaled by a factor 10
 
 	struct mf_type left;
-	MATLAB_MF(&left, "left", 246, 251, 251, 255);           // TODO: needs to be tuned
+	MATLAB_MF(&left, "left", 244, 248, 248, 252);           // TODO: needs to be tuned
 	struct mf_type straight;
-	MATLAB_MF(&straight, "straight", 253, 259, 259, 265);
+	MATLAB_MF(&straight, "straight", 251, 259, 259, 267);
 	struct mf_type right;
-	MATLAB_MF(&right, "right", 262, 267, 267, 272);         // TODO: needs to be tuned
+	MATLAB_MF(&right, "right", 266, 271, 271, 276);         // TODO: needs to be tuned
 
 
 	steering.membership_functions = &right;
@@ -156,7 +156,7 @@ void intersection(int gyro, unsigned char type, int c, int v)
 	if (type == 'r')
 	{
 		// rightTurn(gyro);
-		if (gyro<25)
+		if (gyro<20)
 		{
 			setServo(MAXRIGHT-400);
 		}
@@ -167,7 +167,7 @@ void intersection(int gyro, unsigned char type, int c, int v)
 	}
 	else if (type == 'l')
 	{
-		// leftTurn(gyro);               // original plan
+		// leftTurn(gyro);               // original plan 6
 		if (gyro < 6)                  // hard coded
 		{
 			setServo(STRAIGHT-150);
